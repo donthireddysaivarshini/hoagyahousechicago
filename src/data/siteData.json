@@ -1,0 +1,53 @@
+{
+  "brand": {
+    "name": "Hoagy House",
+    "logoImg": "images/logo.webp",
+    "tagline": "Home of the Famous Sandwiches, Fresh Smash Burgers & American Flame Grill",
+    "subTagline": "Handcrafted Fresh Daily",
+    "heritageText": "AUTHENTIC CHICAGO HERITAGE · EST. 1984",
+    "copyright": "© 2026 HOAGY HOUSE. ALL RIGHTS RESERVED. HANDCRAFTED IN CHICAGO, IL."
+  },
+  "hero": {
+    "heading": "Hoagy House: Famous Sandwiches, Fresh Burgers & American Grill",
+    "scrollHintText": "Scroll to explore dishes"
+  },
+  "menu": {
+    "eyebrow": "Handcrafted Fresh Daily · Chicago Heritage",
+    "title": "The Signature Feast & Hoagie Collection",
+    "desc": "Rooted in authentic South Side Chicago tradition. Every sub is carved to order on hearth-baked Italian rolls, loaded with prime cuts, house-made marinades, and legendary garlic-herb spreads.",
+    "banner": {
+      "title": "Ready to Taste the Legend?",
+      "sub": "Order online for quick counter pickup or dine in our classic dining room.",
+      "primaryBtn": {
+        "label": "Order Online Now",
+        "href": "#order"
+      },
+      "secondaryBtn": {
+        "label": "View Locations & Hours",
+        "href": "#locations"
+      }
+    }
+  },
+  "footerBento": {
+    "hours": {
+      "title": "Hours & Service",
+      "schedule": [
+        "Monday – Thursday: 10:00 AM – 11:00 PM",
+        "Friday – Saturday: 10:00 AM – 2:00 AM",
+        "Sunday: 10:00 AM – 11:00 PM"
+      ],
+      "serviceTypes": "Dine-In · Counter Takeout · DoorDash & Uber Eats"
+    },
+    "kitchen": {
+      "title": "Fresh Kitchen Standards",
+      "description": "Carved to order on hearth-baked Italian rolls, seasoned with house marinades and authentic Chicago hot giardiniera."
+    },
+    "contact": {
+      "title": "Contact & Location",
+      "phone": "(773) 891-2416",
+      "email": "hoagyhousechicago@gmail.com",
+      "address": "7116 S Yates Blvd, Chicago, IL 60649",
+      "subText": "Dine In · Carry Out · Catering Hotline Available"
+    }
+  }
+}

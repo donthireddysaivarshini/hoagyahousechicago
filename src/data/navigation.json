@@ -1,0 +1,30 @@
+{
+  "headerLinks": [
+    { "label": "3D Showcase", "href": "#jarSlider" },
+    { "label": "Full Menu", "href": "#menuSection" }
+  ],
+  "headerCta": {
+    "label": "Order Online",
+    "href": "#menuSection"
+  },
+  "footerLinks": [
+    { "label": "3D Dish Showcase", "href": "#jarSlider" },
+    { "label": "Signature Cheeseburger", "href": "#jarSlider" },
+    { "label": "Crispy Chicken Wings", "href": "#jarSlider" },
+    { "label": "Italian Beef Sandwich", "href": "#jarSlider" },
+    { "label": "Cornmeal Catfish", "href": "#jarSlider" },
+    { "label": "Garlic Butter Shrimp", "href": "#jarSlider" },
+    { "label": "Hours & Locations", "href": "#siteFooter" }
+  ],
+  "socialLinks": [
+    { "label": "IG", "href": "#social", "ariaLabel": "Instagram" },
+    { "label": "FB", "href": "#social", "ariaLabel": "Facebook" },
+    { "label": "TT", "href": "#social", "ariaLabel": "TikTok" },
+    { "label": "X", "href": "#social", "ariaLabel": "X" }
+  ],
+  "legalLinks": [
+    { "label": "Privacy Policy", "href": "#privacy" },
+    { "label": "Terms of Service", "href": "#terms" },
+    { "label": "Accessibility", "href": "#accessibility" }
+  ]
+}

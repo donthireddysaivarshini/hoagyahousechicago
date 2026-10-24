@@ -1,0 +1,852 @@
+[
+  {
+    "id": "hoagy-philly-steak-regular",
+    "name": "Hoagy Philly Steak",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "Regular",
+    "price": "$9.99",
+    "numericPrice": 9.99,
+    "img": "products/Hoagy House Cheesesteak Feast.webp"
+  },
+  {
+    "id": "hoagy-chicken-philly-regular",
+    "name": "Hoagy Chicken Philly",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "Regular",
+    "price": "$9.99",
+    "numericPrice": 9.99,
+    "img": "products/Hoagy House Chicken  Grilled Sandwich.webp"
+  },
+  {
+    "id": "hoagy-italian-beef-regular-12-inch",
+    "name": "Hoagy Italian Beef",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "Regular / 12 inch",
+    "price": "$9.99 / $14.99",
+    "numericPrice": 9.99,
+    "img": "images/italian-beef-sandwich.webp"
+  },
+  {
+    "id": "hoagy-italian-chicken-regular",
+    "name": "Hoagy Italian Chicken",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "Regular",
+    "price": "$9.99",
+    "numericPrice": 9.99,
+    "img": "products/Hoagy House Chicken  Grilled Sandwich.webp"
+  },
+  {
+    "id": "hoagy-jim-shoe-6-inch-12-inch",
+    "name": "Hoagy Jim Shoe",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "6 inch / 12 inch",
+    "price": "$10.99 / $14.99",
+    "numericPrice": 10.99,
+    "img": "products/Hoagy House Jim Shoe.webp"
+  },
+  {
+    "id": "hoagy-gyros-on-pita",
+    "name": "Hoagy Gyros on Pita",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$9.99",
+    "numericPrice": 9.99,
+    "img": "products/Hoagy House Gyro Sandwich Feast.webp"
+  },
+  {
+    "id": "hoagy-gyros-dinner",
+    "name": "Hoagy Gyros Dinner",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$16.99",
+    "numericPrice": 16.99,
+    "img": "products/Hoagy House Gyro Sandwich Feast.webp"
+  },
+  {
+    "id": "hoagy-grilled-chicken-on-pita",
+    "name": "Hoagy Grilled Chicken on Pita",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$9.99",
+    "numericPrice": 9.99,
+    "img": "products/Hoagy House Chicken  Grilled Sandwich.webp"
+  },
+  {
+    "id": "hoagy-grilled-chicken-sandwich",
+    "name": "Hoagy Grilled Chicken Sandwich",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$8.99",
+    "numericPrice": 8.99,
+    "img": "products/Hoagy House Chicken  Grilled Sandwich.webp"
+  },
+  {
+    "id": "hoagy-breaded-chicken-breast",
+    "name": "Hoagy Breaded Chicken Breast",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$8.99",
+    "numericPrice": 8.99,
+    "img": "products/Hoagy House Chicken  Grilled Sandwich.webp"
+  },
+  {
+    "id": "hoagy-crispy-chicken-sandwich",
+    "name": "Hoagy Crispy Chicken Sandwich",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$7.99",
+    "numericPrice": 7.99,
+    "img": "products/Hoagy House Chicken  Grilled Sandwich.webp"
+  },
+  {
+    "id": "hoagy-sweet-steak-sandwich",
+    "name": "Hoagy Sweet Steak Sandwich",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$11.99",
+    "numericPrice": 11.99,
+    "img": "products/Hoagy House Cheesesteak Feast.webp"
+  },
+  {
+    "id": "hoagy-fish-sandwich",
+    "name": "Hoagy Fish Sandwich",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$8.99",
+    "numericPrice": 8.99,
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": "hoagy-double-fish-sandwich",
+    "name": "Hoagy Double Fish Sandwich",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$12.99",
+    "numericPrice": 12.99,
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": "hoagy-catfish-sandwich",
+    "name": "Hoagy Catfish Sandwich",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$8.99",
+    "numericPrice": 8.99,
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": "hoagy-maxwell-beef-polish-12-inch",
+    "name": "Hoagy Maxwell Beef Polish",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "12 inch",
+    "price": "$12.99",
+    "numericPrice": 12.99,
+    "img": "products/Classic Hoagy House Hot Dog.webp"
+  },
+  {
+    "id": "hoagy-hot-dog",
+    "name": "Hoagy Hot Dog",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "",
+    "price": "$4.49",
+    "numericPrice": 4.49,
+    "img": "products/Classic Hoagy House Hot Dog.webp"
+  },
+  {
+    "id": "hoagy-2-hot-dogs-with-fries",
+    "name": "Hoagy 2 Hot Dogs",
+    "category": "sandwiches",
+    "subCategory": "Hot Sandwiches",
+    "details": "With fries",
+    "price": "$9.99",
+    "numericPrice": 9.99,
+    "img": "products/Classic Hoagy House Hot Dog.webp"
+  },
+  {
+    "id": "burger",
+    "name": "Burger",
+    "category": "burgers",
+    "subCategory": "Burgers",
+    "details": "",
+    "price": "$7.99",
+    "numericPrice": 7.99,
+    "img": "images/signature-cheeseburger.webp"
+  },
+  {
+    "id": "cheese-burger",
+    "name": "Cheese Burger",
+    "category": "burgers",
+    "subCategory": "Burgers",
+    "details": "",
+    "price": "$8.99",
+    "numericPrice": 8.99,
+    "img": "images/signature-cheeseburger.webp"
+  },
+  {
+    "id": "double-hamburger",
+    "name": "Double Hamburger",
+    "category": "burgers",
+    "subCategory": "Burgers",
+    "details": "",
+    "price": "$9.99",
+    "numericPrice": 9.99,
+    "img": "images/signature-cheeseburger.webp"
+  },
+  {
+    "id": "double-cheese-burger",
+    "name": "Double Cheese Burger",
+    "category": "burgers",
+    "subCategory": "Burgers",
+    "details": "",
+    "price": "$10.99",
+    "numericPrice": 10.99,
+    "img": "images/signature-cheeseburger.webp"
+  },
+  {
+    "id": "1-2-lb-steak-burger",
+    "name": "1/2 lb Steak Burger",
+    "category": "burgers",
+    "subCategory": "Burgers",
+    "details": "",
+    "price": "$10.99",
+    "numericPrice": 10.99,
+    "img": "images/signature-cheeseburger.webp"
+  },
+  {
+    "id": "double-steak-burger",
+    "name": "Double Steak Burger",
+    "category": "burgers",
+    "subCategory": "Burgers",
+    "details": "",
+    "price": "$13.99",
+    "numericPrice": 13.99,
+    "img": "images/signature-cheeseburger.webp"
+  },
+  {
+    "id": "gyro-burger",
+    "name": "Gyro Burger",
+    "category": "burgers",
+    "subCategory": "Burgers",
+    "details": "",
+    "price": "$11.99",
+    "numericPrice": 11.99,
+    "img": "images/signature-cheeseburger.webp"
+  },
+  {
+    "id": "3-wings-with-fries",
+    "name": "3 Wings",
+    "category": "chicken",
+    "subCategory": "Chicken Wings",
+    "details": "With fries",
+    "price": "$5.99",
+    "numericPrice": 5.99,
+    "img": "images/crispy-chicken-wings.webp"
+  },
+  {
+    "id": "6-wings-dinner",
+    "name": "6 Wings",
+    "category": "chicken",
+    "subCategory": "Chicken Wings",
+    "details": "Dinner",
+    "price": "$10.99",
+    "numericPrice": 10.99,
+    "img": "images/crispy-chicken-wings.webp"
+  },
+  {
+    "id": "10-wings-dinner",
+    "name": "10 Wings",
+    "category": "chicken",
+    "subCategory": "Chicken Wings",
+    "details": "Dinner",
+    "price": "$16.99",
+    "numericPrice": 16.99,
+    "img": "images/crispy-chicken-wings.webp"
+  },
+  {
+    "id": "20-wings-with-fries",
+    "name": "20 Wings",
+    "category": "chicken",
+    "subCategory": "Chicken Wings",
+    "details": "With fries",
+    "price": "$29.99",
+    "numericPrice": 29.99,
+    "img": "images/crispy-chicken-wings.webp"
+  },
+  {
+    "id": "2-pieces-with-fries",
+    "name": "2 Pieces",
+    "category": "chicken",
+    "subCategory": "Legs & Thighs",
+    "details": "With fries",
+    "price": "$4.99",
+    "numericPrice": 4.99,
+    "img": "products/Hoagy House Cheesesteak Feast.webp"
+  },
+  {
+    "id": "6-pieces-with-fries",
+    "name": "6 Pieces",
+    "category": "chicken",
+    "subCategory": "Legs & Thighs",
+    "details": "With fries",
+    "price": "$8.99",
+    "numericPrice": 8.99,
+    "img": "products/Hoagy House Cheesesteak Feast.webp"
+  },
+  {
+    "id": "10-pieces-with-fries",
+    "name": "10 Pieces",
+    "category": "chicken",
+    "subCategory": "Legs & Thighs",
+    "details": "With fries",
+    "price": "$14.99",
+    "numericPrice": 14.99,
+    "img": "products/Hoagy House Cheesesteak Feast.webp"
+  },
+  {
+    "id": "20-pieces-with-fries",
+    "name": "20 Pieces",
+    "category": "chicken",
+    "subCategory": "Legs & Thighs",
+    "details": "With fries",
+    "price": "$26.99",
+    "numericPrice": 26.99,
+    "img": "products/Hoagy House Cheesesteak Feast.webp"
+  },
+  {
+    "id": "chicken-nuggets-small",
+    "name": "Chicken Nuggets",
+    "category": "chicken",
+    "subCategory": "Chicken Nuggets",
+    "details": "Small",
+    "price": "$5.99",
+    "numericPrice": 5.99,
+    "img": "images/golden-chicken-bites.webp"
+  },
+  {
+    "id": "chicken-nuggets-large",
+    "name": "Chicken Nuggets",
+    "category": "chicken",
+    "subCategory": "Chicken Nuggets",
+    "details": "Large",
+    "price": "$7.99",
+    "numericPrice": 7.99,
+    "img": "images/golden-chicken-bites.webp"
+  },
+  {
+    "id": "catfish-3-pieces",
+    "name": "Catfish",
+    "category": "fish",
+    "subCategory": "Fish Dinners",
+    "details": "3 pieces",
+    "price": "$13.99",
+    "numericPrice": 13.99,
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": "catfish-fillets-2-3-4-pieces",
+    "name": "Catfish Fillets",
+    "category": "fish",
+    "subCategory": "Fish Dinners",
+    "details": "2 / 3 / 4 pieces",
+    "price": "$13.99 / $15.99 / $17.99",
+    "numericPrice": 13.99,
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": "tilapia-fillets-2-3-4-pieces",
+    "name": "Tilapia Fillets",
+    "category": "fish",
+    "subCategory": "Fish Dinners",
+    "details": "2 / 3 / 4 pieces",
+    "price": "$13.99 / $15.99 / $17.99",
+    "numericPrice": 13.99,
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": "perch-3-4-5-pieces",
+    "name": "Perch",
+    "category": "fish",
+    "subCategory": "Fish Dinners",
+    "details": "3 / 4 / 5 pieces",
+    "price": "$12.99 / $15.99 / $17.99",
+    "numericPrice": 12.99,
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": "grilled-catfish-fillet-2-3-4-pieces",
+    "name": "Grilled Catfish Fillet",
+    "category": "fish",
+    "subCategory": "Grilled Fish",
+    "details": "2 / 3 / 4 pieces",
+    "price": "$14.99 / $17.99 / $19.99",
+    "numericPrice": 14.99,
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": "grilled-tilapia-2-3-4-pieces",
+    "name": "Grilled Tilapia",
+    "category": "fish",
+    "subCategory": "Grilled Fish",
+    "details": "2 / 3 / 4 pieces",
+    "price": "$14.99 / $17.99 / $19.99",
+    "numericPrice": 14.99,
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": "grilled-shrimp-12-pieces",
+    "name": "Grilled Shrimp",
+    "category": "fish",
+    "subCategory": "Grilled Fish",
+    "details": "12 pieces",
+    "price": "$14.99",
+    "numericPrice": 14.99,
+    "img": "products/Golden Fried Shrimp Takeout Feast.webp"
+  },
+  {
+    "id": "shrimp-10-pieces-with-fries",
+    "name": "Shrimp",
+    "category": "fish",
+    "subCategory": "Shrimp & Seafood",
+    "details": "10 pieces, with fries",
+    "price": "$10.99",
+    "numericPrice": 10.99,
+    "img": "products/Golden Fried Shrimp Takeout Feast.webp"
+  },
+  {
+    "id": "shrimp-20-pieces-with-fries",
+    "name": "Shrimp",
+    "category": "fish",
+    "subCategory": "Shrimp & Seafood",
+    "details": "20 pieces, with fries",
+    "price": "$18.99",
+    "numericPrice": 18.99,
+    "img": "products/Golden Fried Shrimp Takeout Feast.webp"
+  },
+  {
+    "id": "jumbo-shrimp-5-pieces",
+    "name": "Jumbo Shrimp",
+    "category": "fish",
+    "subCategory": "Shrimp & Seafood",
+    "details": "5 pieces",
+    "price": "$11.99",
+    "numericPrice": 11.99,
+    "img": "products/Golden Fried Shrimp Takeout Feast.webp"
+  },
+  {
+    "id": "jumbo-shrimp-6-pieces",
+    "name": "Jumbo Shrimp",
+    "category": "fish",
+    "subCategory": "Shrimp & Seafood",
+    "details": "6 pieces",
+    "price": "$16.99",
+    "numericPrice": 16.99,
+    "img": "products/Golden Fried Shrimp Takeout Feast.webp"
+  },
+  {
+    "id": "jumbo-shrimp-10-pieces-with-fries",
+    "name": "Jumbo Shrimp",
+    "category": "fish",
+    "subCategory": "Shrimp & Seafood",
+    "details": "10 pieces, with fries",
+    "price": "$19.99",
+    "numericPrice": 19.99,
+    "img": "products/Golden Fried Shrimp Takeout Feast.webp"
+  },
+  {
+    "id": "jumbo-shrimp-12-pieces-with-fries",
+    "name": "Jumbo Shrimp",
+    "category": "fish",
+    "subCategory": "Shrimp & Seafood",
+    "details": "12 pieces, with fries",
+    "price": "$26.99",
+    "numericPrice": 26.99,
+    "img": "products/Golden Fried Shrimp Takeout Feast.webp"
+  },
+  {
+    "id": "rice-bowl-chicken-steak-or-gyro",
+    "name": "Rice Bowl",
+    "category": "bowls-salads",
+    "subCategory": "Rice Bowls",
+    "details": "Chicken, steak or gyro",
+    "price": "$12.99",
+    "numericPrice": 12.99,
+    "img": "images/chicken-rice-bowl.webp"
+  },
+  {
+    "id": "garden-salad",
+    "name": "Garden Salad",
+    "category": "bowls-salads",
+    "subCategory": "Fresh Salads",
+    "details": "",
+    "price": "$8.99",
+    "numericPrice": 8.99,
+    "img": "images/chicken-rice-bowl.webp"
+  },
+  {
+    "id": "gyro-salad",
+    "name": "Gyro Salad",
+    "category": "bowls-salads",
+    "subCategory": "Fresh Salads",
+    "details": "",
+    "price": "$12.99",
+    "numericPrice": 12.99,
+    "img": "images/chicken-rice-bowl.webp"
+  },
+  {
+    "id": "grilled-chicken-salad",
+    "name": "Grilled Chicken Salad",
+    "category": "bowls-salads",
+    "subCategory": "Fresh Salads",
+    "details": "",
+    "price": "$13.99",
+    "numericPrice": 13.99,
+    "img": "products/Hoagy House Chicken  Grilled Sandwich.webp"
+  },
+  {
+    "id": "philly-steak-salad",
+    "name": "Philly Steak Salad",
+    "category": "bowls-salads",
+    "subCategory": "Fresh Salads",
+    "details": "",
+    "price": "$13.99",
+    "numericPrice": 13.99,
+    "img": "products/Hoagy House Cheesesteak Feast.webp"
+  },
+  {
+    "id": "greek-salad",
+    "name": "Greek Salad",
+    "category": "bowls-salads",
+    "subCategory": "Fresh Salads",
+    "details": "",
+    "price": "$13.99",
+    "numericPrice": 13.99,
+    "img": "images/chicken-rice-bowl.webp"
+  },
+  {
+    "id": "cheese",
+    "name": "Cheese",
+    "category": "sides-extras",
+    "subCategory": "Extras & Add-ons",
+    "details": "",
+    "price": "$1.49",
+    "numericPrice": 1.49,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "cup-of-cheese",
+    "name": "Cup of Cheese",
+    "category": "sides-extras",
+    "subCategory": "Extras & Add-ons",
+    "details": "",
+    "price": "$1.49",
+    "numericPrice": 1.49,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "bbq-sauce",
+    "name": "BBQ Sauce",
+    "category": "sides-extras",
+    "subCategory": "Extras & Add-ons",
+    "details": "",
+    "price": "$1.49",
+    "numericPrice": 1.49,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "turkey-bacon",
+    "name": "Turkey Bacon",
+    "category": "sides-extras",
+    "subCategory": "Extras & Add-ons",
+    "details": "",
+    "price": "$2.49",
+    "numericPrice": 2.49,
+    "img": "products/Hoagy House Turkey Sandwich.webp"
+  },
+  {
+    "id": "gyro-meat",
+    "name": "Gyro Meat",
+    "category": "sides-extras",
+    "subCategory": "Extras & Add-ons",
+    "details": "",
+    "price": "$2.49",
+    "numericPrice": 2.49,
+    "img": "products/Hoagy House Gyro Sandwich Feast.webp"
+  },
+  {
+    "id": "steak",
+    "name": "Steak",
+    "category": "sides-extras",
+    "subCategory": "Extras & Add-ons",
+    "details": "",
+    "price": "$4.99",
+    "numericPrice": 4.99,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "banana-peppers",
+    "name": "Banana Peppers",
+    "category": "sides-extras",
+    "subCategory": "Extras & Add-ons",
+    "details": "",
+    "price": "$0.99",
+    "numericPrice": 0.99,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "giardiniera-peppers",
+    "name": "Giardiniera Peppers",
+    "category": "sides-extras",
+    "subCategory": "Extras & Add-ons",
+    "details": "",
+    "price": "$0.99",
+    "numericPrice": 0.99,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "jalape-o-peppers",
+    "name": "Jalapeño Peppers",
+    "category": "sides-extras",
+    "subCategory": "Extras & Add-ons",
+    "details": "",
+    "price": "$0.99",
+    "numericPrice": 0.99,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "french-fries-small",
+    "name": "French Fries",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "Small",
+    "price": "$3.99",
+    "numericPrice": 3.99,
+    "img": "products/Hoagy House Loaded Cheese Fries.webp"
+  },
+  {
+    "id": "cheese-fries",
+    "name": "Cheese Fries",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "",
+    "price": "$5.99",
+    "numericPrice": 5.99,
+    "img": "products/Hoagy House Loaded Cheese Fries.webp"
+  },
+  {
+    "id": "bbq-fries",
+    "name": "BBQ Fries",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "",
+    "price": "$5.99",
+    "numericPrice": 5.99,
+    "img": "products/Hoagy House Loaded Cheese Fries.webp"
+  },
+  {
+    "id": "onion-rings",
+    "name": "Onion Rings",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "",
+    "price": "$5.99",
+    "numericPrice": 5.99,
+    "img": "products/Crispy Onion Rings at Hoagy House.webp"
+  },
+  {
+    "id": "mushrooms",
+    "name": "Mushrooms",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "",
+    "price": "$4.99",
+    "numericPrice": 4.99,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "cheese-sticks-6-pieces",
+    "name": "Cheese Sticks",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "6 pieces",
+    "price": "$6.99",
+    "numericPrice": 6.99,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "nachos-with-cheese",
+    "name": "Nachos with Cheese",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "",
+    "price": "$5.99",
+    "numericPrice": 5.99,
+    "img": "products/Hoagy House Loaded Cheese Fries.webp"
+  },
+  {
+    "id": "nachos-with-cheese-meat",
+    "name": "Nachos with Cheese & Meat",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "",
+    "price": "$10.99",
+    "numericPrice": 10.99,
+    "img": "products/Hoagy House Loaded Cheese Fries.webp"
+  },
+  {
+    "id": "pizza-puff",
+    "name": "Pizza Puff",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "",
+    "price": "$4.49",
+    "numericPrice": 4.49,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "cole-slaw-large",
+    "name": "Cole Slaw",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "Large",
+    "price": "$4.99",
+    "numericPrice": 4.99,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "kosher-pickle",
+    "name": "Kosher Pickle",
+    "category": "sides-extras",
+    "subCategory": "Sides",
+    "details": "",
+    "price": "$1.99",
+    "numericPrice": 1.99,
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": "can-pop-pepsi-products",
+    "name": "Can Pop",
+    "category": "beverages",
+    "subCategory": "Beverages",
+    "details": "Pepsi products",
+    "price": "$1.55",
+    "numericPrice": 1.55,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "20-oz-bottle-pop",
+    "name": "20 oz Bottle Pop",
+    "category": "beverages",
+    "subCategory": "Beverages",
+    "details": "",
+    "price": "$2.49",
+    "numericPrice": 2.49,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "1-25-liter-pop",
+    "name": "1.25 Liter Pop",
+    "category": "beverages",
+    "subCategory": "Beverages",
+    "details": "",
+    "price": "$2.99",
+    "numericPrice": 2.99,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "2-liter-pop-pepsi-mountain-dew-or-starry",
+    "name": "2 Liter Pop",
+    "category": "beverages",
+    "subCategory": "Beverages",
+    "details": "Pepsi, Mountain Dew or Starry",
+    "price": "$3.49",
+    "numericPrice": 3.49,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "gatorade",
+    "name": "Gatorade",
+    "category": "beverages",
+    "subCategory": "Beverages",
+    "details": "",
+    "price": "$2.75",
+    "numericPrice": 2.75,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "aquafina-water",
+    "name": "Aquafina Water",
+    "category": "beverages",
+    "subCategory": "Beverages",
+    "details": "",
+    "price": "$1.49",
+    "numericPrice": 1.49,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "fountain-drink-16-oz-32-oz",
+    "name": "Fountain Drink",
+    "category": "beverages",
+    "subCategory": "Beverages",
+    "details": "16 oz / 32 oz",
+    "price": "$1.99 / $2.99",
+    "numericPrice": 1.99,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "slushie-two-sizes-shown-on-menu",
+    "name": "Slushie",
+    "category": "beverages",
+    "subCategory": "Beverages",
+    "details": "Two sizes shown on menu",
+    "price": "$3.99 / $5.99",
+    "numericPrice": 3.99,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "chocolate",
+    "name": "Chocolate",
+    "category": "beverages",
+    "subCategory": "Hand-Spun Milkshakes",
+    "details": "",
+    "price": "$6.49",
+    "numericPrice": 6.49,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "strawberry",
+    "name": "Strawberry",
+    "category": "beverages",
+    "subCategory": "Hand-Spun Milkshakes",
+    "details": "",
+    "price": "$6.49",
+    "numericPrice": 6.49,
+    "img": "images/chocolate-milkshake.webp"
+  },
+  {
+    "id": "vanilla",
+    "name": "Vanilla",
+    "category": "beverages",
+    "subCategory": "Hand-Spun Milkshakes",
+    "details": "",
+    "price": "$6.49",
+    "numericPrice": 6.49,
+    "img": "images/chocolate-milkshake.webp"
+  }
+]

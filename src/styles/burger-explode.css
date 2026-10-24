@@ -1,0 +1,1145 @@
+/* ==========================================================================
+   BURGER EXPLODE HERO SECTION (FIRST SECTION ON HOMEPAGE)
+   ========================================================================== */
+
+.burger-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #060402;
+  color: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-top: clamp(60px, 10vh, 90px);
+}
+
+.burger-hero__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* User-specified background image for first section with Parallax Support */
+.burger-hero__bg-img {
+  position: absolute;
+  inset: -3.5%;
+  width: 107%;
+  height: 107%;
+  background-image: url('/images/bgimagefirstsection.webp');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  will-change: transform;
+}
+
+/* Subtle perimeter vignette to seamlessly ground edges */
+.burger-hero__bg-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 55%,
+    rgba(4, 2, 1, 0.25) 82%,
+    rgba(2, 1, 0, 0.60) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Dark tint from the text side (left) for crisp contrast & high legibility */
+.burger-hero__bg-side-tint {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 1, 1, 0.88) 0%,
+    rgba(3, 2, 1, 0.78) 28%,
+    rgba(4, 2, 1, 0.56) 46%,
+    rgba(5, 3, 2, 0.22) 60%,
+    transparent 74%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   SECTION 2: DARK CULINARY STUDIO BACKGROUND LAYERS
+   ========================================================================== */
+.burger-hero__bg-dark-studio {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity 0.3s ease-out;
+}
+
+.burger-hero__dark-studio-img {
+  position: absolute;
+  inset: -3.5%;
+  width: 107%;
+  height: 107%;
+  background-image: url('/images/dark_studio_bg.webp');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  filter: brightness(0.95) contrast(1.06);
+  will-change: transform;
+}
+
+.burger-hero__dark-studio-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 35% 55%,
+    transparent 35%,
+    rgba(6, 4, 3, 0.40) 70%,
+    rgba(2, 1, 1, 0.88) 100%
+  );
+  pointer-events: none;
+}
+
+/* Subtle background light beam washing down the dark studio wall */
+/* Subtle soft background ambient light haze washing down the dark studio wall */
+.burger-plated__bg-light-cone {
+  position: absolute;
+  top: -10px;
+  left: 31.0%;
+  transform: translateX(-50%);
+  width: clamp(450px, 45vw, 750px);
+  height: 88%;
+  background: radial-gradient(
+    ellipse at 50% 25%,
+    rgba(255, 205, 110, 0.20) 0%,
+    rgba(243, 146, 0, 0.10) 40%,
+    rgba(180, 85, 10, 0.03) 65%,
+    transparent 80%
+  );
+  filter: blur(28px);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Warm, Soft Elliptical Light Pool on the studio slate table under the plate */
+.burger-plated__table-light-pool {
+  position: absolute;
+  bottom: clamp(6%, 12vh, 16%);
+  left: calc(50% - min(25vw, 370px));
+  transform: translate(-50%, 50%);
+  width: clamp(380px, 36vw, 620px);
+  height: clamp(140px, 18vh, 240px);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(255, 200, 95, 0.38) 0%,
+    rgba(243, 146, 0, 0.18) 42%,
+    rgba(160, 75, 10, 0.05) 68%,
+    transparent 85%
+  );
+  filter: blur(24px);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+
+
+/* Fullscreen 3D Canvas Layer spanning both sections */
+.burger-canvas-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.burger-canvas-stage .burger-canvas-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+/* Section Stages */
+.burger-hero__stage,
+.burger-plated__stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-top: clamp(60px, 10vh, 90px);
+}
+
+.burger-hero__inner,
+.burger-plated__inner {
+  position: relative;
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: clamp(20px, 3.5vh, 48px) clamp(16px, 3.5vw, 60px);
+  display: grid;
+  align-items: center;
+  gap: clamp(20px, 3.5vw, 72px);
+  min-height: calc(100vh - 100px);
+}
+
+.burger-hero__inner {
+  grid-template-columns: 1.12fr 1fr;
+}
+
+.burger-plated__inner {
+  grid-template-columns: 1fr 1fr;
+}
+
+.burger-hero__model-placeholder,
+.burger-plated__plate-placeholder {
+  width: 100%;
+  height: clamp(540px, 86vh, 940px);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   LEFT COLUMN: EDITORIAL CONTENT
+   -------------------------------------------------------------------------- */
+.burger-hero__text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+   BRAND BADGE (Top Website Name)
+   -------------------------------------------------------------------------- */
+.burger-hero__brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: rgba(243, 146, 0, 0.12);
+  border: 1px solid rgba(243, 146, 0, 0.38);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  margin-bottom: clamp(14px, 2.2vh, 22px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.burger-hero__brand-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f39200;
+  box-shadow: 0 0 10px #f39200, 0 0 4px #ffc107;
+  animation: burgerPulse 1.8s infinite ease-in-out;
+}
+
+.burger-hero__brand-badge-name {
+  font-family: var(--font-sans);
+  font-size: clamp(0.72rem, 0.85vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #fbd38d;
+  text-transform: uppercase;
+}
+
+@keyframes burgerPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.4;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   CREATIVE PROFESSIONAL TAGLINE
+   -------------------------------------------------------------------------- */
+.burger-hero__tagline-title {
+  margin: 0 0 clamp(12px, 1.8vh, 18px);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.burger-hero__tagline-lead,
+.burger-hero__tagline-accent {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.75vw, 2.95rem);
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  line-height: 1.12;
+  white-space: nowrap;
+}
+
+.burger-hero__tagline-lead {
+  color: #ffffff;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95), 0 2px 6px rgba(0, 0, 0, 0.85);
+}
+
+.burger-hero__tagline-accent {
+  background: linear-gradient(180deg, #ffffff 40%, #e6a85c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.9));
+}
+
+.burger-hero__tagline-desc {
+  font-family: var(--font-sans);
+  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+  line-height: 1.55;
+  color: #f0e5d8;
+  max-width: 490px;
+  margin: 0;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.85);
+}
+
+/* --------------------------------------------------------------------------
+   ANIMATED SCROLL DOWN INDICATOR (ICON ONLY - BOTTOM MIDDLE)
+   -------------------------------------------------------------------------- */
+.burger-hero__scroll-indicator {
+  position: absolute;
+  bottom: clamp(18px, 3vh, 30px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 12px 6px;
+  background: rgba(19, 15, 11, 0.62);
+  border: 1px solid rgba(243, 146, 0, 0.35);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.burger-hero__scroll-indicator:hover {
+  background: rgba(243, 146, 0, 0.2);
+  border-color: rgba(243, 146, 0, 0.7);
+  transform: translateX(-50%) translateY(3px);
+  box-shadow: 0 6px 24px rgba(243, 146, 0, 0.4);
+}
+
+.burger-hero__scroll-mouse {
+  width: 18px;
+  height: 28px;
+  border: 2px solid #f39200;
+  border-radius: 999px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(243, 146, 0, 0.45);
+}
+
+.burger-hero__scroll-wheel {
+  position: absolute;
+  top: 4px;
+  width: 3px;
+  height: 6px;
+  background: #f39200;
+  border-radius: 999px;
+  animation: mouseWheelDrop 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes mouseWheelDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  25% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(13px);
+  }
+}
+
+.burger-hero__scroll-chevron {
+  width: 14px;
+  height: 14px;
+  color: #f39200;
+  animation: chevronBob 1.8s ease-in-out infinite;
+}
+
+@keyframes chevronBob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+/* EXPLOSION METER */
+.burger-hero__explosion-meter {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(20, 14, 10, 0.65);
+  border: 1px solid rgba(243, 146, 0, 0.22);
+  border-radius: 14px;
+  padding: 12px 18px;
+  margin-bottom: clamp(18px, 2.5vh, 24px);
+  backdrop-filter: blur(8px);
+}
+
+.burger-hero__meter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.burger-hero__meter-title {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #e2d3c3;
+  text-transform: uppercase;
+}
+
+.burger-hero__meter-val {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #f39200;
+}
+
+.burger-hero__meter-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.burger-hero__meter-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #f39200 0%, #e94e1b 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(243, 146, 0, 0.8);
+  transition: width 0.1s linear;
+}
+
+/* INGREDIENT PILLS GRID */
+.burger-hero__layers-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 14px;
+  width: 100%;
+  max-width: 520px;
+  margin-bottom: clamp(22px, 3vh, 32px);
+}
+
+.burger-hero__layer-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  background: rgba(18, 12, 8, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.burger-hero__layer-pill.is-active {
+  background: rgba(243, 146, 0, 0.18);
+  border-color: rgba(243, 146, 0, 0.55);
+  box-shadow: 0 4px 14px rgba(243, 146, 0, 0.25);
+  transform: translateX(4px);
+}
+
+.burger-hero__layer-step {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #f39200;
+  opacity: 0.85;
+}
+
+.burger-hero__layer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.burger-hero__layer-name {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f2e9e1;
+  line-height: 1.2;
+}
+
+.burger-hero__layer-desc {
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  color: #a89a8c;
+}
+
+/* BUTTONS */
+.burger-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(18px, 2.5vh, 26px);
+}
+
+.burger-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 28px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.burger-hero__btn--primary {
+  background: linear-gradient(90deg, #f39200 0%, #e94e1b 100%);
+  color: #0b0704;
+  box-shadow: 0 8px 24px rgba(243, 146, 0, 0.4);
+}
+
+.burger-hero__btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(243, 146, 0, 0.6);
+  filter: brightness(1.08);
+}
+
+.burger-hero__status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #d1c5b8;
+  letter-spacing: 0.04em;
+}
+
+.burger-hero__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38a169;
+  box-shadow: 0 0 8px #38a169;
+}
+
+/* SCROLL HINT */
+.burger-hero__scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #f7a93b;
+  opacity: 0.85;
+}
+
+.burger-hero__scroll-arrow {
+  display: inline-block;
+  animation: burgerBounce 1.6s infinite ease-in-out;
+}
+
+@keyframes burgerBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   RIGHT COLUMN: 3D CANVAS & HUD
+   -------------------------------------------------------------------------- */
+.burger-hero__model-col {
+  position: relative;
+  width: 100%;
+  height: clamp(540px, 86vh, 940px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.burger-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  cursor: grab;
+  overflow: visible;
+}
+
+.burger-canvas-wrapper:active {
+  cursor: grabbing;
+}
+
+.burger-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.burger-canvas__loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 10;
+  background: rgba(8, 5, 3, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.burger-canvas__spinner {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid rgba(243, 146, 0, 0.2);
+  border-top-color: #f39200;
+  animation: burgerSpin 0.9s infinite linear;
+}
+
+@keyframes burgerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.burger-canvas__loading-text {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fbd38d;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.burger-canvas__hud-hint {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(14, 9, 6, 0.7);
+  border: 1px solid rgba(243, 146, 0, 0.3);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #fbd38d;
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+.burger-canvas__hud-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f39200;
+  box-shadow: 0 0 6px #f39200;
+}
+
+
+
+
+
+/* --------------------------------------------------------------------------
+   FLOATING INGREDIENT PARTICLES AROUND FIRST SECTION
+   -------------------------------------------------------------------------- */
+.burger-particles-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.burger-particle {
+  position: absolute;
+  transform-origin: center center;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+}
+
+.burger-particle__inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.burger-particle__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  /* Atmospheric lighting drop shadow matching table amber radiance */
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.50))
+          drop-shadow(0 4px 10px rgba(235, 120, 10, 0.22));
+}
+
+/* Organic floating keyframe cycles */
+.burger-particle--particleFloat1 {
+  animation: particleFloatCycle1 ease-in-out infinite;
+}
+
+.burger-particle--particleFloat2 {
+  animation: particleFloatCycle2 ease-in-out infinite;
+}
+
+.burger-particle--particleFloat3 {
+  animation: particleFloatCycle3 ease-in-out infinite;
+}
+
+@keyframes particleFloatCycle1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(4deg);
+  }
+}
+
+@keyframes particleFloatCycle2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-22px) rotate(-5deg);
+  }
+}
+
+@keyframes particleFloatCycle3 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(3deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .burger-particle {
+    opacity: 0.85;
+  }
+}
+
+/* ==========================================================================
+   SECTION 2: PLATED TO PERFECTION (RIGHT COLUMN CONTENT)
+   ========================================================================== */
+.burger-plated__text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.burger-plated__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(243, 146, 0, 0.12);
+  border: 1px solid rgba(243, 146, 0, 0.35);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  margin-bottom: clamp(14px, 2vh, 22px);
+  font-family: var(--font-sans);
+  font-size: clamp(0.72rem, 0.9vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #fbd38d;
+  text-transform: uppercase;
+}
+
+.burger-plated__badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f39200;
+  box-shadow: 0 0 10px #f39200;
+  animation: burgerPulse 1.8s infinite ease-in-out;
+}
+
+.burger-plated__title {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 clamp(12px, 1.8vh, 18px) 0;
+  line-height: 1.1;
+}
+
+.burger-plated__title-sub {
+  font-family: var(--font-sans);
+  font-size: clamp(0.72rem, 0.9vw, 0.84rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #e6a85c;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0.92;
+}
+
+.burger-plated__title-main {
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 2.4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+  background: linear-gradient(180deg, #ffffff 65%, #f2e9dc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.burger-plated__desc {
+  font-family: var(--font-sans);
+  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+  color: #d8cbbc;
+  max-width: 520px;
+  margin: 0 0 clamp(14px, 2vh, 20px) 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.burger-plated__highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  max-width: 520px;
+  margin-bottom: clamp(14px, 2vh, 20px);
+}
+
+.burger-plated__highlight-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 13px;
+  background: rgba(243, 146, 0, 0.12);
+  border: 1px solid rgba(243, 146, 0, 0.32);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #fbd38d;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.burger-plated__closing {
+  font-family: var(--font-sans);
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  font-weight: 600;
+  color: #fbd38d;
+  margin: 0;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
+}
+
+/* Actions Row */
+.burger-plated__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.burger-plated__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 28px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: none;
+  outline: none;
+}
+
+.burger-plated__btn--order {
+  background: linear-gradient(135deg, #f39200 0%, #e67e00 100%);
+  color: #0d0804;
+  box-shadow: 0 8px 26px rgba(243, 146, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.burger-plated__btn--order:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(243, 146, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  background: linear-gradient(135deg, #ff9f1a 0%, #f39200 100%);
+}
+
+.burger-plated__btn--secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fbd38d;
+  border: 1px solid rgba(243, 146, 0, 0.35);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.burger-plated__btn--secondary:hover {
+  background: rgba(243, 146, 0, 0.14);
+  border-color: rgba(243, 146, 0, 0.6);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   RESPONSIVE MOBILE LAYOUT (<= 768px)
+   Section 1: Model on Top (upper 46vh), Text Down (lower portion)
+   Section 2: Plated Model on Top (upper 42vh), Story Text Below (zero overlap)
+   Tablet (>= 768px) and above follows desktop/laptop 2-column layout
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* SECTION 1: HERO (TOP MODEL, DOWN TEXT - CENTERED TOWARD MIDDLE) */
+  .burger-hero__stage {
+    align-items: center;
+    justify-content: center;
+    padding-top: clamp(55px, 8vh, 75px);
+    padding-bottom: clamp(10px, 2vh, 20px);
+    box-sizing: border-box;
+  }
+
+  .burger-hero__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    padding: 0 clamp(16px, 4vw, 24px);
+    gap: clamp(8px, 1.8vh, 16px);
+  }
+
+  /* TOP: 3D model placeholder (reserves upper space for the burger, closer to text) */
+  .burger-hero__model-placeholder {
+    order: 1;
+    width: 100%;
+    height: clamp(200px, 30vh, 270px);
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  /* DOWN: Editorial text column (moves up towards middle, reduced gap with 3D model) */
+  .burger-hero__text-col {
+    order: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    z-index: 6;
+    pointer-events: auto;
+    margin-top: 0;
+    padding-bottom: 0;
+  }
+
+  .burger-hero__bg-side-tint {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(3, 2, 1, 0.32) 28%,
+      rgba(3, 2, 1, 0.82) 58%,
+      rgba(2, 1, 1, 0.94) 100%
+    );
+  }
+
+  .burger-hero__brand-badge {
+    margin-bottom: clamp(8px, 1.5vh, 12px);
+  }
+
+  .burger-hero__tagline-title {
+    margin: 0 0 clamp(8px, 1.4vh, 12px) 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .burger-hero__tagline-lead,
+  .burger-hero__tagline-accent {
+    font-size: clamp(1.35rem, 4.8vw, 1.75rem);
+    text-align: center;
+    line-height: 1.14;
+    white-space: normal;
+  }
+
+  .burger-hero__tagline-desc {
+    font-size: clamp(0.82rem, 2.8vw, 0.92rem);
+    line-height: 1.5;
+    text-align: center;
+    max-width: 380px;
+  }
+
+  /* SECTION 2: PLATED STAGE (TEXT SITS DIRECTLY UNDER THE PLATE) */
+  .burger-plated__stage {
+    align-items: stretch;
+    justify-content: flex-start;
+    padding-top: 0;
+    padding-bottom: clamp(14px, 2.5vh, 24px);
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+  }
+
+  .burger-plated__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    min-height: 100svh;
+    padding: 0 clamp(16px, 4vw, 24px);
+    gap: 0;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  /* Reserved 3D Space: Plate sits around ~42vh */
+  .burger-plated__plate-placeholder {
+    order: 1;
+    width: 100%;
+    height: 42vh;
+    min-height: 42vh;
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  /* Story Text sits directly UNDER the plate on the dark table surface */
+  .burger-plated__text-col {
+    order: 2;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    margin-top: clamp(8px, 1.5vh, 16px);
+    padding-top: 0;
+    padding-bottom: clamp(16px, 3vh, 28px);
+    z-index: 6;
+    pointer-events: auto;
+  }
+
+  .burger-plated__title {
+    margin: 0 0 clamp(4px, 1vh, 8px) 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .burger-plated__title-sub {
+    font-size: clamp(0.68rem, 2.3vw, 0.78rem);
+    letter-spacing: 0.18em;
+    margin-bottom: 3px;
+  }
+
+  .burger-plated__title-main {
+    font-size: clamp(1.3rem, 4.8vw, 1.7rem);
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    text-align: center;
+  }
+
+  .burger-plated__desc {
+    font-size: clamp(0.78rem, 2.7vw, 0.88rem);
+    line-height: 1.46;
+    text-align: center;
+    max-width: 420px;
+    margin: 0 0 10px 0;
+  }
+
+  .burger-plated__highlights {
+    justify-content: center;
+    gap: 5px 8px;
+    margin-bottom: 10px;
+  }
+
+  .burger-plated__highlight-pill {
+    padding: 3.5px 10px;
+    font-size: 0.67rem;
+  }
+
+  .burger-plated__closing {
+    font-size: clamp(0.86rem, 3.1vw, 1.02rem);
+    text-align: center;
+  }
+
+  .burger-plated__table-light-pool {
+    left: 50%;
+    bottom: auto;
+    top: 42%;
+    transform: translate(-50%, -50%);
+    width: clamp(250px, 68vw, 360px);
+    height: clamp(85px, 12vh, 130px);
+  }
+}
+

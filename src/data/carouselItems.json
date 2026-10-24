@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "name": "Signature Cheeseburger",
+    "img": "images/signature-cheeseburger.webp"
+  },
+  {
+    "id": 2,
+    "name": "Crispy Chicken Wings",
+    "img": "images/crispy-chicken-wings.webp"
+  },
+  {
+    "id": 3,
+    "name": "Garlic Butter Shrimp",
+    "img": "images/garlic-butter-shrimp.webp"
+  },
+  {
+    "id": 4,
+    "name": "Shoestring Fries",
+    "img": "images/shoestring-fries.webp"
+  },
+  {
+    "id": 5,
+    "name": "Cornmeal Catfish",
+    "img": "images/cornmeal-catfish.webp"
+  },
+  {
+    "id": 6,
+    "name": "Shrimp & Fries Basket",
+    "img": "images/shrimp-fries-basket.webp"
+  },
+  {
+    "id": 7,
+    "name": "Italian Beef Sandwich",
+    "img": "images/italian-beef-sandwich.webp"
+  },
+  {
+    "id": 8,
+    "name": "Chicken Rice Bowl",
+    "img": "images/chicken-rice-bowl.webp"
+  },
+  {
+    "id": 9,
+    "name": "Golden Chicken Bites",
+    "img": "images/golden-chicken-bites.webp"
+  },
+  {
+    "id": 10,
+    "name": "Chocolate Milkshake",
+    "img": "images/chocolate-milkshake.webp"
+  }
+]

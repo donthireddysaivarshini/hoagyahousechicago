@@ -1,0 +1,53 @@
+
+/* Loader animations */
+@keyframes loaderLogoFloat {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-5px) scale(1.018); }
+}
+
+@keyframes fruitLoaderPanelSweep {
+  0% {
+    transform: translate3d(0, 100%, 0);
+    animation-timing-function: var(--ease-don-expo);
+  }
+  50% {
+    transform: translate3d(0, -100%, 0);
+    animation-timing-function: var(--ease-don-expo);
+  }
+  100% {
+    transform: translate3d(0, -205%, 0);
+  }
+}
+
+@keyframes fruitLoaderLineSweep {
+  0% {
+    left: -100vw;
+    opacity: 0;
+    animation-timing-function: var(--ease-don-power);
+  }
+  15% {
+    opacity: 1;
+  }
+  50% {
+    left: 0;
+    opacity: 1;
+    animation-timing-function: linear;
+  }
+  100% {
+    left: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fruitLoaderContentHide {
+  0% { opacity: 1; }
+  49% { opacity: 1; }
+  50% { opacity: 0; visibility: hidden; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+/* Scroll hint bounce */
+@keyframes hintBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}

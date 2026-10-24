@@ -1,0 +1,50 @@
+[
+  {
+    "id": "all",
+    "name": "All Products",
+    "icon": "products/Hoagy House Cheesesteak Feast.webp",
+    "count": 85
+  },
+  {
+    "id": "sandwiches",
+    "name": "Hot Sandwiches",
+    "icon": "products/Hoagy House Cheesesteak Feast.webp",
+    "count": 18
+  },
+  {
+    "id": "burgers",
+    "name": "Burgers",
+    "icon": "images/signature-cheeseburger.webp",
+    "count": 7
+  },
+  {
+    "id": "chicken",
+    "name": "Chicken & Wings",
+    "icon": "images/crispy-chicken-wings.webp",
+    "count": 10
+  },
+  {
+    "id": "fish",
+    "name": "Fish & Seafood",
+    "icon": "images/cornmeal-catfish.webp",
+    "count": 13
+  },
+  {
+    "id": "bowls-salads",
+    "name": "Rice Bowls & Salads",
+    "icon": "images/chicken-rice-bowl.webp",
+    "count": 6
+  },
+  {
+    "id": "sides-extras",
+    "name": "Sides & Extras",
+    "icon": "products/Hoagy House Loaded Cheese Fries.webp",
+    "count": 20
+  },
+  {
+    "id": "beverages",
+    "name": "Beverages & Shakes",
+    "icon": "images/chocolate-milkshake.webp",
+    "count": 11
+  }
+]

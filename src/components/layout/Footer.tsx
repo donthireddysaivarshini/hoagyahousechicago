@@ -103,17 +103,6 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Horizontal Navigation Strip */}
-        <nav className="luxury-footer__nav-strip" aria-label="Footer navigation">
-          <a href="#burgerHeroSection" className="luxury-footer__nav-link">MENU</a>
-          <a href="#burgerHeroSection" className="luxury-footer__nav-link">SMASH BURGERS</a>
-          <a href="#burgerHeroSection" className="luxury-footer__nav-link">HOAGIES</a>
-          <a href="#burgerHeroSection" className="luxury-footer__nav-link">PHILLY STEAKS</a>
-          <a href="#platedSection" className="luxury-footer__nav-link">ABOUT US</a>
-          <a href="#platedSection" className="luxury-footer__nav-link">HERITAGE</a>
-          <a href="#siteFooter" className="luxury-footer__nav-link">CATERING</a>
-          <a href="#siteFooter" className="luxury-footer__nav-link">LOCATIONS</a>
-        </nav>
 
         {/* Bottom Legal / Copyright Row */}
         <div className="luxury-footer__bottom-row">

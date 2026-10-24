@@ -1625,31 +1625,6 @@ svg {
   color: #888888;
 }
 
-/* HORIZONTAL NAVIGATION STRIP */
-.luxury-footer__nav-strip {
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 22px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.luxury-footer__nav-link {
-  font-family: var(--font-sans);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #f0e6dc;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.luxury-footer__nav-link:hover {
-  color: #f39200;
-}
 
 /* BOTTOM COPYRIGHT ROW */
 .luxury-footer__bottom-row {
@@ -1672,17 +1647,22 @@ svg {
 
 @media (max-width: 768px) {
   .luxury-footer__hero-wordmark {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(10px, 2.5vw, 18px);
+    padding: 24px 0 32px;
+  }
+  .luxury-footer__brand-bars {
+    gap: clamp(4px, 1.2vw, 8px);
+  }
+  .luxury-footer__bar {
+    width: clamp(6px, 1.6vw, 10px);
+    height: clamp(30px, 7.5vw, 44px);
+    border-radius: 2px;
   }
   .luxury-footer__wordmark-title {
-    font-size: clamp(2.8rem, 12.5vw, 4.5rem);
-    white-space: normal;
-  }
-  .luxury-footer__nav-strip {
-    justify-content: flex-start;
-    gap: 12px 20px;
+    font-size: clamp(1.9rem, 9.2vw, 3.8rem);
+    white-space: nowrap;
   }
   .luxury-footer__bottom-row {
     flex-direction: column;

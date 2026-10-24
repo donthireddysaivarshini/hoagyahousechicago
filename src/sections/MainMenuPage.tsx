@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import categories from "../data/categories.json";
 import allItems from "../data/items.json";
 import { useCart } from "../context/CartContext";
@@ -14,6 +14,9 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
   initialCategory = "all",
 }) => {
   const [activeCategory, setActiveCategory] = useState<string>(initialCategory);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(12);
+  const contentTopRef = useRef<HTMLDivElement>(null);
   const { addToCart, items: cartItems, updateQuantity } = useCart();
 
   useEffect(() => {
@@ -22,13 +25,69 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
     }
   }, [initialCategory]);
 
+  // Reset to page 1 whenever category changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory]);
+
   // Filter items by category
   const filteredItems = useMemo(() => {
     if (activeCategory === "all") {
       return allItems;
     }
     return allItems.filter((it) => it.category === activeCategory);
-  }, [allItems, activeCategory]);
+  }, [activeCategory]);
+
+  // Dynamic pagination calculations
+  const totalItems = filteredItems.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+
+  const startIndex = (safeCurrentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+
+  const paginatedItems = useMemo(() => {
+    return filteredItems.slice(startIndex, endIndex);
+  }, [filteredItems, startIndex, endIndex]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages || newPage === safeCurrentPage) return;
+    setCurrentPage(newPage);
+    if (contentTopRef.current) {
+      contentTopRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  // Generate intelligent pagination range with ellipsis
+  const paginationRange = useMemo(() => {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    const pages: (number | "ellipsis")[] = [];
+
+    if (safeCurrentPage <= 4) {
+      for (let i = 1; i <= 5; i++) pages.push(i);
+      pages.push("ellipsis");
+      pages.push(totalPages);
+    } else if (safeCurrentPage >= totalPages - 3) {
+      pages.push(1);
+      pages.push("ellipsis");
+      for (let i = totalPages - 4; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      pages.push("ellipsis");
+      pages.push(safeCurrentPage - 1);
+      pages.push(safeCurrentPage);
+      pages.push(safeCurrentPage + 1);
+      pages.push("ellipsis");
+      pages.push(totalPages);
+    }
+
+    return pages;
+  }, [safeCurrentPage, totalPages]);
 
   // Find active category label
   const currentCatObj = categories.find((c) => c.id === activeCategory);
@@ -109,14 +168,16 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
         </aside>
 
         {/* Right Column: Products Display */}
-        <main className="menu-content">
+        <main className="menu-content" ref={contentTopRef}>
           {/* Section Header */}
           <div className="menu-content__header">
             <div>
               <h1 className="menu-content__title">{activeTitle}</h1>
             </div>
             <span className="menu-content__counter">
-              {filteredItems.length} {filteredItems.length === 1 ? "item" : "items"}
+              {totalItems > 0 && totalPages > 1
+                ? `Showing ${startIndex + 1}–${endIndex} of ${totalItems} items`
+                : `${totalItems} ${totalItems === 1 ? "item" : "items"}`}
             </span>
           </div>
 
@@ -137,7 +198,7 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
             </div>
           ) : (
             <div className="menu-products-grid">
-              {filteredItems.map((it) => {
+              {paginatedItems.map((it) => {
                 const inCartQty = cartQtyMap.get(it.id) || 0;
                 return (
                   <article key={it.id} className="menu-card">
@@ -231,6 +292,91 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
                 );
               })}
             </div>
+          )}
+
+          {/* Dynamic Pagination Controls */}
+          {totalPages > 1 && (
+            <nav className="menu-pagination" aria-label="Products pagination">
+              <div className="menu-pagination__summary">
+                Showing <strong>{startIndex + 1}–{endIndex}</strong> of <strong>{totalItems}</strong> items
+              </div>
+
+              <div className="menu-pagination__controls">
+                {/* Previous button */}
+                <button
+                  type="button"
+                  className="menu-pagination__btn menu-pagination__btn--nav"
+                  disabled={safeCurrentPage === 1}
+                  onClick={() => handlePageChange(safeCurrentPage - 1)}
+                  aria-label="Previous page"
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                  <span>Prev</span>
+                </button>
+
+                {/* Numbered buttons with ellipsis */}
+                <div className="menu-pagination__pages">
+                  {paginationRange.map((p, idx) => {
+                    if (p === "ellipsis") {
+                      return (
+                        <span key={`ellipsis-${idx}`} className="menu-pagination__ellipsis" aria-hidden="true">
+                          &hellip;
+                        </span>
+                      );
+                    }
+                    const isActive = p === safeCurrentPage;
+                    return (
+                      <button
+                        key={p}
+                        type="button"
+                        className={`menu-pagination__btn menu-pagination__btn--num ${isActive ? "is-active" : ""}`}
+                        onClick={() => handlePageChange(p)}
+                        aria-current={isActive ? "page" : undefined}
+                        aria-label={`Page ${p}`}
+                      >
+                        {p}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Next button */}
+                <button
+                  type="button"
+                  className="menu-pagination__btn menu-pagination__btn--nav"
+                  disabled={safeCurrentPage === totalPages}
+                  onClick={() => handlePageChange(safeCurrentPage + 1)}
+                  aria-label="Next page"
+                >
+                  <span>Next</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Items per page selector */}
+              <div className="menu-pagination__per-page">
+                <span className="menu-pagination__per-page-label">Per page:</span>
+                <div className="menu-pagination__per-page-pills">
+                  {[12, 24, 48].map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      className={`menu-pagination__size-pill ${itemsPerPage === size ? "is-active" : ""}`}
+                      onClick={() => {
+                        setItemsPerPage(size);
+                        setCurrentPage(1);
+                      }}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </nav>
           )}
         </main>
       </div>

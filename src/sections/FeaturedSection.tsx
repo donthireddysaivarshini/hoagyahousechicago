@@ -5,7 +5,8 @@ interface CardParticle {
   id: string;
   type: "img" | "spark";
   src?: string;
-  top: string;
+  top?: string;
+  bottom?: string;
   left?: string;
   right?: string;
   size: string;
@@ -32,10 +33,10 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Hot Sandwiches & Philly Steaks",
     img: "images/italian-beef-sandwich.webp",
     particles: [
-      { id: "p1", type: "img", src: "images/particles/jalapeno.webp", top: "36%", right: "6%", size: "clamp(22px, 2.5vw, 30px)", rotate: 24, floatAnim: "featFloat1", duration: "5.5s", delay: "0s" },
-      { id: "p2", type: "img", src: "images/particles/onion.webp", top: "42%", left: "5%", size: "clamp(20px, 2.2vw, 28px)", rotate: -18, floatAnim: "featFloat2", duration: "6.2s", delay: "0.8s" },
-      { id: "p3", type: "img", src: "images/particles/bacon_shards.webp", top: "72%", right: "8%", size: "clamp(18px, 2vw, 24px)", rotate: 32, floatAnim: "featFloat1", duration: "5s", delay: "1.4s" },
-      { id: "p4", type: "spark", top: "30%", left: "14%", size: "6px", floatAnim: "featSparkPulse", duration: "3s", delay: "0.2s" },
+      { id: "p1", type: "img", src: "images/particles/jalapeno.webp", top: "36%", right: "6%", size: "clamp(32px, 3.5vw, 42px)", rotate: 24, floatAnim: "featFloat1", duration: "5.5s", delay: "0s" },
+      { id: "p2", type: "img", src: "images/particles/onion.webp", top: "42%", left: "5%", size: "clamp(30px, 3.2vw, 40px)", rotate: -18, floatAnim: "featFloat2", duration: "6.2s", delay: "0.8s" },
+      { id: "p3", type: "img", src: "images/particles/bacon_shards.webp", top: "72%", right: "8%", size: "clamp(26px, 2.8vw, 34px)", rotate: 32, floatAnim: "featFloat1", duration: "5s", delay: "1.4s" },
+      { id: "p4", type: "spark", top: "30%", left: "14%", size: "9px", floatAnim: "featSparkPulse", duration: "3s", delay: "0.2s" },
     ],
   },
   {
@@ -45,10 +46,10 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Fresh Smash Burgers",
     img: "images/signature-cheeseburger.webp",
     particles: [
-      { id: "p1", type: "img", src: "images/particles/pickle.webp", top: "35%", left: "6%", size: "clamp(22px, 2.4vw, 30px)", rotate: -15, floatAnim: "featFloat2", duration: "6s", delay: "0.3s" },
-      { id: "p2", type: "img", src: "images/particles/tomato.webp", top: "40%", right: "5%", size: "clamp(22px, 2.4vw, 30px)", rotate: 20, floatAnim: "featFloat1", duration: "5.6s", delay: "0.9s" },
-      { id: "p3", type: "img", src: "images/particles/lettuce.webp", top: "70%", left: "7%", size: "clamp(20px, 2.2vw, 26px)", rotate: -24, floatAnim: "featFloat2", duration: "6.8s", delay: "1.5s" },
-      { id: "p4", type: "spark", top: "31%", right: "12%", size: "7px", floatAnim: "featSparkPulse", duration: "3.2s", delay: "0.5s" },
+      { id: "p1", type: "img", src: "images/particles/pickle.webp", top: "35%", left: "6%", size: "clamp(32px, 3.5vw, 42px)", rotate: -15, floatAnim: "featFloat2", duration: "6s", delay: "0.3s" },
+      { id: "p2", type: "img", src: "images/particles/tomato.webp", top: "40%", right: "5%", size: "clamp(32px, 3.5vw, 42px)", rotate: 20, floatAnim: "featFloat1", duration: "5.6s", delay: "0.9s" },
+      { id: "p3", type: "img", src: "images/particles/lettuce.webp", top: "70%", left: "7%", size: "clamp(28px, 3vw, 38px)", rotate: -24, floatAnim: "featFloat2", duration: "6.8s", delay: "1.5s" },
+      { id: "p4", type: "spark", top: "31%", right: "12%", size: "10px", floatAnim: "featSparkPulse", duration: "3.2s", delay: "0.5s" },
     ],
   },
   {
@@ -58,10 +59,10 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Crispy Fried Chicken",
     img: "images/crispy-chicken-wings.webp",
     particles: [
-      { id: "p1", type: "img", src: "images/particles/bacon_shards.webp", top: "35%", right: "7%", size: "clamp(20px, 2.3vw, 28px)", rotate: 30, floatAnim: "featFloat1", duration: "5.2s", delay: "0.2s" },
-      { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "42%", left: "5%", size: "clamp(22px, 2.4vw, 28px)", rotate: -20, floatAnim: "featFloat2", duration: "6.4s", delay: "0.7s" },
-      { id: "p3", type: "img", src: "images/particles/bacon_shards.webp", top: "72%", left: "9%", size: "clamp(18px, 2vw, 24px)", rotate: -32, floatAnim: "featFloat1", duration: "5.8s", delay: "1.3s" },
-      { id: "p4", type: "spark", top: "33%", left: "12%", size: "6px", floatAnim: "featSparkPulse", duration: "2.8s", delay: "0.4s" },
+      { id: "p1", type: "img", src: "images/particles/bacon_shards.webp", top: "35%", right: "7%", size: "clamp(28px, 3.2vw, 38px)", rotate: 30, floatAnim: "featFloat1", duration: "5.2s", delay: "0.2s" },
+      { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "42%", left: "5%", size: "clamp(32px, 3.5vw, 42px)", rotate: -20, floatAnim: "featFloat2", duration: "6.4s", delay: "0.7s" },
+      { id: "p3", type: "img", src: "images/particles/bacon_shards.webp", top: "72%", left: "9%", size: "clamp(26px, 2.8vw, 34px)", rotate: -32, floatAnim: "featFloat1", duration: "5.8s", delay: "1.3s" },
+      { id: "p4", type: "spark", top: "33%", left: "12%", size: "9px", floatAnim: "featSparkPulse", duration: "2.8s", delay: "0.4s" },
     ],
   },
   {
@@ -71,10 +72,10 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Catfish & Jumbo Shrimp",
     img: "images/shrimp-fries-basket.webp",
     particles: [
-      { id: "p1", type: "img", src: "images/particles/fry.webp", top: "36%", left: "6%", size: "clamp(28px, 3.2vw, 38px)", rotate: -35, floatAnim: "featFloat2", duration: "6.5s", delay: "0.1s" },
-      { id: "p2", type: "img", src: "images/particles/pickle.webp", top: "42%", right: "6%", size: "clamp(20px, 2.3vw, 28px)", rotate: 25, floatAnim: "featFloat1", duration: "5.4s", delay: "0.8s" },
-      { id: "p3", type: "img", src: "images/particles/onion.webp", top: "70%", right: "8%", size: "clamp(20px, 2.2vw, 26px)", rotate: -15, floatAnim: "featFloat2", duration: "6s", delay: "1.4s" },
-      { id: "p4", type: "spark", top: "32%", right: "14%", size: "6px", floatAnim: "featSparkPulse", duration: "3s", delay: "0.6s" },
+      { id: "p1", type: "img", src: "images/particles/fry.webp", top: "36%", left: "6%", size: "clamp(38px, 4.2vw, 52px)", rotate: -35, floatAnim: "featFloat2", duration: "6.5s", delay: "0.1s" },
+      { id: "p2", type: "img", src: "images/particles/pickle.webp", top: "42%", right: "6%", size: "clamp(30px, 3.2vw, 40px)", rotate: 25, floatAnim: "featFloat1", duration: "5.4s", delay: "0.8s" },
+      { id: "p3", type: "img", src: "images/particles/onion.webp", top: "70%", right: "8%", size: "clamp(28px, 3vw, 38px)", rotate: -15, floatAnim: "featFloat2", duration: "6s", delay: "1.4s" },
+      { id: "p4", type: "spark", top: "32%", right: "14%", size: "9px", floatAnim: "featSparkPulse", duration: "3s", delay: "0.6s" },
     ],
   },
   {
@@ -84,10 +85,10 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Flame-Grilled Rice Bowls",
     img: "images/chicken-rice-bowl.webp",
     particles: [
-      { id: "p1", type: "img", src: "images/particles/onion.webp", top: "35%", right: "6%", size: "clamp(22px, 2.4vw, 28px)", rotate: 22, floatAnim: "featFloat1", duration: "5.8s", delay: "0.3s" },
-      { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "42%", left: "5%", size: "clamp(22px, 2.4vw, 28px)", rotate: -22, floatAnim: "featFloat2", duration: "6.2s", delay: "0.9s" },
-      { id: "p3", type: "img", src: "images/particles/tomato.webp", top: "72%", right: "8%", size: "clamp(19px, 2.1vw, 25px)", rotate: 18, floatAnim: "featFloat1", duration: "5.5s", delay: "1.5s" },
-      { id: "p4", type: "spark", top: "31%", left: "14%", size: "6px", floatAnim: "featSparkPulse", duration: "3.4s", delay: "0.4s" },
+      { id: "p1", type: "img", src: "images/particles/onion.webp", top: "35%", right: "6%", size: "clamp(30px, 3.2vw, 40px)", rotate: 22, floatAnim: "featFloat1", duration: "5.8s", delay: "0.3s" },
+      { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "42%", left: "5%", size: "clamp(32px, 3.5vw, 42px)", rotate: -22, floatAnim: "featFloat2", duration: "6.2s", delay: "0.9s" },
+      { id: "p3", type: "img", src: "images/particles/tomato.webp", top: "72%", right: "8%", size: "clamp(28px, 3vw, 38px)", rotate: 18, floatAnim: "featFloat1", duration: "5.5s", delay: "1.5s" },
+      { id: "p4", type: "spark", top: "31%", left: "14%", size: "9px", floatAnim: "featSparkPulse", duration: "3.4s", delay: "0.4s" },
     ],
   },
   {
@@ -97,10 +98,10 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Hot & Crispy Wings",
     img: "images/golden-chicken-bites.webp",
     particles: [
-      { id: "p1", type: "img", src: "images/particles/bacon_shards.webp", top: "34%", left: "6%", size: "clamp(22px, 2.4vw, 28px)", rotate: -26, floatAnim: "featFloat2", duration: "5.6s", delay: "0.2s" },
-      { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "40%", right: "6%", size: "clamp(22px, 2.4vw, 28px)", rotate: 19, floatAnim: "featFloat1", duration: "6.2s", delay: "0.7s" },
-      { id: "p3", type: "img", src: "images/particles/onion.webp", top: "68%", left: "8%", size: "clamp(20px, 2.2vw, 26px)", rotate: 28, floatAnim: "featFloat2", duration: "5.9s", delay: "1.3s" },
-      { id: "p4", type: "spark", top: "30%", right: "12%", size: "7px", floatAnim: "featSparkPulse", duration: "3s", delay: "0.5s" },
+      { id: "p1", type: "img", src: "images/particles/bacon_shards.webp", top: "34%", left: "6%", size: "clamp(30px, 3.2vw, 40px)", rotate: -26, floatAnim: "featFloat2", duration: "5.6s", delay: "0.2s" },
+      { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "40%", right: "6%", size: "clamp(32px, 3.5vw, 42px)", rotate: 19, floatAnim: "featFloat1", duration: "6.2s", delay: "0.7s" },
+      { id: "p3", type: "img", src: "images/particles/onion.webp", top: "68%", left: "8%", size: "clamp(28px, 3vw, 38px)", rotate: 28, floatAnim: "featFloat2", duration: "5.9s", delay: "1.3s" },
+      { id: "p4", type: "spark", top: "30%", right: "12%", size: "10px", floatAnim: "featSparkPulse", duration: "3s", delay: "0.5s" },
     ],
   },
   {
@@ -110,10 +111,10 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Golden Shoestring Fries",
     img: "images/shoestring-fries.webp",
     particles: [
-      { id: "p1", type: "img", src: "images/particles/fry.webp", top: "34%", right: "6%", size: "clamp(30px, 3.4vw, 40px)", rotate: 28, floatAnim: "featFloat1", duration: "6s", delay: "0.1s" },
-      { id: "p2", type: "img", src: "images/particles/bacon_shards.webp", top: "42%", left: "5%", size: "clamp(22px, 2.4vw, 28px)", rotate: -20, floatAnim: "featFloat2", duration: "5.4s", delay: "0.6s" },
-      { id: "p3", type: "img", src: "images/particles/fry.webp", top: "68%", right: "9%", size: "clamp(26px, 3vw, 34px)", rotate: -42, floatAnim: "featFloat1", duration: "6.6s", delay: "1.2s" },
-      { id: "p4", type: "spark", top: "31%", left: "12%", size: "6px", floatAnim: "featSparkPulse", duration: "3.2s", delay: "0.3s" },
+      { id: "p1", type: "img", src: "images/particles/fry.webp", top: "34%", right: "6%", size: "clamp(40px, 4.5vw, 54px)", rotate: 28, floatAnim: "featFloat1", duration: "6s", delay: "0.1s" },
+      { id: "p2", type: "img", src: "images/particles/bacon_shards.webp", top: "42%", left: "5%", size: "clamp(30px, 3.2vw, 40px)", rotate: -20, floatAnim: "featFloat2", duration: "5.4s", delay: "0.6s" },
+      { id: "p3", type: "img", src: "images/particles/fry.webp", top: "68%", right: "9%", size: "clamp(36px, 4vw, 48px)", rotate: -42, floatAnim: "featFloat1", duration: "6.6s", delay: "1.2s" },
+      { id: "p4", type: "spark", top: "31%", left: "12%", size: "9px", floatAnim: "featSparkPulse", duration: "3.2s", delay: "0.3s" },
     ],
   },
   {
@@ -123,11 +124,11 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Hand-Spun Milkshakes",
     img: "images/chocolate-milkshake.webp",
     particles: [
-      { id: "p1", type: "spark", top: "32%", left: "10%", size: "8px", floatAnim: "featSparkPulse", duration: "2.8s", delay: "0s" },
-      { id: "p2", type: "spark", top: "38%", right: "9%", size: "7px", floatAnim: "featSparkPulse", duration: "3.2s", delay: "0.5s" },
-      { id: "p3", type: "spark", top: "54%", left: "7%", size: "9px", floatAnim: "featSparkPulse", duration: "3s", delay: "1.0s" },
-      { id: "p4", type: "spark", top: "68%", right: "10%", size: "6px", floatAnim: "featSparkPulse", duration: "2.6s", delay: "1.5s" },
-      { id: "p5", type: "spark", top: "76%", left: "12%", size: "8px", floatAnim: "featSparkPulse", duration: "3.4s", delay: "0.8s" },
+      { id: "p1", type: "spark", top: "32%", left: "10%", size: "11px", floatAnim: "featSparkPulse", duration: "2.8s", delay: "0s" },
+      { id: "p2", type: "spark", top: "38%", right: "9%", size: "10px", floatAnim: "featSparkPulse", duration: "3.2s", delay: "0.5s" },
+      { id: "p3", type: "spark", top: "54%", left: "7%", size: "12px", floatAnim: "featSparkPulse", duration: "3s", delay: "1.0s" },
+      { id: "p4", type: "spark", top: "68%", right: "10%", size: "9px", floatAnim: "featSparkPulse", duration: "2.6s", delay: "1.5s" },
+      { id: "p5", type: "spark", top: "76%", left: "12%", size: "11px", floatAnim: "featSparkPulse", duration: "3.4s", delay: "0.8s" },
     ],
   },
 ];
@@ -183,12 +184,23 @@ export const FeaturedSection: React.FC<FeaturedSectionProps> = ({ onNavigateToMe
             {/* Floating Ambient Particles Layer (2 to 5 per card) */}
             <div className="feat-poster-card__particles" aria-hidden="true">
               {cat.particles.map((p) => {
-                const style: React.CSSProperties = {
+                const isLeft = Boolean(p.left);
+                const topVal = parseInt(p.top || "50", 10);
+                const isTop = topVal < 50;
+                const slotClasses = `feat-poster-particle-slot ${isLeft ? "feat-slot--left" : "feat-slot--right"} ${isTop ? "feat-slot--top" : "feat-slot--bottom"}`;
+
+                const slotStyle: React.CSSProperties = {
                   top: p.top,
                   left: p.left,
                   right: p.right,
+                  bottom: p.bottom,
                   width: p.size,
                   height: p.size,
+                };
+
+                const particleStyle: React.CSSProperties = {
+                  width: "100%",
+                  height: "100%",
                   animationName: p.floatAnim,
                   animationDuration: p.duration || "5s",
                   animationDelay: p.delay || "0s",
@@ -196,25 +208,23 @@ export const FeaturedSection: React.FC<FeaturedSectionProps> = ({ onNavigateToMe
                   ["--rot" as string]: `${p.rotate || 0}deg`,
                 };
 
-                if (p.type === "spark") {
-                  return (
-                    <span
-                      key={p.id}
-                      className="feat-poster-particle feat-poster-particle--spark"
-                      style={style}
-                    />
-                  );
-                }
-
                 return (
-                  <img
-                    key={p.id}
-                    src={`/${p.src}`}
-                    alt=""
-                    className="feat-poster-particle feat-poster-particle--img"
-                    style={style}
-                    loading="lazy"
-                  />
+                  <div key={p.id} className={slotClasses} style={slotStyle}>
+                    {p.type === "spark" ? (
+                      <span
+                        className="feat-poster-particle feat-poster-particle--spark"
+                        style={particleStyle}
+                      />
+                    ) : (
+                      <img
+                        src={`/${p.src}`}
+                        alt=""
+                        className="feat-poster-particle feat-poster-particle--img"
+                        style={particleStyle}
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
                 );
               })}
             </div>

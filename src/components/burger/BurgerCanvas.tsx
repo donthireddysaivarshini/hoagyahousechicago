@@ -411,6 +411,9 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
         layersRef.current = layers;
         spinGroup.add(model);
         setLoading(false);
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("burger-3d-ready"));
+        }
       },
       undefined,
       (err) => {
@@ -536,12 +539,41 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
       const targetX = -ndcOffset * halfWidthPlated;
       const currentX = startX + (targetX - startX) * flightP;
 
+      const isTablet = !isMobile && container.clientWidth < 1024;
+
+      // Section 1: Hero scale strictly untouched
+      const heroScale = isMobile ? 0.52 : (isTablet ? 0.56 : 0.72);
+
+      // Section 2: Enlarged responsive burger & plate scale for tablet and desktop
+      let platedScale = 0.36; // Mobile unchanged
+      let plateScaleFactor = 0.58; // Mobile unchanged
+      let targetPlateY = 0.38; // Mobile unchanged
+      let targetBaseY = 0.65; // Mobile unchanged
+
+      if (!isMobile) {
+        if (isTablet) {
+          // Tablet (768px - 1023px): gently reduced to sweet-spot size
+          platedScale = 0.55;
+          plateScaleFactor = 0.90;
+          targetPlateY = -0.90;
+          targetBaseY = targetPlateY + 0.38 * (platedScale / 0.54);
+        } else {
+          // Desktop (>= 1024px): tuned to a balanced 0.66 (at 1024px) up to 0.73 (at 1920px)
+          const widthT = Math.min(1.0, Math.max(0, (container.clientWidth - 1024) / (1920 - 1024)));
+          platedScale = 0.66 + widthT * 0.07;
+          plateScaleFactor = platedScale * 1.63;
+          targetPlateY = -0.92 - widthT * 0.03;
+          targetBaseY = targetPlateY + 0.38 * (platedScale / 0.54);
+        }
+      }
+
+      const burgerScale = heroScale * (1 - flightP) + platedScale * flightP;
+
       // Vertical translation:
       // On mobile: Section 1 sits in upper-middle (startY = 0.38)
-      // In Section 2: Burger glides to rest flush on the plate surface (targetBaseY = 0.65 on mobile, -0.50 on desktop)
-      // On tablet/laptop/desktop: 2-column side-by-side layout (startY = 0, targetBaseY = -0.50)
+      // In Section 2: Burger glides to rest flush on the plate surface
+      // On tablet/laptop/desktop: 2-column side-by-side layout (startY = 0)
       const startY = isMobile ? 0.38 : 0;
-      const targetBaseY = isMobile ? 0.65 : -0.50;
       const currentBaseY = startY + (targetBaseY - startY) * flightP;
 
       // Flight parabolic arc & cushioned landing into plate
@@ -557,13 +589,6 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
       const heroRotZ = 0.52 + explodeP * 0.06;
       const platedRotZ = 0.0;
       const currentRotZ = heroRotZ * (1 - flightP) + platedRotZ * flightP;
-
-      // Scale transition:
-      // Balanced, proportional sizing: mobile, tablet, and desktop
-      const isTablet = !isMobile && container.clientWidth < 1024;
-      const heroScale = isMobile ? 0.52 : (isTablet ? 0.56 : 0.72);
-      const platedScale = isMobile ? 0.36 : (isTablet ? 0.44 : 0.54);
-      const burgerScale = heroScale * (1 - flightP) + platedScale * flightP;
 
       const time = Date.now() * 0.0015;
 
@@ -586,9 +611,8 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
         plateGroupRef.current.rotation.x = 0.12;
         const plateAppearance = Math.max(0, Math.min(1, (flightP - 0.18) / 0.60));
         const smoothPlateScale = plateAppearance * plateAppearance * (3 - 2 * plateAppearance);
-        const plateScaleFactor = isMobile ? 0.58 : (isTablet ? 0.72 : 0.88);
         plateGroupRef.current.scale.setScalar(Math.max(0.001, smoothPlateScale * plateScaleFactor));
-        plateGroupRef.current.position.y = (isMobile ? 0.38 : -0.88) + (1 - smoothPlateScale) * -0.20;
+        plateGroupRef.current.position.y = targetPlateY + (1 - smoothPlateScale) * -0.20;
       }
 
       // Dynamic Camera Dolly & Framing (pulls back in Section 2 for spacious dining perspective)

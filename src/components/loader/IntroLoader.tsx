@@ -13,31 +13,44 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
   useEffect(() => {
     document.body.classList.add("is-loading");
 
+    let closed = false;
+    const triggerClose = () => {
+      if (closed) return;
+      closed = true;
+      setProgress(100);
+      setTimeout(() => {
+        setIsClosing(true);
+        setTimeout(() => {
+          document.body.classList.remove("is-loading");
+          setIsDone(true);
+          if (onComplete) onComplete();
+        }, 550);
+      }, 100);
+    };
+
+    // Listen for instant completion when 3D model finishes downloading
+    const handleModelReady = () => {
+      triggerClose();
+    };
+    window.addEventListener("burger-3d-ready", handleModelReady);
+
+    // Natural snappy increment fallback
     const timer = setInterval(() => {
       setProgress((prev) => {
-        // Natural smooth increment
-        const increment = prev < 55 ? Math.floor(Math.random() * 5) + 3 : Math.floor(Math.random() * 4) + 2;
+        const increment = prev < 60 ? Math.floor(Math.random() * 8) + 6 : Math.floor(Math.random() * 6) + 4;
         const next = prev + increment;
         if (next >= 100) {
           clearInterval(timer);
-          // Allow full progress bar to settle gracefully
-          setTimeout(() => {
-            setIsClosing(true);
-            // Smooth shutter duration: 1100ms
-            setTimeout(() => {
-              document.body.classList.remove("is-loading");
-              setIsDone(true);
-              if (onComplete) onComplete();
-            }, 1100);
-          }, 280);
+          triggerClose();
           return 100;
         }
         return next;
       });
-    }, 38);
+    }, 24);
 
     return () => {
       clearInterval(timer);
+      window.removeEventListener("burger-3d-ready", handleModelReady);
       document.body.classList.remove("is-loading");
     };
   }, [onComplete]);
@@ -56,6 +69,8 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
             src={`/${siteData.brand.logoImg}`}
             alt={siteData.brand.name}
             className="fruit-loader__logo-img"
+            loading="eager"
+            decoding="sync"
           />
         </div>
         <div className="fruit-loader__bar-wrap">

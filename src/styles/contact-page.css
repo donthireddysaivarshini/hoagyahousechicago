@@ -22,6 +22,91 @@
   z-index: 1;
 }
 
+/* Floating 3D Ingredient Particles in Background */
+.contact-particles-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.contact-particle {
+  position: absolute;
+  transform-origin: center center;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+}
+
+.contact-particle__inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.contact-particle__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.75))
+          drop-shadow(0 4px 14px rgba(243, 146, 0, 0.35));
+}
+
+.contact-particle--float1 {
+  animation: contactParticleFloat1 ease-in-out infinite;
+}
+
+.contact-particle--float2 {
+  animation: contactParticleFloat2 ease-in-out infinite;
+}
+
+.contact-particle--float3 {
+  animation: contactParticleFloat3 ease-in-out infinite;
+}
+
+@keyframes contactParticleFloat1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(4deg);
+  }
+}
+
+@keyframes contactParticleFloat2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(-5deg);
+  }
+}
+
+@keyframes contactParticleFloat3 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(3deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-particle {
+    opacity: 0.65;
+  }
+}
+
 /* Ambient Top Amber Gold Radial Glow */
 .contact-page__glow {
   position: absolute;

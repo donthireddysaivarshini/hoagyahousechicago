@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import siteData from "../data/siteData.json";
+import ContactParticles from "../components/contact/ContactParticles";
 import "../styles/contact-page.css";
 
 interface ContactPageProps {
@@ -257,7 +258,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({
       {/* Interactive Background Particle Canvas */}
       <canvas ref={canvasRef} className="contact-page__canvas" aria-hidden="true" />
 
-      {/* Top Center Ambient Emerald Halo */}
+      {/* Floating 3D Food Ingredient Particles (Spread across background & reacts to hover) */}
+      <ContactParticles />
+
+      {/* Top Center Ambient Amber Halo */}
       <div className="contact-page__glow" aria-hidden="true" />
 
       {/* Top Left Circuit Accent */}

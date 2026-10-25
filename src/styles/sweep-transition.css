@@ -1,0 +1,130 @@
+/* ==========================================================================
+   HOAGY HOUSE ARCHITECTURAL SHUTTER SWEEP TRANSITION
+   Standalone Cinematic Stage Curtain (Separate from Loading Screen)
+   ========================================================================== */
+
+.shutter-sweep {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10050;
+  pointer-events: none;
+  transform: translate3d(0, 100%, 0);
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23000000' stroke-width='0.75' stroke-opacity='0.18'/%3E%3C/svg%3E"),
+    linear-gradient(165deg, #ffc83b 0%, #f39200 25%, #d17800 55%, #e94e1b 80%, #b8360f 100%);
+  background-size: 60px 60px, cover;
+  border-top: 3px solid #ffe8a3;
+  border-bottom: 3px solid #140802;
+  box-shadow:
+    0 -8px 36px rgba(243, 146, 0, 0.65),
+    0 12px 48px rgba(0, 0, 0, 0.85);
+}
+
+.shutter-sweep.is-active {
+  animation: shutterSweepGlide var(--sweep-duration, 1.35s) cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@keyframes shutterSweepGlide {
+  0% {
+    transform: translate3d(0, 100%, 0);
+  }
+  42% {
+    transform: translate3d(0, 0%, 0);
+  }
+  54% {
+    transform: translate3d(0, 0%, 0);
+  }
+  100% {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* Polished Specular Light Sheen across Shutter Blade */
+.shutter-sweep__sheen {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 250%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: shutterSheenGleam var(--sweep-duration, 1.35s) ease-in-out forwards;
+}
+
+@keyframes shutterSheenGleam {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+/* Debossed Luxury Brand Stamp in Center of Shutter */
+.shutter-sweep__brand {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.shutter-sweep__bars {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.shutter-sweep__bar {
+  display: block;
+  width: 8px;
+  height: 28px;
+  background: #150903;
+  border-radius: 2px;
+  transform: skewX(-14deg);
+  box-shadow: 0 1px 3px rgba(255, 255, 255, 0.25);
+}
+
+.shutter-sweep__bar--accent {
+  background: #2b1103;
+}
+
+.shutter-sweep__title {
+  font-family: var(--font-sans);
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  color: #120702;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.35);
+}
+
+.shutter-sweep__sub {
+  font-family: monospace;
+  font-size: clamp(0.68rem, 1vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: rgba(20, 8, 2, 0.75);
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .shutter-sweep__title {
+    font-size: 1.3rem;
+  }
+}

@@ -1,0 +1,362 @@
+/* ==========================================================================
+   HOAGY HOUSE LUXURY ATELIER INTRO LOADER
+   High-End Agency 3D Spatial Experience (3.5s Duration, 1-100% Precision)
+   ========================================================================== */
+
+.cinema-loader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  overflow: hidden;
+  background: #070504;
+  color: #f5ede4;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: auto;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+/* 1. ATMOSPHERIC BACKDROP & LIGHTING */
+.cinema-loader__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Deep Obsidian Radial Gradient */
+.cinema-loader__bg-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 50%, rgba(243, 146, 0, 0.14) 0%, rgba(233, 78, 27, 0.05) 45%, transparent 75%),
+    radial-gradient(circle 800px at 50% 50%, #150f0a 0%, #0c0806 50%, #050403 100%);
+  z-index: 1;
+}
+
+/* Ambient Subtle Flame Core Glow behind Logo */
+.cinema-loader__core-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(340px, 45vw, 650px);
+  height: clamp(340px, 45vw, 650px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(243, 146, 0, 0.28) 0%, rgba(233, 78, 27, 0.10) 40%, transparent 70%);
+  filter: blur(40px);
+  animation: coreGlowBreathe 3.2s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes coreGlowBreathe {
+  0% {
+    transform: translate(-50%, -50%) scale(0.88);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 0.95;
+  }
+}
+
+/* Ambient Embers Canvas */
+.cinema-loader__embers-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.85;
+}
+
+/* Film Texture & Vignette Overlay */
+.cinema-loader__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.75) 100%);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* 2. 3D SPATIAL PARTICLES LAYER (BURSTING INGREDIENTS) */
+.cinema-loader__particles-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Individual Particle Wrapper */
+.cinema-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  --cur-target-x: var(--target-x);
+  --cur-target-y: var(--target-y);
+  --cur-scale: var(--particle-scale);
+  /* Initial state: clustered at center behind logo */
+  opacity: 0;
+  transform: translate3d(-50%, -50%, -150px) scale(0.08) rotate(calc(var(--target-rot) - 60deg));
+  transition:
+    transform 1.05s cubic-bezier(0.16, 1, 0.3, 1) var(--burst-delay),
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--burst-delay);
+}
+
+/* When burst triggers: shoots outward to target coordinate */
+.cinema-loader.has-burst .cinema-particle {
+  opacity: 1;
+  transform: translate3d(
+    calc(-50% + var(--cur-target-x)),
+    calc(-50% + var(--cur-target-y)),
+    var(--target-z)
+  ) scale(var(--cur-scale)) rotate(var(--target-rot));
+}
+
+/* Continuous Organic Floating Layer */
+.cinema-particle__float {
+  width: var(--particle-size);
+  height: var(--particle-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cinema-particle--float1 .cinema-particle__float {
+  animation: cinemaFloat1 var(--float-speed) ease-in-out infinite alternate;
+}
+
+.cinema-particle--float2 .cinema-particle__float {
+  animation: cinemaFloat2 var(--float-speed) ease-in-out infinite alternate;
+}
+
+.cinema-particle--float3 .cinema-particle__float {
+  animation: cinemaFloat3 var(--float-speed) ease-in-out infinite alternate;
+}
+
+@keyframes cinemaFloat1 {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, -14px, 15px) rotate(4deg); }
+  100% { transform: translate3d(0, 10px, -10px) rotate(-3deg); }
+}
+
+@keyframes cinemaFloat2 {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, 16px, 12px) rotate(-5deg); }
+  100% { transform: translate3d(0, -12px, -8px) rotate(4deg); }
+}
+
+@keyframes cinemaFloat3 {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, -12px, -14px) rotate(3deg); }
+  100% { transform: translate3d(0, 14px, 8px) rotate(-4deg); }
+}
+
+/* Image with Depth-of-Field and Photorealistic Volumetric Shadows */
+.cinema-particle__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  filter:
+    drop-shadow(0 20px 32px rgba(0, 0, 0, 0.85))
+    drop-shadow(0 6px 14px rgba(243, 146, 0, 0.35));
+}
+
+/* Foreground Macro-Blur Particles (adds intense cinematic depth) */
+.cinema-particle--foreground {
+  filter: blur(2.5px);
+  z-index: 12;
+}
+
+.cinema-particle--foreground .cinema-particle__img {
+  opacity: 0.92;
+  filter: drop-shadow(0 26px 40px rgba(0, 0, 0, 0.9));
+}
+
+/* Midground Sharp Hero Particles */
+.cinema-particle--midground {
+  z-index: 6;
+}
+
+/* 3. CENTER HERO EMBLEM & ROTATING APERTURE GAUGE */
+.cinema-loader__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 8;
+  pointer-events: none;
+}
+
+/* Logo Emblem (Clean, No Ring) */
+.cinema-loader__logo-box {
+  width: clamp(230px, 28vw, 390px);
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.88);
+  animation: logoCinemaReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+@keyframes logoCinemaReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(12px);
+    filter: brightness(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: brightness(1);
+  }
+}
+
+.cinema-loader__logo-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter:
+    drop-shadow(0 22px 40px rgba(0, 0, 0, 0.9))
+    drop-shadow(0 4px 18px rgba(243, 146, 0, 0.45));
+  animation: logoCinemaFloat 3.5s ease-in-out 0.8s infinite alternate;
+}
+
+@keyframes logoCinemaFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+/* 4. LUXURY HUD PROGRESS CONSOLE */
+.cinema-loader__console {
+  margin-top: clamp(14px, 2.2vh, 26px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+/* Monospace & Editorial Precision Counter */
+.cinema-loader__counter-lockup {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  font-family: var(--font-sans);
+  color: #ffb834;
+  line-height: 1;
+  text-shadow:
+    0 0 28px rgba(243, 146, 0, 0.7),
+    0 2px 12px rgba(0, 0, 0, 0.95);
+}
+
+.cinema-loader__bracket {
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  font-weight: 300;
+  color: rgba(243, 146, 0, 0.45);
+  font-family: monospace;
+}
+
+.cinema-loader__counter-value {
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: #fff4e0;
+}
+
+.cinema-loader__counter-total {
+  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+  font-weight: 700;
+  color: rgba(243, 146, 0, 0.65);
+  font-family: monospace;
+  margin-left: 2px;
+}
+
+/* Linear Razor-Thin Progress Bar with Glowing Comet Head */
+.cinema-loader__bar-container {
+  width: clamp(220px, 28vw, 360px);
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(243, 146, 0, 0.22);
+  border-radius: 999px;
+  margin-top: 14px;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.85);
+}
+
+.cinema-loader__bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #e94e1b 0%, #f39200 60%, #ffb834 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 16px rgba(243, 146, 0, 0.9);
+  transition: width 0.06s linear;
+}
+
+/* Comet Head on Progress Tip */
+.cinema-loader__bar-comet {
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fff6e0;
+  box-shadow: 0 0 12px #ffb834, 0 0 24px #f39200;
+}
+
+/* Responsive Overrides for Mobile Portrait Viewports */
+@media (max-width: 768px) {
+  .cinema-particle {
+    --cur-target-x: var(--mobile-target-x, var(--target-x));
+    --cur-target-y: var(--mobile-target-y, var(--target-y));
+    --cur-scale: var(--mobile-scale, 1.15);
+  }
+  .cinema-particle__float {
+    width: clamp(72px, 19vw, 102px) !important;
+    height: clamp(72px, 19vw, 102px) !important;
+  }
+  .cinema-particle--foreground .cinema-particle__float {
+    width: clamp(92px, 25vw, 130px) !important;
+    height: clamp(92px, 25vw, 130px) !important;
+  }
+  .cinema-particle--foreground {
+    filter: blur(2px);
+  }
+  .cinema-loader__logo-box {
+    width: clamp(210px, 64vw, 300px);
+  }
+  .cinema-loader__bar-container {
+    width: clamp(200px, 62vw, 290px);
+  }
+}
+

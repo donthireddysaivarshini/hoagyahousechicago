@@ -7,7 +7,8 @@ interface FullScreenNavMenuProps {
   onClose: () => void;
   onNavigateHome: () => void;
   onNavigateMenu: () => void;
-  currentView?: "home" | "menu";
+  onNavigateContact: () => void;
+  currentView?: "home" | "menu" | "contact";
 }
 
 export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
@@ -15,6 +16,7 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
   onClose,
   onNavigateHome,
   onNavigateMenu,
+  onNavigateContact,
   currentView = "home",
 }) => {
   const { totalCount, setIsCartOpen, showToast } = useCart();
@@ -62,6 +64,16 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
     },
     {
       num: "03",
+      id: "contact",
+      label: "CONTACT US",
+      onClick: () => {
+        onClose();
+        onNavigateContact();
+      },
+      isActive: currentView === "contact",
+    },
+    {
+      num: "04",
       id: "cart",
       label: "CART",
       badge: totalCount > 0 ? String(totalCount) : undefined,
@@ -72,7 +84,7 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
       isActive: false,
     },
     {
-      num: "04",
+      num: "05",
       id: "orders",
       label: "MY ORDERS",
       onClick: () => {
@@ -82,7 +94,7 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
       isActive: false,
     },
     {
-      num: "05",
+      num: "06",
       id: "payments",
       label: "PAYMENT HISTORY",
       onClick: () => {
@@ -92,7 +104,7 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
       isActive: false,
     },
     {
-      num: "06",
+      num: "07",
       id: "login",
       label: "LOGIN",
       onClick: () => {

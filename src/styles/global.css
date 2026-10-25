@@ -24,6 +24,24 @@ html {
   scrollbar-color: rgba(255, 255, 255, 0.22) #090605;
 }
 
+/* Lenis Smooth Scroll Engine Support */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 /* Global Slim Dark Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -299,8 +317,61 @@ svg {
   transform: translateY(-1px);
 }
 
+.site-header__nav-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .site-header__menu-btn:hover::after,
 .site-header__menu-btn.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Header Text Button (Contact) */
+.site-header__contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: rgba(247, 243, 238, 0.78);
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: color 0.22s ease, text-shadow 0.22s ease, transform 0.22s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.site-header__contact-btn::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: #f39200;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-header__contact-btn:hover {
+  background: transparent;
+  color: #f39200;
+  text-shadow: 0 0 14px rgba(243, 146, 0, 0.55);
+  transform: translateY(-1px);
+}
+
+.site-header__contact-btn:hover::after,
+.site-header__contact-btn.is-active::after {
   transform: scaleX(1);
 }
 

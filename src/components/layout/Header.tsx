@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { useLenis } from "@studio-freight/react-lenis";
 import siteData from "../../data/siteData.json";
 import { useCart } from "../../context/CartContext";
 import FullScreenNavMenu from "./FullScreenNavMenu";
 
 interface HeaderProps {
-  currentView?: "home" | "menu";
+  currentView?: "home" | "menu" | "contact";
   onNavigateHome?: () => void;
   onNavigateMenu?: () => void;
+  onNavigateContact?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentView = "home",
   onNavigateHome,
   onNavigateMenu,
+  onNavigateContact,
 }) => {
   const [isSticky, setIsSticky] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { totalCount, setIsCartOpen, subtotal } = useCart();
+  const lenis = useLenis();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,6 +39,8 @@ export const Header: React.FC<HeaderProps> = ({
     e.preventDefault();
     if (onNavigateHome) {
       onNavigateHome();
+    } else if (lenis) {
+      lenis.scrollTo(0, { immediate: false, duration: 0.9 });
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -44,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({
     <>
       <header className={`site-header ${isSticky ? "is-sticky" : ""}`} id="siteHeader">
         <div className="site-header__bar">
-        {/* Left Side: Explore Menu Button on Home, or Back to 3D Button on Menu */}
+        {/* Left Side: Explore Menu on Home, or Home Button on other views */}
         <div className="site-header__left">
           {currentView === "home" ? (
             <button
@@ -56,27 +62,39 @@ export const Header: React.FC<HeaderProps> = ({
               <span>Explore Menu</span>
             </button>
           ) : (
-            <button
-              type="button"
-              className="site-header__back-btn"
-              onClick={onNavigateHome}
-              aria-label="Back to Home"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            <div className="site-header__nav-group">
+              <button
+                type="button"
+                className="site-header__back-btn"
+                onClick={onNavigateHome}
+                aria-label="Back to Home"
               >
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
-              <span className="site-header__back-text">Home</span>
-            </button>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+                <span className="site-header__back-text">Home</span>
+              </button>
+              {currentView === "contact" && (
+                <button
+                  type="button"
+                  className="site-header__menu-btn"
+                  onClick={onNavigateMenu}
+                  aria-label="Explore Menu"
+                >
+                  <span>Explore Menu</span>
+                </button>
+              )}
+            </div>
           )}
         </div>
 
@@ -154,6 +172,7 @@ export const Header: React.FC<HeaderProps> = ({
       onClose={() => setIsNavOpen(false)}
       onNavigateHome={onNavigateHome || (() => {})}
       onNavigateMenu={onNavigateMenu || (() => {})}
+      onNavigateContact={onNavigateContact || (() => {})}
       currentView={currentView}
     />
   </>

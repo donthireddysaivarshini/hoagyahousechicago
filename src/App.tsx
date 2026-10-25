@@ -1,66 +1,134 @@
-import React, { useEffect, useState } from "react";
-import { ReactLenis } from "@studio-freight/react-lenis";
+import React, { useCallback, useEffect, useState } from "react";
+import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
 import IntroLoader from "./components/loader/IntroLoader";
 import Header from "./components/layout/Header";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import BurgerExplodeSection from "./sections/BurgerExplodeSection";
 import FeaturedSection from "./sections/FeaturedSection";
 import MainMenuPage from "./sections/MainMenuPage";
+import ContactPage from "./sections/ContactPage";
 import Footer from "./components/layout/Footer";
 import { CartProvider, useCart } from "./context/CartContext";
 import CartDrawer from "./components/cart/CartDrawer";
 
 const AppContent: React.FC = () => {
-  const [currentView, setCurrentView] = useState<"home" | "menu">(() => {
-    if (typeof window !== "undefined" && window.location.hash === "#menu") {
-      return "menu";
+  const [currentView, setCurrentView] = useState<"home" | "menu" | "contact">(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.hash.startsWith("#contact")) return "contact";
+      if (window.location.hash.startsWith("#menu")) return "menu";
     }
     return "home";
   });
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const { toastMessage } = useCart();
+  const lenis = useLenis();
+
+  // Universal bulletproof scroll-to-top handler
+  const resetScrollToTop = useCallback((immediate = true) => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate, force: true });
+      lenis.resize();
+    }
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: immediate ? ("instant" as ScrollBehavior) : "smooth",
+    });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [lenis]);
 
   useEffect(() => {
     const handleHashChange = () => {
-      if (window.location.hash.startsWith("#menu")) {
+      if (window.location.hash.startsWith("#contact")) {
+        setCurrentView("contact");
+      } else if (window.location.hash.startsWith("#menu")) {
         setCurrentView("menu");
-        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         setCurrentView("home");
       }
+      resetScrollToTop(true);
     };
 
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
+  }, [resetScrollToTop]);
 
-  // Ensure ScrollTrigger never intercepts scrolling on the products page
+  // Synchronize ScrollTrigger and view switches with scroll-to-top
   useEffect(() => {
-    if (currentView === "menu") {
+    // 1. Immediately reset scroll
+    resetScrollToTop(true);
+
+    if (currentView !== "home") {
       ScrollTrigger.getAll().forEach((st) => st.disable());
+      const timer = setTimeout(() => {
+        resetScrollToTop(true);
+        if (lenis) lenis.resize();
+      }, 25);
+      return () => clearTimeout(timer);
     } else {
-      ScrollTrigger.getAll().forEach((st) => st.enable());
-      ScrollTrigger.refresh();
+      resetScrollToTop(true);
+      const timer = setTimeout(() => {
+        resetScrollToTop(true);
+        ScrollTrigger.getAll().forEach((st) => st.enable());
+        ScrollTrigger.refresh();
+        if (lenis) lenis.resize();
+        window.dispatchEvent(new Event("resize"));
+      }, 40);
+      return () => clearTimeout(timer);
     }
-  }, [currentView]);
+  }, [currentView, lenis, resetScrollToTop]);
 
   const navigateToHome = () => {
-    window.location.hash = "";
-    setCurrentView("home");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setTimeout(() => {
-      window.dispatchEvent(new Event("resize"));
-    }, 50);
+    if (window.location.hash !== "") {
+      window.location.hash = "";
+    }
+    if (currentView === "home") {
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: false, duration: 0.9 });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } else {
+      setCurrentView("home");
+      resetScrollToTop(true);
+    }
   };
 
   const navigateToMenu = (category?: string) => {
     if (category) {
       setSelectedCategory(category);
     }
-    window.location.hash = "menu";
-    setCurrentView("menu");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.location.hash !== "#menu") {
+      window.location.hash = "menu";
+    }
+    if (currentView === "menu") {
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: false, duration: 0.8 });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } else {
+      setCurrentView("menu");
+      resetScrollToTop(true);
+    }
+  };
+
+  const navigateToContact = () => {
+    if (window.location.hash !== "#contact") {
+      window.location.hash = "contact";
+    }
+    if (currentView === "contact") {
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: false, duration: 0.8 });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } else {
+      setCurrentView("contact");
+      resetScrollToTop(true);
+    }
   };
 
   return (
@@ -73,6 +141,7 @@ const AppContent: React.FC = () => {
         currentView={currentView}
         onNavigateHome={navigateToHome}
         onNavigateMenu={() => navigateToMenu("all")}
+        onNavigateContact={navigateToContact}
       />
 
       {/* Main Content: Seamless view switching without destructive unmounting */}
@@ -97,10 +166,20 @@ const AppContent: React.FC = () => {
             initialCategory={selectedCategory}
           />
         </div>
+
+        <div
+          id="contactView"
+          style={{ display: currentView === "contact" ? "block" : "none" }}
+        >
+          <ContactPage
+            onBackToHome={navigateToHome}
+            onNavigateMenu={() => navigateToMenu("all")}
+          />
+        </div>
       </main>
 
       {/* Luxury Footer */}
-      <Footer />
+      <Footer onNavigateContact={navigateToContact} />
 
       {/* Slide-out Cart Drawer */}
       <CartDrawer onNavigateToMenu={navigateToMenu} />

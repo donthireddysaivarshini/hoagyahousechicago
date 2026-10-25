@@ -198,44 +198,40 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(14px, 2.8vh, 26px);
+  gap: clamp(10px, 2.1vh, 20px);
 }
 
 .fullscreen-nav__link-item {
   opacity: 0;
   transform: translateX(24px);
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fullscreen-nav.is-open .fullscreen-nav__link-item {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .fullscreen-nav.is-open .fullscreen-nav__link-item:nth-child(1) {
-  opacity: 1;
-  transform: translateX(0);
-  transition-delay: 0.10s;
+  transition-delay: 0.08s;
 }
 .fullscreen-nav.is-open .fullscreen-nav__link-item:nth-child(2) {
-  opacity: 1;
-  transform: translateX(0);
-  transition-delay: 0.15s;
+  transition-delay: 0.12s;
 }
 .fullscreen-nav.is-open .fullscreen-nav__link-item:nth-child(3) {
-  opacity: 1;
-  transform: translateX(0);
-  transition-delay: 0.20s;
+  transition-delay: 0.16s;
 }
 .fullscreen-nav.is-open .fullscreen-nav__link-item:nth-child(4) {
-  opacity: 1;
-  transform: translateX(0);
-  transition-delay: 0.25s;
+  transition-delay: 0.20s;
 }
 .fullscreen-nav.is-open .fullscreen-nav__link-item:nth-child(5) {
-  opacity: 1;
-  transform: translateX(0);
-  transition-delay: 0.30s;
+  transition-delay: 0.24s;
 }
 .fullscreen-nav.is-open .fullscreen-nav__link-item:nth-child(6) {
-  opacity: 1;
-  transform: translateX(0);
-  transition-delay: 0.35s;
+  transition-delay: 0.28s;
+}
+.fullscreen-nav.is-open .fullscreen-nav__link-item:nth-child(7) {
+  transition-delay: 0.32s;
 }
 
 .fullscreen-nav__link-btn {
@@ -269,7 +265,7 @@
 /* Route Text: HOME, EXPLORE MENU, etc. */
 .fullscreen-nav__link-text {
   font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
-  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.7rem, 2.8vw, 2.5rem);
   font-weight: 900;
   letter-spacing: 0.04em;
   text-transform: uppercase;

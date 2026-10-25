@@ -134,7 +134,7 @@ export const BurgerExplodeSection: React.FC<BurgerExplodeSectionProps> = ({ isAc
 
       {/* Full-bleed 3D Canvas Layer */}
       <div className="burger-canvas-stage">
-        <BurgerCanvas progress={scrollProgress} />
+        <BurgerCanvas progress={scrollProgress} isActive={isActive} />
       </div>
 
       {/* =========================================================================

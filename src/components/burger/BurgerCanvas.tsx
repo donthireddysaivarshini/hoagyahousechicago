@@ -15,9 +15,10 @@ interface BurgerLayerInfo {
 
 interface BurgerCanvasProps {
   progress: number; // 0 to 1 scroll explode progress
+  isActive?: boolean;
 }
 
-export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
+export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress, isActive = true }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,17 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
 
   const progressRef = useRef(progress);
   progressRef.current = progress;
+
+  const isActiveRef = useRef(isActive);
+  isActiveRef.current = isActive;
+
+  useEffect(() => {
+    isActiveRef.current = isActive;
+    if (isActive && containerRef.current) {
+      // Immediate resync when returning to active view
+      window.dispatchEvent(new Event("resize"));
+    }
+  }, [isActive]);
 
   const currentProgressRef = useRef(progress);
   const layersRef = useRef<BurgerLayerInfo[]>([]);
@@ -44,8 +56,8 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
     const scene = new THREE.Scene();
     scene.background = null;
 
-    const width = container.clientWidth || 600;
-    const height = container.clientHeight || 600;
+    const width = container.clientWidth || window.innerWidth || 600;
+    const height = container.clientHeight || window.innerHeight || 600;
 
     const camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 100);
     camera.position.set(0, 0.22, 6.2);
@@ -62,7 +74,7 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.18;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
 
     // 2. Studio Lighting (tuned for richer, slightly deeper shades)
     const ambientLight = new THREE.AmbientLight(0xffeedd, 1.25);
@@ -143,6 +155,7 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
     });
     const plateMesh = new THREE.Mesh(plateGeo, plateMat);
     plateMesh.receiveShadow = true;
+    plateMesh.frustumCulled = false;
     plateGroup.add(plateMesh);
 
     // Warm Brass Gold Accent Rim (scaled to compact plate)
@@ -155,6 +168,7 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
     const rimMesh = new THREE.Mesh(rimGeo, rimMat);
     rimMesh.rotation.x = Math.PI / 2;
     rimMesh.position.y = 0.055;
+    rimMesh.frustumCulled = false;
     plateGroup.add(rimMesh);
 
     // Burger Direct Contact Shadow on Plate Bed
@@ -167,6 +181,7 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
     const contactShadowMesh = new THREE.Mesh(contactShadowGeo, contactShadowMat);
     contactShadowMesh.rotation.x = -Math.PI / 2;
     contactShadowMesh.position.y = 0.020;
+    contactShadowMesh.frustumCulled = false;
     plateGroup.add(contactShadowMesh);
 
     // Plate Soft Ambient Contact Shadow Underneath Plate
@@ -179,6 +194,7 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
     const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
     shadowMesh.rotation.x = -Math.PI / 2;
     shadowMesh.position.y = 0.005;
+    shadowMesh.frustumCulled = false;
     plateGroup.add(shadowMesh);
 
     // Dedicated Pendant Lamp Overhead Spotlight for the Plate Bed
@@ -244,6 +260,7 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
 
             mesh.castShadow = true;
             mesh.receiveShadow = true;
+            mesh.frustumCulled = false;
 
             // Apply appetizing PBR materials
             if (mesh.material) {
@@ -455,11 +472,12 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
     container.addEventListener("pointerdown", handlePointerDown);
     window.addEventListener("pointerup", handlePointerUp);
 
-    // 6. Responsive Resize Handler
+    // 6. Responsive Resize Handler & Lifecycle Observers
     const handleResize = () => {
       if (!container || !renderer) return;
-      const newW = container.clientWidth || 600;
-      const newH = container.clientHeight || 600;
+      const newW = container.clientWidth;
+      const newH = container.clientHeight;
+      if (newW <= 0 || newH <= 0) return;
       camera.aspect = newW / newH;
       camera.updateProjectionMatrix();
       renderer.setSize(newW, newH);
@@ -467,10 +485,53 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
 
     window.addEventListener("resize", handleResize);
 
+    // Watch container directly for display: block / visibility toggles
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+            handleResize();
+          }
+        }
+      });
+      resizeObserver.observe(container);
+    }
+
+    // WebGL Context recovery
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      console.warn("WebGL context lost, pausing render.");
+    };
+
+    const handleContextRestored = () => {
+      console.info("WebGL context restored, resuming.");
+      handleResize();
+    };
+
+    canvas.addEventListener("webglcontextlost", handleContextLost);
+    canvas.addEventListener("webglcontextrestored", handleContextRestored);
+
     // 7. 60FPS RAF Render Loop
     let animId = 0;
     const animate = () => {
       animId = requestAnimationFrame(animate);
+
+      // Guard 1: View must be active
+      if (!isActiveRef.current) return;
+
+      // Guard 2: Container must have non-zero dimensions (prevents NaN camera matrix)
+      const clientW = container.clientWidth;
+      const clientH = container.clientHeight;
+      if (clientW <= 0 || clientH <= 0) return;
+
+      // Guard 3: Aspect auto-recovery if resized without window event
+      const currentAspect = clientW / clientH;
+      if (Math.abs(camera.aspect - currentAspect) > 0.005) {
+        camera.aspect = currentAspect;
+        camera.updateProjectionMatrix();
+        renderer.setSize(clientW, clientH, false);
+      }
 
       // Smooth magnetic progress scrubbing
       currentProgressRef.current +=
@@ -529,17 +590,17 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
       // Responsive X offsets: desktop/laptop/tablet vs mobile
       // Tablet (>= 768px) and bigger follow desktop/laptop side-by-side 2-column layout
       // Mobile (<= 768px) follows stacked vertical layout
-      const isMobile = container.clientWidth <= 768;
-      const aspect = container.clientWidth / (container.clientHeight || 1);
+      const isMobile = clientW <= 768;
+      const aspect = currentAspect;
       const halfWidthHero = 6.2 * Math.tan((34 * Math.PI) / 360) * aspect;
       const halfWidthPlated = 6.6 * Math.tan((34 * Math.PI) / 360) * aspect;
-      const ndcOffset = isMobile ? 0 : Math.min(0.50, 740 / container.clientWidth);
+      const ndcOffset = isMobile ? 0 : Math.min(0.50, 740 / Math.max(1, clientW));
 
       const startX = ndcOffset * halfWidthHero;
       const targetX = -ndcOffset * halfWidthPlated;
       const currentX = startX + (targetX - startX) * flightP;
 
-      const isTablet = !isMobile && container.clientWidth < 1024;
+      const isTablet = !isMobile && clientW < 1024;
 
       // Section 1: Hero scale strictly untouched
       const heroScale = isMobile ? 0.52 : (isTablet ? 0.56 : 0.72);
@@ -559,7 +620,7 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
           targetBaseY = targetPlateY + 0.38 * (platedScale / 0.54);
         } else {
           // Desktop (>= 1024px): tuned to a balanced 0.66 (at 1024px) up to 0.73 (at 1920px)
-          const widthT = Math.min(1.0, Math.max(0, (container.clientWidth - 1024) / (1920 - 1024)));
+          const widthT = Math.min(1.0, Math.max(0, (clientW - 1024) / (1920 - 1024)));
           platedScale = 0.66 + widthT * 0.07;
           plateScaleFactor = platedScale * 1.63;
           targetPlateY = -0.92 - widthT * 0.03;
@@ -592,7 +653,13 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
 
       const time = Date.now() * 0.0015;
 
-      if (modelGroupRef.current) {
+      if (
+        modelGroupRef.current &&
+        Number.isFinite(currentX) &&
+        Number.isFinite(currentY) &&
+        Number.isFinite(burgerScale) &&
+        burgerScale > 0
+      ) {
         modelGroupRef.current.position.x = currentX;
         // Hover bobbing smoothly settles to 0 when resting on plate
         const hoverBob = Math.sin(time) * 0.025 * Math.max(0, 1 - flightP * 1.05);
@@ -606,7 +673,7 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
       }
 
       // Plate scale and position: emerges as burger flies in
-      if (plateGroupRef.current) {
+      if (plateGroupRef.current && Number.isFinite(targetX) && Number.isFinite(targetPlateY)) {
         plateGroupRef.current.position.x = targetX;
         plateGroupRef.current.rotation.x = 0.12;
         const plateAppearance = Math.max(0, Math.min(1, (flightP - 0.18) / 0.60));
@@ -625,7 +692,9 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
       const lookAtY = isMobile
         ? 0.12 * (1 - flightP) + 0.10 * flightP
         : -0.08 * flightP - 0.04 * (1 - flightP);
-      camera.lookAt(currentX * 0.16, lookAtY, 0);
+      if (Number.isFinite(currentX) && Number.isFinite(lookAtY)) {
+        camera.lookAt(currentX * 0.16, lookAtY, 0);
+      }
 
       // Section 2: Dark Studio chiaroscuro lighting modulation
       ambientLight.intensity = 1.25 * (1 - flightP * 0.38); // dims gently to ~0.78, preserving rich contrast
@@ -663,6 +732,12 @@ export const BurgerCanvas: React.FC<BurgerCanvasProps> = ({ progress }) => {
       container.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("pointerup", handlePointerUp);
       window.removeEventListener("resize", handleResize);
+
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+      canvas.removeEventListener("webglcontextlost", handleContextLost);
+      canvas.removeEventListener("webglcontextrestored", handleContextRestored);
 
       scene.traverse((obj) => {
         if ((obj as THREE.Mesh).isMesh) {

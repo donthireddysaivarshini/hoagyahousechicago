@@ -251,60 +251,24 @@
   100% { transform: translateY(-8px); }
 }
 
-/* 4. LUXURY HUD PROGRESS CONSOLE */
+/* 4. LUXURY HUD PROGRESS CONSOLE (Directly Under Logo) */
 .cinema-loader__console {
-  margin-top: clamp(14px, 2.2vh, 26px);
+  margin-top: clamp(14px, 2vh, 22px);
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 8px;
   z-index: 10;
-}
-
-/* Monospace & Editorial Precision Counter */
-.cinema-loader__counter-lockup {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 4px;
-  font-family: var(--font-sans);
-  color: #ffb834;
-  line-height: 1;
-  text-shadow:
-    0 0 28px rgba(243, 146, 0, 0.7),
-    0 2px 12px rgba(0, 0, 0, 0.95);
-}
-
-.cinema-loader__bracket {
-  font-size: clamp(1.2rem, 2vw, 1.8rem);
-  font-weight: 300;
-  color: rgba(243, 146, 0, 0.45);
-  font-family: monospace;
-}
-
-.cinema-loader__counter-value {
-  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
-  color: #fff4e0;
-}
-
-.cinema-loader__counter-total {
-  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
-  font-weight: 700;
-  color: rgba(243, 146, 0, 0.65);
-  font-family: monospace;
-  margin-left: 2px;
 }
 
 /* Linear Razor-Thin Progress Bar with Glowing Comet Head */
 .cinema-loader__bar-container {
-  width: clamp(220px, 28vw, 360px);
-  height: 4px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(243, 146, 0, 0.22);
+  width: clamp(200px, 26vw, 320px);
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(243, 146, 0, 0.28);
   border-radius: 999px;
-  margin-top: 14px;
+  margin-top: 0;
   position: relative;
   overflow: visible;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.85);
@@ -317,8 +281,37 @@
   bottom: 0;
   background: linear-gradient(90deg, #e94e1b 0%, #f39200 60%, #ffb834 100%);
   border-radius: 999px;
-  box-shadow: 0 0 16px rgba(243, 146, 0, 0.9);
+  box-shadow: 0 0 14px rgba(243, 146, 0, 0.85);
   transition: width 0.06s linear;
+}
+
+/* Monospace & Editorial Precision Small Counter */
+.cinema-loader__counter-lockup {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  font-family: monospace;
+  color: #ffb834;
+  line-height: 1;
+  margin-top: 2px;
+  text-shadow:
+    0 0 14px rgba(243, 146, 0, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.95);
+}
+
+.cinema-loader__counter-value {
+  font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  color: #fff4e0;
+}
+
+.cinema-loader__counter-symbol {
+  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
+  font-weight: 600;
+  color: rgba(243, 146, 0, 0.85);
 }
 
 /* Comet Head on Progress Tip */

@@ -401,15 +401,9 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
             />
           </div>
 
-        {/* 5. Clean Architectural Progress Console (Counter + Line, No Text Underneath) */}
+        {/* 5. Clean Architectural Progress Console Directly Under Logo */}
         <div className="cinema-loader__console">
-          {/* Percentage Counter: e.g. 72% */}
-          <div className="cinema-loader__counter-lockup">
-            <span className="cinema-loader__counter-value">{progress}</span>
-            <span className="cinema-loader__counter-symbol">%</span>
-          </div>
-
-          {/* Razor-Thin Glowing Comet Bar */}
+          {/* Razor-Thin Glowing Comet Bar Directly Under Logo */}
           <div className="cinema-loader__bar-container">
             <div
               className="cinema-loader__bar-fill"
@@ -417,6 +411,12 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
             >
               <span className="cinema-loader__bar-comet" />
             </div>
+          </div>
+
+          {/* Small Refined Percentage Counter Under Progress Bar */}
+          <div className="cinema-loader__counter-lockup">
+            <span className="cinema-loader__counter-value">{progress}</span>
+            <span className="cinema-loader__counter-symbol">%</span>
           </div>
         </div>
       </div>

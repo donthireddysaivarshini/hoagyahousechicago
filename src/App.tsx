@@ -4,25 +4,71 @@ import IntroLoader from "./components/loader/IntroLoader";
 import SweepTransition from "./components/loader/SweepTransition";
 import Header from "./components/layout/Header";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import BurgerExplodeSection from "./sections/BurgerExplodeSection";
-import FeaturedSection from "./sections/FeaturedSection";
-import MainMenuPage from "./sections/MainMenuPage";
-import ContactPage from "./sections/ContactPage";
+import { HomePage, MenuPage, ContactPage, AuthPage } from "./pages";
+const AdminDashboard = React.lazy(() => import("./pages/admin/AdminDashboard"));
+const AdminLoginPage = React.lazy(() => import("./pages/admin/AdminLoginPage"));
 import Footer from "./components/layout/Footer";
 import { CartProvider, useCart } from "./context/CartContext";
 import CartDrawer from "./components/cart/CartDrawer";
 
-type ViewType = "home" | "menu" | "contact";
+type ViewType = "home" | "menu" | "contact" | "auth" | "admin";
+
+const resolveRouteFromLocation = (): {
+  view: ViewType;
+  authMode?: "login" | "register" | "forgot-password" | "otp";
+} => {
+  if (typeof window === "undefined") return { view: "home" };
+
+  const pathname = window.location.pathname.toLowerCase().replace(/\/+$/, "");
+  const hash = window.location.hash.toLowerCase();
+
+  // Admin routing check: matches /admin, /admin/..., #admin, #/admin
+  if (
+    pathname === "/admin" ||
+    pathname.startsWith("/admin/") ||
+    hash.startsWith("#admin") ||
+    hash.startsWith("#/admin")
+  ) {
+    return { view: "admin" };
+  }
+
+  // Client auth routing checks: matches /register, /login, /auth, /forgot, /otp etc.
+  if (pathname === "/register" || hash.startsWith("#register")) {
+    return { view: "auth", authMode: "register" };
+  }
+  if (pathname === "/forgot" || pathname.startsWith("/forgot") || hash.startsWith("#forgot")) {
+    return { view: "auth", authMode: "forgot-password" };
+  }
+  if (pathname === "/otp" || hash.startsWith("#otp")) {
+    return { view: "auth", authMode: "otp" };
+  }
+  if (
+    pathname === "/auth" ||
+    pathname === "/login" ||
+    hash.startsWith("#auth") ||
+    hash.startsWith("#login")
+  ) {
+    return { view: "auth", authMode: "login" };
+  }
+
+  // Storefront subpages
+  if (pathname === "/contact" || hash.startsWith("#contact")) {
+    return { view: "contact" };
+  }
+  if (pathname === "/menu" || hash.startsWith("#menu")) {
+    return { view: "menu" };
+  }
+
+  return { view: "home" };
+};
 
 const AppContent: React.FC = () => {
-  const [currentView, setCurrentView] = useState<ViewType>(() => {
-    if (typeof window !== "undefined") {
-      const hash = window.location.hash.toLowerCase();
-      if (hash.startsWith("#contact")) return "contact";
-      if (hash.startsWith("#menu")) return "menu";
-    }
-    return "home";
-  });
+  const initialRoute = resolveRouteFromLocation();
+  const [authInitialMode, setAuthInitialMode] = useState<
+    "login" | "register" | "forgot-password" | "otp"
+  >(initialRoute.authMode || "login");
+  const [isAdminAuthed, setIsAdminAuthed] = useState<boolean>(false);
+  const [currentView, setCurrentView] = useState<ViewType>(initialRoute.view);
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [isNavSweeping, setIsNavSweeping] = useState(false);
@@ -33,19 +79,27 @@ const AppContent: React.FC = () => {
 
   // Helper: check if a target is an admin page or route (Strictly bypass transitions for admin)
   const isAdminRoute = (routeOrHash?: string) => {
-    const target = (
-      routeOrHash ||
-      (typeof window !== "undefined"
-        ? window.location.pathname + window.location.hash
-        : "")
-    ).toLowerCase();
-
-    return (
-      target.includes("/admin") ||
-      target.startsWith("#admin") ||
-      target.startsWith("#/admin") ||
-      target === "admin"
-    );
+    if (routeOrHash) {
+      const lower = routeOrHash.toLowerCase();
+      return (
+        lower === "admin" ||
+        lower === "/admin" ||
+        lower.startsWith("/admin/") ||
+        lower.startsWith("#admin") ||
+        lower.startsWith("#/admin")
+      );
+    }
+    if (typeof window !== "undefined") {
+      const pathname = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      return (
+        pathname === "/admin" ||
+        pathname.startsWith("/admin/") ||
+        hash.startsWith("#admin") ||
+        hash.startsWith("#/admin")
+      );
+    }
+    return false;
   };
 
   // Universal bulletproof scroll-to-top handler
@@ -67,7 +121,7 @@ const AppContent: React.FC = () => {
   const executeClientTransition = useCallback(
     (targetView: ViewType, categoryToSet?: string) => {
       // 1. If target or current URL is an admin page, BYPASS transition completely!
-      if (isAdminRoute(targetView) || isAdminRoute(window.location.hash)) {
+      if (isAdminRoute(targetView) || isAdminRoute()) {
         if (categoryToSet) setSelectedCategory(categoryToSet);
         setCurrentView(targetView);
         resetScrollToTop(true);
@@ -113,39 +167,44 @@ const AppContent: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.toLowerCase();
+    const handleLocationChange = () => {
+      const route = resolveRouteFromLocation();
+      if (route.authMode) {
+        setAuthInitialMode(route.authMode);
+      }
 
-      // If admin route, do NOT trigger client-side sweep!
-      if (isAdminRoute(hash)) {
+      // If admin route, navigate directly to admin without client-side sweep!
+      if (route.view === "admin") {
+        setCurrentView("admin");
+        resetScrollToTop(true);
         return;
       }
 
-      let target: ViewType = "home";
-      if (hash.startsWith("#contact")) {
-        target = "contact";
-      } else if (hash.startsWith("#menu")) {
-        target = "menu";
-      }
-
-      if (target !== currentView) {
-        executeClientTransition(target);
+      if (route.view !== currentView) {
+        executeClientTransition(route.view);
       }
     };
 
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [currentView, executeClientTransition]);
+    window.addEventListener("hashchange", handleLocationChange);
+    window.addEventListener("popstate", handleLocationChange);
+    return () => {
+      window.removeEventListener("hashchange", handleLocationChange);
+      window.removeEventListener("popstate", handleLocationChange);
+    };
+  }, [currentView, executeClientTransition, resetScrollToTop]);
 
   // Synchronize ScrollTrigger and view switches with scroll-to-top
   useEffect(() => {
     resetScrollToTop(true);
 
     if (currentView !== "home") {
-      ScrollTrigger.getAll().forEach((st) => st.disable());
+      ScrollTrigger.getAll().forEach((st) => st.disable(false, true));
       const timer = setTimeout(() => {
         resetScrollToTop(true);
-        if (lenis) lenis.resize();
+        if (lenis) {
+          lenis.start();
+          lenis.resize();
+        }
       }, 25);
       return () => clearTimeout(timer);
     } else {
@@ -154,14 +213,62 @@ const AppContent: React.FC = () => {
         resetScrollToTop(true);
         ScrollTrigger.getAll().forEach((st) => st.enable());
         ScrollTrigger.refresh();
-        if (lenis) lenis.resize();
+        if (lenis) {
+          lenis.start();
+          lenis.resize();
+        }
         window.dispatchEvent(new Event("resize"));
       }, 40);
       return () => clearTimeout(timer);
     }
   }, [currentView, lenis, resetScrollToTop]);
 
+  // Synchronize Lenis smooth-scroll ticks with GSAP ScrollTrigger
+  useEffect(() => {
+    if (!lenis) return;
+    const handleScroll = () => {
+      ScrollTrigger.update();
+    };
+    lenis.on("scroll", handleScroll);
+    return () => {
+      lenis.off("scroll", handleScroll);
+    };
+  }, [lenis]);
+
+  // Safety watchdog: ensure document.body and html never stay stuck with overflow: hidden or stopped scroll
+  useEffect(() => {
+    const ensureScrollActive = () => {
+      const hasModalOpen =
+        document.querySelector(".cart-drawer-overlay.is-open") ||
+        document.querySelector(".fullscreen-nav.is-open") ||
+        document.querySelector(".cinema-loader");
+
+      if (!hasModalOpen && !isNavSweeping) {
+        if (document.body.style.overflow === "hidden") {
+          document.body.style.overflow = "";
+        }
+        if (document.body.classList.contains("is-loading")) {
+          document.body.classList.remove("is-loading");
+        }
+        if (lenis?.isStopped) {
+          lenis.start();
+          lenis.resize();
+        }
+      }
+    };
+
+    window.addEventListener("focus", ensureScrollActive);
+    const interval = setInterval(ensureScrollActive, 1000);
+    return () => {
+      window.removeEventListener("focus", ensureScrollActive);
+      clearInterval(interval);
+    };
+  }, [isNavSweeping, lenis]);
+
   const navigateToHome = useCallback(() => {
+    if (window.location.pathname !== "/") {
+      window.history.pushState(null, "", "/");
+    }
     if (window.location.hash !== "") {
       window.location.hash = "";
     }
@@ -170,7 +277,9 @@ const AppContent: React.FC = () => {
 
   const navigateToMenu = useCallback(
     (category?: string) => {
-      if (window.location.hash !== "#menu") {
+      if (window.location.pathname !== "/" && window.location.pathname !== "/menu") {
+        window.history.pushState(null, "", "/menu");
+      } else if (window.location.hash !== "#menu") {
         window.location.hash = "menu";
       }
       executeClientTransition("menu", category || "all");
@@ -179,16 +288,38 @@ const AppContent: React.FC = () => {
   );
 
   const navigateToContact = useCallback(() => {
-    if (window.location.hash !== "#contact") {
+    if (window.location.pathname !== "/" && window.location.pathname !== "/contact") {
+      window.history.pushState(null, "", "/contact");
+    } else if (window.location.hash !== "#contact") {
       window.location.hash = "contact";
     }
     executeClientTransition("contact");
   }, [executeClientTransition]);
 
+  const navigateToAuth = useCallback(
+    (mode: "login" | "register" | "forgot-password" | "otp" = "login") => {
+      setAuthInitialMode(mode);
+      if (window.location.pathname !== "/" && window.location.pathname !== "/auth") {
+        window.history.pushState(null, "", "/auth");
+      } else if (window.location.hash !== "#auth") {
+        window.location.hash = "auth";
+      }
+      executeClientTransition("auth");
+    },
+    [executeClientTransition]
+  );
+
   return (
     <>
-      {/* Brand Intro Loading Screen (Only on initial load) */}
-      <IntroLoader />
+      {/* Brand Intro Loading Screen (Only on initial load of public storefront) */}
+      {currentView !== "admin" && currentView !== "auth" && (
+        <IntroLoader
+          onComplete={() => {
+            ScrollTrigger.refresh();
+            if (lenis) lenis.resize();
+          }}
+        />
+      )}
 
       {/* Smooth Shutter Sweep Transition (Only client-side pages; strictly skips admin) */}
       <SweepTransition
@@ -198,37 +329,37 @@ const AppContent: React.FC = () => {
         onComplete={handleNavComplete}
       />
 
-      {/* Sticky Luxury Header with Menu & Cart Controls */}
-      <Header
-        currentView={currentView}
-        onNavigateHome={navigateToHome}
-        onNavigateMenu={() => navigateToMenu("all")}
-        onNavigateContact={navigateToContact}
-      />
+      {/* Customer Header (Only shown on storefront client views, HIDDEN on admin & login/auth) */}
+      {currentView !== "admin" && currentView !== "auth" && (
+        <Header
+          currentView={currentView}
+          onNavigateHome={navigateToHome}
+          onNavigateMenu={() => navigateToMenu("all")}
+          onNavigateContact={navigateToContact}
+          onNavigateAuth={() => navigateToAuth("login")}
+        />
+      )}
 
-      {/* Main Content: Seamless view switching without destructive unmounting */}
+      {/* Main Content: Scalable Role-Based & Client Pages */}
       <main id="site-main">
-        <div
-          id="homeView"
-          style={{ display: currentView === "home" ? "block" : "none" }}
-        >
-          {/* 1st Section: 3D Exploded Burger Hero */}
-          <BurgerExplodeSection isActive={currentView === "home"} />
+        {/* Home Page (Exploded Burger 3D Hero + Featured Categories Showcase) */}
+        <HomePage
+          isActive={currentView === "home"}
+          onNavigateToMenu={navigateToMenu}
+        />
 
-          {/* 2nd Section: Featured Signature Categories Showcase */}
-          <FeaturedSection onNavigateToMenu={navigateToMenu} />
-        </div>
-
+        {/* Menu Page Catalog */}
         <div
           id="menuView"
           style={{ display: currentView === "menu" ? "block" : "none" }}
         >
-          <MainMenuPage
+          <MenuPage
             onBackToHome={navigateToHome}
             initialCategory={selectedCategory}
           />
         </div>
 
+        {/* Contact Page */}
         <div
           id="contactView"
           style={{ display: currentView === "contact" ? "block" : "none" }}
@@ -238,20 +369,70 @@ const AppContent: React.FC = () => {
             onNavigateMenu={() => navigateToMenu("all")}
           />
         </div>
+
+        {/* Client Auth Page (Login, Register, Forgot Password, OTP) */}
+        <div
+          id="authView"
+          style={{ display: currentView === "auth" ? "block" : "none" }}
+        >
+          <AuthPage
+            initialMode={authInitialMode}
+            onSuccess={navigateToHome}
+            onBackToStore={navigateToHome}
+          />
+        </div>
+
+        {/* Admin Portal Page (Lazy-loaded isolated console guarded by AdminLoginPage) */}
+        {currentView === "admin" && (
+          <div id="adminView">
+            <React.Suspense
+              fallback={
+                <div
+                  style={{
+                    minHeight: "100vh",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "#0c0a09",
+                    color: "#ffb834",
+                    fontFamily: "monospace",
+                    letterSpacing: "0.12em",
+                  }}
+                >
+                  INITIALIZING ADMIN SYSTEM...
+                </div>
+              }
+            >
+              {isAdminAuthed ? (
+                <AdminDashboard
+                  onBackToClient={() => {
+                    setIsAdminAuthed(false);
+                    navigateToHome();
+                  }}
+                />
+              ) : (
+                <AdminLoginPage
+                  onSuccess={() => setIsAdminAuthed(true)}
+                  onBackToStore={navigateToHome}
+                />
+              )}
+            </React.Suspense>
+          </div>
+        )}
       </main>
 
-      {/* Luxury Footer */}
-      <Footer onNavigateContact={navigateToContact} />
-
-      {/* Slide-out Cart Drawer */}
-      <CartDrawer onNavigateToMenu={navigateToMenu} />
-
-      {/* Quick Add Notification */}
-      {toastMessage && (
-        <div className="cart-toast" role="status" aria-live="polite">
-          <span className="cart-toast__dot" />
-          <span>{toastMessage}</span>
-        </div>
+      {/* Customer Footer & Cart Drawer (Only shown on storefront client views, HIDDEN on admin & login/auth) */}
+      {currentView !== "admin" && currentView !== "auth" && (
+        <>
+          <Footer onNavigateContact={navigateToContact} />
+          <CartDrawer onNavigateToMenu={navigateToMenu} />
+          {toastMessage && (
+            <div className="cart-toast" role="status" aria-live="polite">
+              <span className="cart-toast__dot" />
+              <span>{toastMessage}</span>
+            </div>
+          )}
+        </>
       )}
     </>
   );
@@ -259,7 +440,16 @@ const AppContent: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <ReactLenis root>
+    <ReactLenis
+      root
+      options={{
+        lerp: 0.1,
+        duration: 1.2,
+        smoothWheel: true,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 1.4,
+      }}
+    >
       <CartProvider>
         <AppContent />
       </CartProvider>

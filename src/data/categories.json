@@ -14,37 +14,37 @@
   {
     "id": "burgers",
     "name": "Burgers",
-    "icon": "images/signature-cheeseburger.webp",
+    "icon": "images/categories/signature-cheeseburger.webp",
     "count": 7
   },
   {
     "id": "chicken",
     "name": "Chicken & Wings",
-    "icon": "images/crispy-chicken-wings.webp",
+    "icon": "images/categories/crispy-chicken-wings.webp",
     "count": 10
   },
   {
     "id": "fish",
     "name": "Fish & Seafood",
-    "icon": "images/cornmeal-catfish.webp",
+    "icon": "images/categories/cornmeal-catfish.webp",
     "count": 13
   },
   {
     "id": "bowls-salads",
     "name": "Rice Bowls & Salads",
-    "icon": "images/chicken-rice-bowl.webp",
+    "icon": "images/categories/chicken-rice-bowl.webp",
     "count": 6
   },
   {
     "id": "sides-extras",
     "name": "Sides & Extras",
-    "icon": "products/Hoagy House Loaded Cheese Fries.webp",
+    "icon": "images/categories/shoestring-fries.webp",
     "count": 20
   },
   {
     "id": "beverages",
     "name": "Beverages & Shakes",
-    "icon": "images/chocolate-milkshake.webp",
+    "icon": "images/categories/chocolate-milkshake.webp",
     "count": 11
   }
 ]

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import "../styles/featured-section.css";
+import "../../styles/featured-section.css";
 
 interface CardParticle {
   id: string;
@@ -31,7 +31,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     nameLine1: "HOT",
     nameLine2: "SANDWICHES",
     fullName: "Hot Sandwiches & Philly Steaks",
-    img: "images/italian-beef-sandwich.webp",
+    img: "images/categories/italian-beef-sandwich.webp",
     particles: [
       { id: "p1", type: "img", src: "images/particles/jalapeno.webp", top: "36%", right: "6%", size: "clamp(32px, 3.5vw, 42px)", rotate: 24, floatAnim: "featFloat1", duration: "5.5s", delay: "0s" },
       { id: "p2", type: "img", src: "images/particles/onion.webp", top: "42%", left: "5%", size: "clamp(30px, 3.2vw, 40px)", rotate: -18, floatAnim: "featFloat2", duration: "6.2s", delay: "0.8s" },
@@ -44,7 +44,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     nameLine1: "SMASH",
     nameLine2: "BURGERS",
     fullName: "Fresh Smash Burgers",
-    img: "images/signature-cheeseburger.webp",
+    img: "images/categories/signature-cheeseburger.webp",
     particles: [
       { id: "p1", type: "img", src: "images/particles/pickle.webp", top: "35%", left: "6%", size: "clamp(32px, 3.5vw, 42px)", rotate: -15, floatAnim: "featFloat2", duration: "6s", delay: "0.3s" },
       { id: "p2", type: "img", src: "images/particles/tomato.webp", top: "40%", right: "5%", size: "clamp(32px, 3.5vw, 42px)", rotate: 20, floatAnim: "featFloat1", duration: "5.6s", delay: "0.9s" },
@@ -57,7 +57,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     nameLine1: "FRIED",
     nameLine2: "CHICKEN",
     fullName: "Crispy Fried Chicken",
-    img: "images/crispy-chicken-wings.webp",
+    img: "images/categories/crispy-chicken-wings.webp",
     particles: [
       { id: "p1", type: "img", src: "images/particles/bacon_shards.webp", top: "35%", right: "7%", size: "clamp(28px, 3.2vw, 38px)", rotate: 30, floatAnim: "featFloat1", duration: "5.2s", delay: "0.2s" },
       { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "42%", left: "5%", size: "clamp(32px, 3.5vw, 42px)", rotate: -20, floatAnim: "featFloat2", duration: "6.4s", delay: "0.7s" },
@@ -70,7 +70,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     nameLine1: "CRISPY",
     nameLine2: "SEAFOOD",
     fullName: "Catfish & Jumbo Shrimp",
-    img: "images/shrimp-fries-basket.webp",
+    img: "images/categories/shrimp-fries-basket.webp",
     particles: [
       { id: "p1", type: "img", src: "images/particles/fry.webp", top: "36%", left: "6%", size: "clamp(38px, 4.2vw, 52px)", rotate: -35, floatAnim: "featFloat2", duration: "6.5s", delay: "0.1s" },
       { id: "p2", type: "img", src: "images/particles/pickle.webp", top: "42%", right: "6%", size: "clamp(30px, 3.2vw, 40px)", rotate: 25, floatAnim: "featFloat1", duration: "5.4s", delay: "0.8s" },
@@ -83,7 +83,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     nameLine1: "RICE",
     nameLine2: "BOWLS",
     fullName: "Flame-Grilled Rice Bowls",
-    img: "images/chicken-rice-bowl.webp",
+    img: "images/categories/chicken-rice-bowl.webp",
     particles: [
       { id: "p1", type: "img", src: "images/particles/onion.webp", top: "35%", right: "6%", size: "clamp(30px, 3.2vw, 40px)", rotate: 22, floatAnim: "featFloat1", duration: "5.8s", delay: "0.3s" },
       { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "42%", left: "5%", size: "clamp(32px, 3.5vw, 42px)", rotate: -22, floatAnim: "featFloat2", duration: "6.2s", delay: "0.9s" },
@@ -96,7 +96,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     nameLine1: "CRISPY",
     nameLine2: "WINGS",
     fullName: "Hot & Crispy Wings",
-    img: "images/golden-chicken-bites.webp",
+    img: "images/categories/golden-chicken-bites.webp",
     particles: [
       { id: "p1", type: "img", src: "images/particles/bacon_shards.webp", top: "34%", left: "6%", size: "clamp(30px, 3.2vw, 40px)", rotate: -26, floatAnim: "featFloat2", duration: "5.6s", delay: "0.2s" },
       { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "40%", right: "6%", size: "clamp(32px, 3.5vw, 42px)", rotate: 19, floatAnim: "featFloat1", duration: "6.2s", delay: "0.7s" },
@@ -109,7 +109,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     nameLine1: "CRISPY",
     nameLine2: "FRIES",
     fullName: "Golden Shoestring Fries",
-    img: "images/shoestring-fries.webp",
+    img: "images/categories/shoestring-fries.webp",
     particles: [
       { id: "p1", type: "img", src: "images/particles/fry.webp", top: "34%", right: "6%", size: "clamp(40px, 4.5vw, 54px)", rotate: 28, floatAnim: "featFloat1", duration: "6s", delay: "0.1s" },
       { id: "p2", type: "img", src: "images/particles/bacon_shards.webp", top: "42%", left: "5%", size: "clamp(30px, 3.2vw, 40px)", rotate: -20, floatAnim: "featFloat2", duration: "5.4s", delay: "0.6s" },
@@ -122,7 +122,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     nameLine1: "THICK",
     nameLine2: "SHAKES",
     fullName: "Hand-Spun Milkshakes",
-    img: "images/chocolate-milkshake.webp",
+    img: "images/categories/chocolate-milkshake.webp",
     particles: [
       { id: "p1", type: "spark", top: "32%", left: "10%", size: "11px", floatAnim: "featSparkPulse", duration: "2.8s", delay: "0s" },
       { id: "p2", type: "spark", top: "38%", right: "9%", size: "10px", floatAnim: "featSparkPulse", duration: "3.2s", delay: "0.5s" },

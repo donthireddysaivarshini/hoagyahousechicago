@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useLenis } from "@studio-freight/react-lenis";
 import { useCart } from "../../context/CartContext";
 import "../../styles/full-screen-nav.css";
 
@@ -8,7 +9,8 @@ interface FullScreenNavMenuProps {
   onNavigateHome: () => void;
   onNavigateMenu: () => void;
   onNavigateContact: () => void;
-  currentView?: "home" | "menu" | "contact";
+  onNavigateAuth?: () => void;
+  currentView?: "home" | "menu" | "contact" | "auth" | "admin";
 }
 
 export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
@@ -17,9 +19,11 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
   onNavigateHome,
   onNavigateMenu,
   onNavigateContact,
+  onNavigateAuth,
   currentView = "home",
 }) => {
   const { totalCount, setIsCartOpen, showToast } = useCart();
+  const lenis = useLenis();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -30,16 +34,21 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
 
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
       window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
+      lenis?.resize();
     }
 
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
+      lenis?.resize();
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, lenis]);
 
   const navRoutes = [
     {
@@ -106,12 +115,16 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
     {
       num: "07",
       id: "login",
-      label: "LOGIN",
+      label: "LOGIN / ACCOUNT",
       onClick: () => {
         onClose();
-        showToast("Login & Account feature is in active development!");
+        if (onNavigateAuth) {
+          onNavigateAuth();
+        } else {
+          window.location.hash = "auth";
+        }
       },
-      isActive: false,
+      isActive: currentView === "auth",
     },
   ];
 
@@ -119,6 +132,7 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
     <div
       className={`fullscreen-nav ${isOpen ? "is-open" : ""}`}
       id="fullscreenNavMenu"
+      data-lenis-prevent
       role="dialog"
       aria-modal="true"
       aria-label="Navigation Menu"

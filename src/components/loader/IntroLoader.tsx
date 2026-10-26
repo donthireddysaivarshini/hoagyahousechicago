@@ -174,11 +174,11 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
   const [mouseTilt, setMouseTilt] = useState({ x: 0, y: 0 });
   const embersCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  // 1. Precise 3.5s Eased Progress Counter & Logo Burst Choreography
+  // 1. Precise 2.0s Eased Progress Counter & Logo Burst Choreography
   useEffect(() => {
     document.body.classList.add("is-loading");
 
-    const TOTAL_DURATION_MS = 3500; // Exactly 3.5 seconds
+    const TOTAL_DURATION_MS = 2000; // Snappy 2.0s luxury pacing
     const startTime = performance.now();
     let animId = 0;
     let closed = false;
@@ -186,7 +186,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
     // Trigger explosive radial particle burst right after logo reveals
     const burstTimer = setTimeout(() => {
       setHasBurst(true);
-    }, 400);
+    }, 280);
 
     const updateProgress = (now: number) => {
       const elapsed = now - startTime;
@@ -203,20 +203,55 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
         closed = true;
         setProgress(100);
 
-        // Climax hold for 220ms at 100%, then trigger separate sweep transition
+        // Climax hold for 120ms at 100%, then trigger smooth sweep transition
         setTimeout(() => {
           setIsSweeping(true);
-        }, 220);
+        }, 120);
       }
     };
 
     animId = requestAnimationFrame(updateProgress);
 
+    // Fail-safe watchdog: Guarantee loader NEVER freezes or sticks under any circumstance
+    const safetyWatchdog = setTimeout(() => {
+      if (!closed) {
+        closed = true;
+        setProgress(100);
+        setIsSweeping(true);
+      }
+      setTimeout(() => {
+        document.body.classList.remove("is-loading");
+        setIsLoading(false);
+        setIsSweeping(false);
+        setIsDone(true);
+        if (onComplete) onComplete();
+      }, 700);
+    }, 3000);
+
     return () => {
       cancelAnimationFrame(animId);
       clearTimeout(burstTimer);
+      clearTimeout(safetyWatchdog);
       document.body.classList.remove("is-loading");
     };
+  }, [onComplete]);
+
+  const handleCover = React.useCallback(() => {
+    setIsLoading(false);
+    document.body.classList.remove("is-loading");
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("loader-complete"));
+    }
+  }, []);
+
+  const handleComplete = React.useCallback(() => {
+    setIsSweeping(false);
+    setIsDone(true);
+    document.body.classList.remove("is-loading");
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("loader-complete"));
+    }
+    if (onComplete) onComplete();
   }, [onComplete]);
 
   // 2. Interactive 3D Holographic Perspective Tilt
@@ -403,13 +438,20 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
 
         {/* 5. Clean Architectural Progress Console Directly Under Logo */}
         <div className="cinema-loader__console">
-          {/* Razor-Thin Glowing Comet Bar Directly Under Logo */}
+          {/* Celestial Shooting Star Progress Track */}
           <div className="cinema-loader__bar-container">
             <div
               className="cinema-loader__bar-fill"
               style={{ width: `${progress}%` }}
             >
-              <span className="cinema-loader__bar-comet" />
+              {/* Celestial Shooting Star with Pulsing Core, 4-Point Flare, Nebula Halo & Trailing Sparks */}
+              <div className="cinema-loader__shooting-star">
+                <span className="shooting-star__halo" />
+                <span className="shooting-star__flare" />
+                <span className="shooting-star__core" />
+                <span className="shooting-star__spark shooting-star__spark--1" />
+                <span className="shooting-star__spark shooting-star__spark--2" />
+              </div>
             </div>
           </div>
 
@@ -427,14 +469,8 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
       {/* 2. SEPARATE ARCHITECTURAL SHUTTER SWEEP (Independent Overlay Component) */}
       <SweepTransition
         isActive={isSweeping}
-        onCover={() => {
-          setIsLoading(false);
-          document.body.classList.remove("is-loading");
-        }}
-        onComplete={() => {
-          setIsDone(true);
-          if (onComplete) onComplete();
-        }}
+        onCover={handleCover}
+        onComplete={handleComplete}
       />
     </>
   );

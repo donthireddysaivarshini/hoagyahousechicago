@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import siteData from "../data/siteData.json";
-import ContactParticles from "../components/contact/ContactParticles";
-import "../styles/contact-page.css";
+import siteData from "../../data/siteData.json";
+import ContactParticles from "../../components/contact/ContactParticles";
+import "../../styles/contact-page.css";
 
 interface ContactPageProps {
   onBackToHome?: () => void;

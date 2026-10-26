@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../styles/sweep-transition.css";
 
 interface SweepTransitionProps {
@@ -10,25 +10,35 @@ interface SweepTransitionProps {
 
 export const SweepTransition: React.FC<SweepTransitionProps> = ({
   isActive,
-  durationMs = 1350,
+  durationMs = 1250,
   onCover,
   onComplete,
 }) => {
   const [mounted, setMounted] = useState(false);
 
+  // Store latest callbacks in refs to prevent dependency changes from resetting animation timers
+  const onCoverRef = useRef(onCover);
+  onCoverRef.current = onCover;
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive) {
+      setMounted(false);
+      return;
+    }
+
     setMounted(true);
 
     // At 46% of the animation, the shutter is 100% covering the viewport.
     const coverTime = Math.round(durationMs * 0.46);
     const coverTimer = setTimeout(() => {
-      if (onCover) onCover();
+      onCoverRef.current?.();
     }, coverTime);
 
     // When the animation completes, shutter is completely finished and off-screen.
     const completeTimer = setTimeout(() => {
-      if (onComplete) onComplete();
+      onCompleteRef.current?.();
       setMounted(false);
     }, durationMs);
 
@@ -36,7 +46,7 @@ export const SweepTransition: React.FC<SweepTransitionProps> = ({
       clearTimeout(coverTimer);
       clearTimeout(completeTimer);
     };
-  }, [isActive, durationMs, onCover, onComplete]);
+  }, [isActive, durationMs]);
 
   if (!mounted && !isActive) return null;
 

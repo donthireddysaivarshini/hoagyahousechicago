@@ -1,0 +1,375 @@
+/* ==========================================================================
+   HOAGY HOUSE ARTISANAL SPLIT-SCREEN AUTHENTICATION DESIGN
+   Matching website theme & color palette (Obsidian, Amber Gold & Flame Orange):
+   - Background: Cinematic Chicago Gourmet Steak Hoagy & Grill Embers (/images/auth_hoagy_bg.jpg)
+   - Left side: Full-bleed authentic culinary photography view
+   - Right side: Warm frosted dark obsidian glass pane (backdrop-filter: blur(28px))
+   - Minimalist underline inputs with glowing amber focus accents
+   - "Welcome back" & "Please enter your details."
+   - "[ ] Remember me" & "Forgot your password?"
+   - Solid obsidian "Log in" button with warm amber highlight
+   - "Don't have an account? Register here"
+   ========================================================================== */
+
+.auth-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  background: #090706 url("/images/auth_macro_bg.webp") 15% center / cover no-repeat fixed;
+  position: relative;
+  overflow-x: hidden;
+  color: #fff;
+  font-family: var(--font-sans, "Outfit", sans-serif);
+}
+
+/* Left Hero Half: Spacious Culinary Photography View */
+.auth-split-visual {
+  flex: 1.15;
+  display: none;
+  position: relative;
+  padding: clamp(32px, 4vw, 56px);
+}
+
+@media (min-width: 900px) {
+  .auth-split-visual {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.auth-store-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 10, 8, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 200, 59, 0.28);
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: #fff5e0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+}
+
+.auth-store-pill:hover {
+  background: rgba(22, 14, 10, 0.88);
+  border-color: #ffc83b;
+  color: #ffffff;
+  transform: translateX(-3px);
+  box-shadow: 0 6px 24px rgba(243, 146, 0, 0.35);
+}
+
+/* Right Half: Frosted Warm Obsidian Glass Panel */
+.auth-split-pane {
+  flex: 1;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(14, 10, 8, 0.82);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-left: 1px solid rgba(243, 146, 0, 0.18);
+  padding: clamp(40px, 6vw, 72px) clamp(28px, 5vw, 64px);
+  position: relative;
+  z-index: 2;
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.75);
+}
+
+@media (max-width: 899px) {
+  .auth-split-pane {
+    background: rgba(12, 8, 6, 0.88);
+    border-left: none;
+    padding: 48px 24px;
+  }
+}
+
+/* Form Container Card */
+.auth-card-minimal {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  animation: authFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes authFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Headings */
+.auth-title-minimal {
+  font-size: clamp(2.1rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.auth-subtitle-minimal {
+  font-size: 0.96rem;
+  color: rgba(255, 235, 215, 0.7);
+  margin-top: 8px;
+  margin-bottom: 40px;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Minimalist Underline Form Fields */
+.auth-form-minimal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.auth-field-minimal {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 26px;
+  position: relative;
+}
+
+.auth-label-minimal {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #fff4e0;
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+.auth-input-underline-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-input-underline {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+  background: transparent;
+  border-radius: 0;
+  padding: 8px 0 10px 0;
+  color: #ffffff;
+  font-size: 0.96rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-input-underline::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.92rem;
+}
+
+.auth-input-underline:focus {
+  outline: none;
+  border-bottom-color: #ffc83b;
+  box-shadow: 0 1px 0 #ffc83b;
+}
+
+/* Action button inside input (e.g. SHOW/HIDE password) */
+.auth-underline-action {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  background: none;
+  border: none;
+  color: rgba(255, 200, 59, 0.8);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 2px 4px;
+  transition: color 0.15s ease;
+}
+
+.auth-underline-action:hover {
+  color: #ffffff;
+}
+
+/* Options Row: Remember Me & Forgot Password */
+.auth-options-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+  margin-bottom: 36px;
+  font-size: 0.88rem;
+}
+
+.auth-remember-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.88rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.auth-checkbox-minimal {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+  display: grid;
+  place-content: center;
+}
+
+.auth-checkbox-minimal:checked {
+  background: #ffc83b;
+  border-color: #ffc83b;
+}
+
+.auth-checkbox-minimal:checked::after {
+  content: "";
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+.auth-link-minimal {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.88rem;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.auth-link-minimal:hover {
+  color: #ffc83b;
+  text-decoration: underline;
+}
+
+/* Solid Obsidian Action Button with Warm Amber Highlight */
+.auth-btn-solid-black {
+  width: 100%;
+  height: 48px;
+  border: 1px solid rgba(255, 200, 59, 0.22);
+  border-radius: 8px;
+  background: #000000;
+  color: #ffffff;
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-btn-solid-black:hover:not(:disabled) {
+  background: #18120e;
+  border-color: #ffc83b;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(243, 146, 0, 0.32);
+}
+
+.auth-btn-solid-black:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.auth-btn-solid-black:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Switch / Redirect Footer text */
+.auth-switch-text {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.auth-switch-link {
+  background: none;
+  border: none;
+  color: #ffc83b;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 5px;
+  padding: 0;
+  transition: color 0.15s ease;
+}
+
+.auth-switch-link:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+/* OTP 6-Digit Minimalist Underline Grid */
+.auth-otp-minimal-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(8px, 2.5vw, 14px);
+  margin-bottom: 32px;
+}
+
+.auth-otp-underline-box {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.32);
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  border-radius: 0;
+}
+
+.auth-otp-underline-box:focus {
+  outline: none;
+  border-bottom-color: #ffc83b;
+  box-shadow: 0 2px 0 #ffc83b;
+}
+
+/* Error Notice Banner */
+.auth-error-banner {
+  padding: 10px 14px;
+  background: rgba(233, 78, 27, 0.18);
+  border: 1px solid rgba(233, 78, 27, 0.45);
+  border-radius: 6px;
+  color: #ff9170;
+  font-size: 0.84rem;
+  margin-bottom: 20px;
+  text-align: center;
+}

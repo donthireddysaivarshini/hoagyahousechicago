@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import BurgerCanvas from "../components/burger/BurgerCanvas";
-import BurgerParticles from "../components/burger/BurgerParticles";
+import BurgerCanvas from "../../components/burger/BurgerCanvas";
+import BurgerParticles from "../../components/burger/BurgerParticles";
 
 
 
@@ -29,11 +29,10 @@ export const BurgerExplodeSection: React.FC<BurgerExplodeSectionProps> = ({ isAc
         trigger: section,
         pin: true,
         start: "top top",
-        end: () => `+=${Math.round(window.innerHeight * 1.8)}`,
-        anticipatePin: 1,
+        end: () => `+=${Math.round(window.innerHeight * 1.5)}`,
+        anticipatePin: 0,
         refreshPriority: 2,
         scrub: 0.5,
-        fastScrollEnd: true,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const p = Math.max(0, Math.min(1, self.progress));
@@ -42,14 +41,37 @@ export const BurgerExplodeSection: React.FC<BurgerExplodeSectionProps> = ({ isAc
       });
 
       if (!isActive && triggerRef.current) {
-        triggerRef.current.disable();
+        triggerRef.current.disable(false, true);
       }
     };
 
     initScrollTrigger();
     ScrollTrigger.refresh();
 
+    // Auto-refresh when model is ready or intro loader lifts
+    const handleRefresh = () => {
+      if (triggerRef.current) {
+        triggerRef.current.enable();
+      }
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener("loader-complete", handleRefresh);
+    window.addEventListener("burger-3d-ready", handleRefresh);
+    window.addEventListener("resize", handleRefresh);
+
+    // Watchdog refresh intervals to ensure pin bounds adapt after loader finishes
+    const t1 = setTimeout(handleRefresh, 600);
+    const t2 = setTimeout(handleRefresh, 1600);
+    const t3 = setTimeout(handleRefresh, 2800);
+
     return () => {
+      window.removeEventListener("loader-complete", handleRefresh);
+      window.removeEventListener("burger-3d-ready", handleRefresh);
+      window.removeEventListener("resize", handleRefresh);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
       if (triggerRef.current) {
         triggerRef.current.kill(true);
         triggerRef.current = null;
@@ -68,7 +90,7 @@ export const BurgerExplodeSection: React.FC<BurgerExplodeSectionProps> = ({ isAc
       triggerRef.current.enable();
       ScrollTrigger.refresh();
     } else {
-      triggerRef.current.disable();
+      triggerRef.current.disable(false, true);
     }
   }, [isActive]);
 

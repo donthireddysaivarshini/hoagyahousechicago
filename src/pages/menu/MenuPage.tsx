@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLenis } from "@studio-freight/react-lenis";
-import categories from "../data/categories.json";
-import allItems from "../data/items.json";
-import { useCart } from "../context/CartContext";
-import "../styles/main-menu.css";
+import categories from "../../data/categories.json";
+import allItems from "../../data/items.json";
+import { useCart } from "../../context/CartContext";
+import "../../styles/main-menu.css";
 
 interface MainMenuPageProps {
   onBackToHome: () => void;
@@ -394,4 +394,5 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
   );
 };
 
+export const MenuPage = MainMenuPage;
 export default MainMenuPage;

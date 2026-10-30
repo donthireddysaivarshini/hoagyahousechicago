@@ -143,19 +143,20 @@
   bottom: 6px;
   width: 3.5px;
   border-radius: 0 4px 4px 0;
-  background: #2ecc71; /* Vibrant green like reference image */
+  background: linear-gradient(180deg, var(--color-orange, #f39200) 0%, var(--color-flame, #e94e1b) 100%);
+  box-shadow: 0 0 10px rgba(243, 146, 0, 0.6);
   opacity: 0;
   transform: scaleY(0.4);
   transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .menu-category-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #f7f3ee;
+  background: rgba(243, 146, 0, 0.08);
+  color: #fff8ee;
 }
 
 .menu-category-btn.is-active {
-  background: rgba(46, 204, 113, 0.12);
+  background: rgba(243, 146, 0, 0.15);
   color: #ffffff;
 }
 
@@ -180,15 +181,15 @@
 }
 
 .menu-category-btn.is-active .menu-category-btn__icon-wrap {
-  border-color: #2ecc71;
-  box-shadow: 0 0 10px rgba(46, 204, 113, 0.35);
+  border-color: var(--color-gold, #ffb834);
+  box-shadow: 0 0 12px rgba(243, 146, 0, 0.45);
 }
 
 .menu-category-btn__all-badge {
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 800;
-  color: #2ecc71;
+  color: var(--color-gold, #ffb834);
   letter-spacing: 0.04em;
 }
 
@@ -373,22 +374,26 @@
   }
 }
 
-/* ---------- PRODUCT CARD (Reference Images 2 & 3) ---------- */
+/* ---------- PRODUCT CARD (Dark Obsidian & Espresso Luxury) ---------- */
 .menu-card {
-  background: #130f0c;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(28, 19, 13, 0.85) 0%, rgba(16, 11, 7, 0.95) 100%);
+  border: 1px solid rgba(243, 146, 0, 0.2);
+  border-radius: 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
   position: relative;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .menu-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(243, 146, 0, 0.35);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.65), 0 0 16px rgba(243, 146, 0, 0.1);
+  transform: translateY(-6px);
+  border-color: rgba(243, 146, 0, 0.55);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(243, 146, 0, 0.18);
 }
 
 /* Image Container */
@@ -412,7 +417,7 @@
   transform: scale(1.05);
 }
 
-/* Circular '+' Button (Reference Images 2 & 3) */
+/* Circular '+' Button (Artisanal Luxury Amber Accent) */
 .menu-card__add-circle {
   position: absolute;
   top: 10px;
@@ -420,29 +425,33 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #ffffff;
-  border: 1.5px solid #2ecc71; /* Fresh green accent */
-  color: #2ecc71;
+  background: rgba(18, 12, 8, 0.85);
+  border: 1px solid rgba(243, 146, 0, 0.45);
+  color: var(--color-gold, #ffb834);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), 0 0 10px rgba(243, 146, 0, 0.15);
   transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 3;
 }
 
 .menu-card__add-circle:hover {
   transform: scale(1.12);
-  background: #2ecc71;
-  color: #ffffff;
-  box-shadow: 0 6px 18px rgba(46, 204, 113, 0.45);
+  background: linear-gradient(135deg, var(--color-orange, #f39200) 0%, var(--color-flame, #e94e1b) 100%);
+  border-color: var(--color-orange, #f39200);
+  color: #0b0704;
+  box-shadow: 0 6px 20px rgba(243, 146, 0, 0.6);
 }
 
 .menu-card__add-circle.is-in-cart {
-  background: #f39200;
-  border-color: #f39200;
+  background: linear-gradient(135deg, var(--color-orange, #f39200) 0%, var(--color-flame, #e94e1b) 100%);
+  border-color: var(--color-orange, #f39200);
   color: #0b0704;
+  box-shadow: 0 0 14px rgba(243, 146, 0, 0.4);
 }
 
 .menu-card__add-qty {

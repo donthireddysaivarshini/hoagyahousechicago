@@ -4,14 +4,33 @@ import IntroLoader from "./components/loader/IntroLoader";
 import SweepTransition from "./components/loader/SweepTransition";
 import Header from "./components/layout/Header";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { HomePage, MenuPage, ContactPage, AuthPage } from "./pages";
+import {
+  HomePage,
+  MenuPage,
+  ContactPage,
+  AuthPage,
+  CheckoutPage,
+  OrderConfirmationPage,
+  OrdersPage,
+  ProfilePage,
+} from "./pages";
+import type { PlacedOrderData } from "./pages";
 const AdminDashboard = React.lazy(() => import("./pages/admin/AdminDashboard"));
 const AdminLoginPage = React.lazy(() => import("./pages/admin/AdminLoginPage"));
 import Footer from "./components/layout/Footer";
 import { CartProvider, useCart } from "./context/CartContext";
 import CartDrawer from "./components/cart/CartDrawer";
 
-type ViewType = "home" | "menu" | "contact" | "auth" | "admin";
+type ViewType =
+  | "home"
+  | "menu"
+  | "contact"
+  | "auth"
+  | "admin"
+  | "checkout"
+  | "confirmation"
+  | "orders"
+  | "profile";
 
 const resolveRouteFromLocation = (): {
   view: ViewType;
@@ -51,6 +70,20 @@ const resolveRouteFromLocation = (): {
     return { view: "auth", authMode: "login" };
   }
 
+  // Checkout and Customer Portal views
+  if (pathname === "/checkout" || hash.startsWith("#checkout")) {
+    return { view: "checkout" };
+  }
+  if (pathname === "/confirmation" || hash.startsWith("#confirmation")) {
+    return { view: "confirmation" };
+  }
+  if (pathname === "/orders" || hash.startsWith("#orders")) {
+    return { view: "orders" };
+  }
+  if (pathname === "/profile" || hash.startsWith("#profile")) {
+    return { view: "profile" };
+  }
+
   // Storefront subpages
   if (pathname === "/contact" || hash.startsWith("#contact")) {
     return { view: "contact" };
@@ -71,6 +104,7 @@ const AppContent: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewType>(initialRoute.view);
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [currentPlacedOrder, setCurrentPlacedOrder] = useState<PlacedOrderData | null>(null);
   const [isNavSweeping, setIsNavSweeping] = useState(false);
   const pendingNavRef = useRef<(() => void) | null>(null);
 
@@ -309,6 +343,48 @@ const AppContent: React.FC = () => {
     [executeClientTransition]
   );
 
+  const navigateToCheckout = useCallback(() => {
+    if (window.location.pathname !== "/" && window.location.pathname !== "/checkout") {
+      window.history.pushState(null, "", "/checkout");
+    } else if (window.location.hash !== "#checkout") {
+      window.location.hash = "checkout";
+    }
+    executeClientTransition("checkout");
+  }, [executeClientTransition]);
+
+  const navigateToConfirmation = useCallback(
+    (order?: PlacedOrderData) => {
+      if (order) {
+        setCurrentPlacedOrder(order);
+      }
+      if (window.location.pathname !== "/" && window.location.pathname !== "/confirmation") {
+        window.history.pushState(null, "", "/confirmation");
+      } else if (window.location.hash !== "#confirmation") {
+        window.location.hash = "confirmation";
+      }
+      executeClientTransition("confirmation");
+    },
+    [executeClientTransition]
+  );
+
+  const navigateToOrders = useCallback(() => {
+    if (window.location.pathname !== "/" && window.location.pathname !== "/orders") {
+      window.history.pushState(null, "", "/orders");
+    } else if (window.location.hash !== "#orders") {
+      window.location.hash = "orders";
+    }
+    executeClientTransition("orders");
+  }, [executeClientTransition]);
+
+  const navigateToProfile = useCallback(() => {
+    if (window.location.pathname !== "/" && window.location.pathname !== "/profile") {
+      window.history.pushState(null, "", "/profile");
+    } else if (window.location.hash !== "#profile") {
+      window.location.hash = "profile";
+    }
+    executeClientTransition("profile");
+  }, [executeClientTransition]);
+
   return (
     <>
       {/* Brand Intro Loading Screen (Only on initial load of public storefront) */}
@@ -337,6 +413,8 @@ const AppContent: React.FC = () => {
           onNavigateMenu={() => navigateToMenu("all")}
           onNavigateContact={navigateToContact}
           onNavigateAuth={() => navigateToAuth("login")}
+          onNavigateOrders={navigateToOrders}
+          onNavigateProfile={navigateToProfile}
         />
       )}
 
@@ -370,6 +448,53 @@ const AppContent: React.FC = () => {
           />
         </div>
 
+        {/* Checkout Page */}
+        <div
+          id="checkoutView"
+          style={{ display: currentView === "checkout" ? "block" : "none" }}
+        >
+          <CheckoutPage
+            onBackToMenu={() => navigateToMenu("all")}
+            onOrderSuccess={(placedOrder) => navigateToConfirmation(placedOrder)}
+          />
+        </div>
+
+        {/* Order Confirmation Page */}
+        <div
+          id="confirmationView"
+          style={{ display: currentView === "confirmation" ? "block" : "none" }}
+        >
+          <OrderConfirmationPage
+            order={currentPlacedOrder}
+            onNavigateMenu={() => navigateToMenu("all")}
+            onNavigateOrders={navigateToOrders}
+          />
+        </div>
+
+        {/* My Orders Page */}
+        <div
+          id="ordersView"
+          style={{ display: currentView === "orders" ? "block" : "none" }}
+        >
+          <OrdersPage
+            currentOrder={currentPlacedOrder}
+            onNavigateMenu={() => navigateToMenu("all")}
+            onNavigateHome={navigateToHome}
+          />
+        </div>
+
+        {/* Customer Profile Page */}
+        <div
+          id="profileView"
+          style={{ display: currentView === "profile" ? "block" : "none" }}
+        >
+          <ProfilePage
+            onNavigateMenu={() => navigateToMenu("all")}
+            onNavigateOrders={navigateToOrders}
+            onLogout={navigateToHome}
+          />
+        </div>
+
         {/* Client Auth Page (Login, Register, Forgot Password, OTP) */}
         <div
           id="authView"
@@ -377,7 +502,7 @@ const AppContent: React.FC = () => {
         >
           <AuthPage
             initialMode={authInitialMode}
-            onSuccess={navigateToHome}
+            onSuccess={navigateToProfile}
             onBackToStore={navigateToHome}
           />
         </div>
@@ -425,7 +550,10 @@ const AppContent: React.FC = () => {
       {currentView !== "admin" && currentView !== "auth" && (
         <>
           <Footer onNavigateContact={navigateToContact} />
-          <CartDrawer onNavigateToMenu={navigateToMenu} />
+          <CartDrawer
+            onNavigateToMenu={navigateToMenu}
+            onNavigateToCheckout={navigateToCheckout}
+          />
           {toastMessage && (
             <div className="cart-toast" role="status" aria-live="polite">
               <span className="cart-toast__dot" />

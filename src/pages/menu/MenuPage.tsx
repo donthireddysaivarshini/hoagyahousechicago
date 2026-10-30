@@ -3,6 +3,7 @@ import { useLenis } from "@studio-freight/react-lenis";
 import categories from "../../data/categories.json";
 import allItems from "../../data/items.json";
 import { useCart } from "../../context/CartContext";
+import ProductDetailModal, { MenuItemData } from "../../components/menu/ProductDetailModal";
 import "../../styles/main-menu.css";
 
 interface MainMenuPageProps {
@@ -20,6 +21,30 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
   const contentTopRef = useRef<HTMLDivElement>(null);
   const { addToCart, items: cartItems, updateQuantity } = useCart();
   const lenis = useLenis();
+
+  // State for Product Detail Modal
+  const [modalItem, setModalItem] = useState<MenuItemData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenDetail = (it: (typeof allItems)[0]) => {
+    setModalItem(it);
+    setIsModalOpen(true);
+  };
+
+  const handleModalAddToCart = (it: MenuItemData, qty: number, options: string[]) => {
+    for (let i = 0; i < qty; i++) {
+      addToCart({
+        id: it.id,
+        name: it.name,
+        price: it.price,
+        numericPrice: it.numericPrice,
+        details: it.details,
+        img: it.img,
+        category: it.category,
+        selectedOptions: options,
+      });
+    }
+  };
 
   // Scroll smoothly to top of menu catalog
   const scrollMenuToTop = (smooth = true) => {
@@ -212,7 +237,17 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
                 return (
                   <article key={it.id} className="menu-card">
                     {/* Image Area with Circular '+' Button in Top-Right */}
-                    <div className="menu-card__media">
+                    <div
+                      className="menu-card__media"
+                      onClick={() => handleOpenDetail(it)}
+                      style={{ cursor: "pointer" }}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`View details for ${it.name}`}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleOpenDetail(it);
+                      }}
+                    >
                       <img
                         src={`/${it.img}`}
                         alt={it.name}
@@ -223,7 +258,10 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
                       <button
                         type="button"
                         className={`menu-card__add-circle ${inCartQty > 0 ? "is-in-cart" : ""}`}
-                        onClick={() => handleAdd(it)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAdd(it);
+                        }}
                         aria-label={`Add ${it.name} to cart`}
                         title={`Add ${it.name} to cart`}
                       >
@@ -251,14 +289,18 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
                     </div>
 
                     {/* Card Content */}
-                    <div className="menu-card__info">
+                    <div
+                      className="menu-card__info"
+                      onClick={() => handleOpenDetail(it)}
+                      style={{ cursor: "pointer" }}
+                    >
                       <h3 className="menu-card__name">{it.name}</h3>
                       {it.details && (
                         <p className="menu-card__details">{it.details}</p>
                       )}
 
                       {/* Compact Footer Row: Price on Left, Text Button / Stepper on Right */}
-                      <div className="menu-card__footer">
+                      <div className="menu-card__footer" onClick={(e) => e.stopPropagation()}>
                         <span className="menu-card__price">{it.price}</span>
 
                         {inCartQty > 0 ? (
@@ -390,6 +432,14 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
           )}
         </main>
       </div>
+
+      {/* Product Customization & Detail Modal */}
+      <ProductDetailModal
+        item={modalItem}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAddToCart={handleModalAddToCart}
+      />
     </div>
   );
 };

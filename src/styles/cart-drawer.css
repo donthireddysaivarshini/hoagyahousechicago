@@ -27,9 +27,10 @@
   bottom: 0;
   width: 100%;
   max-width: 440px;
-  background: #110d0a;
-  border-left: 1px solid rgba(243, 146, 0, 0.18);
-  box-shadow: -16px 0 60px rgba(0, 0, 0, 0.85);
+  background: #0d0906;
+  background-image: radial-gradient(ellipse 90% 40% at 50% 0%, rgba(243, 146, 0, 0.1), transparent);
+  border-left: 1px solid rgba(243, 146, 0, 0.25);
+  box-shadow: -20px 0 70px rgba(0, 0, 0, 0.9);
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
@@ -48,7 +49,7 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: #15100c;
+  background: #140e0a;
 }
 
 .cart-drawer__title-wrap {
@@ -160,22 +161,27 @@
 .cart-drawer__browse-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 13px 26px;
   border-radius: 999px;
-  background: #f39200;
+  background: linear-gradient(90deg, var(--color-orange, #f39200) 0%, var(--color-flame, #e94e1b) 100%);
   color: #0b0704;
   font-family: var(--font-sans);
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   border: none;
   cursor: pointer;
-  transition: transform 0.25s ease, background 0.25s ease;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(243, 146, 0, 0.4);
 }
 
 .cart-drawer__browse-btn:hover {
-  background: #ffaa1d;
   transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(243, 146, 0, 0.65);
+  filter: brightness(1.08);
 }
 
 /* Item List */
@@ -191,15 +197,16 @@
 .cart-item {
   display: flex;
   gap: 14px;
-  padding: 12px;
+  padding: 14px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: border-color 0.25s ease;
+  background: linear-gradient(180deg, rgba(28, 19, 13, 0.75) 0%, rgba(16, 11, 7, 0.9) 100%);
+  border: 1px solid rgba(243, 146, 0, 0.16);
+  transition: all 0.25s ease;
 }
 
 .cart-item:hover {
-  border-color: rgba(243, 146, 0, 0.2);
+  border-color: rgba(243, 146, 0, 0.45);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 16px rgba(243, 146, 0, 0.12);
 }
 
 .cart-item__img {
@@ -351,27 +358,27 @@
   color: #f39200;
 }
 
-/* ---------- ORDER NOW BUTTON (Reference Image 1) ---------- */
+/* ---------- ORDER NOW / PROCEED TO CHECKOUT BUTTON (Luxury Signature Gold-Flame Gradient) ---------- */
 .cart-order-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   width: 100%;
-  padding: 14px 28px;
-  margin-top: 6px;
+  padding: 15px 28px;
+  margin-top: 8px;
   border-radius: 999px;
-  /* Warm golden-brown palette inspired by reference image */
-  background: #6a461e;
-  border: 1px solid rgba(243, 146, 0, 0.35);
-  color: #0d0905;
+  background: linear-gradient(90deg, var(--color-orange, #f39200) 0%, var(--color-flame, #e94e1b) 100%);
+  border: none;
+  color: #0b0704;
   font-family: var(--font-sans);
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 800;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  box-shadow: 0 4px 18px rgba(106, 70, 30, 0.45);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 22px rgba(243, 146, 0, 0.45);
 }
 
 .cart-order-btn span {
@@ -384,10 +391,10 @@
 }
 
 .cart-order-btn:hover {
-  background: #7d5425;
-  border-color: rgba(243, 146, 0, 0.6);
+  background: linear-gradient(90deg, #ffaa1d 0%, #ff5e28 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 26px rgba(243, 146, 0, 0.35);
+  box-shadow: 0 10px 30px rgba(243, 146, 0, 0.65);
+  filter: brightness(1.08);
 }
 
 .cart-order-btn:hover svg {

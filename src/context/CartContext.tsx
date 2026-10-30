@@ -9,11 +9,12 @@ export interface CartItem {
   img: string;
   category?: string;
   quantity: number;
+  selectedOptions?: string[];
 }
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (item: Omit<CartItem, "quantity">) => void;
+  addToCart: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, qty: number) => void;
   clearCart: () => void;
@@ -58,15 +59,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, 2500);
   };
 
-  const addToCart = (newItem: Omit<CartItem, "quantity">) => {
+  const addToCart = (newItem: Omit<CartItem, "quantity">, addQty: number = 1) => {
     setItems((prev) => {
       const existing = prev.find((it) => it.id === newItem.id);
       if (existing) {
         return prev.map((it) =>
-          it.id === newItem.id ? { ...it, quantity: it.quantity + 1 } : it
+          it.id === newItem.id ? { ...it, quantity: it.quantity + addQty } : it
         );
       }
-      return [...prev, { ...newItem, quantity: 1 }];
+      return [...prev, { ...newItem, quantity: addQty }];
     });
     showToast(`Added ${newItem.name} to cart`);
   };

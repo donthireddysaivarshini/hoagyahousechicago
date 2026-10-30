@@ -5,11 +5,13 @@ import { useCart } from "../../context/CartContext";
 import FullScreenNavMenu from "./FullScreenNavMenu";
 
 interface HeaderProps {
-  currentView?: "home" | "menu" | "contact" | "auth" | "admin";
+  currentView?: string;
   onNavigateHome?: () => void;
   onNavigateMenu?: () => void;
   onNavigateContact?: () => void;
   onNavigateAuth?: () => void;
+  onNavigateOrders?: () => void;
+  onNavigateProfile?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -18,6 +20,8 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigateMenu,
   onNavigateContact,
   onNavigateAuth,
+  onNavigateOrders,
+  onNavigateProfile,
 }) => {
   const [isSticky, setIsSticky] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -176,6 +180,8 @@ export const Header: React.FC<HeaderProps> = ({
       onNavigateMenu={onNavigateMenu || (() => {})}
       onNavigateContact={onNavigateContact || (() => {})}
       onNavigateAuth={onNavigateAuth}
+      onNavigateOrders={onNavigateOrders}
+      onNavigateProfile={onNavigateProfile}
       currentView={currentView}
     />
   </>

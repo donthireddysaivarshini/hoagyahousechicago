@@ -5,9 +5,13 @@ import "../../styles/cart-drawer.css";
 
 interface CartDrawerProps {
   onNavigateToMenu?: () => void;
+  onNavigateToCheckout?: () => void;
 }
 
-export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToMenu }) => {
+export const CartDrawer: React.FC<CartDrawerProps> = ({
+  onNavigateToMenu,
+  onNavigateToCheckout,
+}) => {
   const {
     items,
     isCartOpen,
@@ -59,8 +63,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToMenu }) => {
   };
 
   const handleCheckout = () => {
-    // Open DoorDash / phone order
-    window.open("https://www.doordash.com", "_blank");
+    setIsCartOpen(false);
+    if (onNavigateToCheckout) {
+      onNavigateToCheckout();
+    }
+  };
+
+  const handleContinueShopping = () => {
+    setIsCartOpen(false);
   };
 
   return (
@@ -188,6 +198,25 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToMenu }) => {
                       {it.details && (
                         <span className="cart-item__details">{it.details}</span>
                       )}
+                      {it.selectedOptions && it.selectedOptions.length > 0 && (
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", margin: "4px 0" }}>
+                          {it.selectedOptions.map((opt, i) => (
+                            <span
+                              key={i}
+                              style={{
+                                fontSize: "0.72rem",
+                                background: "rgba(255, 184, 52, 0.1)",
+                                border: "1px solid rgba(255, 184, 52, 0.25)",
+                                color: "#ffb834",
+                                padding: "2px 6px",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              {opt}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                       <div className="cart-item__bottom">
                         <div className="cart-item__qty">
                           <button
@@ -237,14 +266,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToMenu }) => {
                 ${total.toFixed(2)}
               </span>
             </div>
+            <p style={{ fontSize: "0.75rem", color: "#a8a29e", margin: "6px 0 16px", lineHeight: "1.4" }}>
+              * Final total including delivery fee and verified tax is calculated at checkout.
+            </p>
 
-            {/* Reference Image #1 Order Now Button */}
+            {/* Action Buttons: Proceed to Checkout & Continue Shopping */}
             <button
               type="button"
               className="cart-order-btn"
               onClick={handleCheckout}
             >
-              <span>Order Now</span>
+              <span>Proceed to Checkout</span>
               <svg
                 width="18"
                 height="18"
@@ -259,6 +291,26 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToMenu }) => {
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
               </svg>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleContinueShopping}
+              style={{
+                width: "100%",
+                background: "transparent",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                color: "#d6d3d1",
+                padding: "10px",
+                borderRadius: "8px",
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                marginTop: "10px",
+                transition: "all 0.2s ease",
+              }}
+            >
+              ← Continue Browsing Menu
             </button>
 
             <div className="cart-drawer__footer-meta">

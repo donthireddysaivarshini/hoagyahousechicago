@@ -4,3 +4,7 @@ export { ContactPage } from "./contact";
 export { AdminDashboard, AdminLoginPage } from "./admin";
 export { AuthPage, LoginPage, RegisterPage, ForgotPasswordPage, OtpVerificationPage } from "./auth";
 export type { AuthMode } from "./auth";
+export { CheckoutPage, OrderConfirmationPage } from "./checkout";
+export type { PlacedOrderData } from "./checkout";
+export { OrdersPage } from "./orders";
+export { ProfilePage } from "./profile";

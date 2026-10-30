@@ -10,7 +10,9 @@ interface FullScreenNavMenuProps {
   onNavigateMenu: () => void;
   onNavigateContact: () => void;
   onNavigateAuth?: () => void;
-  currentView?: "home" | "menu" | "contact" | "auth" | "admin";
+  onNavigateOrders?: () => void;
+  onNavigateProfile?: () => void;
+  currentView?: string;
 }
 
 export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
@@ -20,9 +22,11 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
   onNavigateMenu,
   onNavigateContact,
   onNavigateAuth,
+  onNavigateOrders,
+  onNavigateProfile,
   currentView = "home",
 }) => {
-  const { totalCount, setIsCartOpen, showToast } = useCart();
+  const { totalCount, setIsCartOpen } = useCart();
   const lenis = useLenis();
 
   useEffect(() => {
@@ -98,19 +102,23 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
       label: "MY ORDERS",
       onClick: () => {
         onClose();
-        showToast("My Orders feature is in active development!");
+        if (onNavigateOrders) {
+          onNavigateOrders();
+        }
       },
-      isActive: false,
+      isActive: currentView === "orders",
     },
     {
       num: "06",
-      id: "payments",
-      label: "PAYMENT HISTORY",
+      id: "profile",
+      label: "MY ACCOUNT / PROFILE",
       onClick: () => {
         onClose();
-        showToast("Payment History feature is in active development!");
+        if (onNavigateProfile) {
+          onNavigateProfile();
+        }
       },
-      isActive: false,
+      isActive: currentView === "profile",
     },
     {
       num: "07",

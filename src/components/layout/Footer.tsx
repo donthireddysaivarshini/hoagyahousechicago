@@ -1,10 +1,21 @@
 import React from "react";
+import { useLenis } from "@studio-freight/react-lenis";
 
 interface FooterProps {
   onNavigateContact?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
+  const lenis = useLenis();
+
+  const handleScrollToTop = () => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: false, duration: 1.0 });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <footer className="luxury-footer" id="siteFooter">
       <div className="luxury-footer__inner">
@@ -135,6 +146,30 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
           <span className="luxury-footer__quality-note">
             100% Turkey &amp; Beef · No Pork · Dine In &amp; Carry Out · DoorDash &amp; Uber Eats
           </span>
+          <button
+            type="button"
+            onClick={handleScrollToTop}
+            className="luxury-footer__scroll-top-btn"
+            style={{
+              background: "none",
+              border: "none",
+              color: "var(--color-gold, #ffb834)",
+              fontFamily: "var(--font-sans)",
+              fontSize: "0.78rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              cursor: "pointer",
+              padding: "4px 8px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              transition: "transform 0.2s ease, color 0.2s ease",
+            }}
+            aria-label="Scroll to top of page"
+          >
+            <span>BACK TO TOP</span>
+            <span aria-hidden="true">↑</span>
+          </button>
         </div>
       </div>
     </footer>

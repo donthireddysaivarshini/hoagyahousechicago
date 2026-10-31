@@ -20,6 +20,7 @@ const AdminLoginPage = React.lazy(() => import("./pages/admin/AdminLoginPage"));
 import Footer from "./components/layout/Footer";
 import { CartProvider, useCart } from "./context/CartContext";
 import CartDrawer from "./components/cart/CartDrawer";
+import ScrollToTopButton from "./components/common/ScrollToTopButton";
 
 type ViewType =
   | "home"
@@ -546,7 +547,7 @@ const AppContent: React.FC = () => {
         )}
       </main>
 
-      {/* Customer Footer & Cart Drawer (Only shown on storefront client views, HIDDEN on admin & login/auth) */}
+      {/* Customer Footer, Cart Drawer & Floating Scroll-To-Top (Only shown on storefront client views, HIDDEN on admin & login/auth) */}
       {currentView !== "admin" && currentView !== "auth" && (
         <>
           <Footer onNavigateContact={navigateToContact} />
@@ -554,6 +555,7 @@ const AppContent: React.FC = () => {
             onNavigateToMenu={navigateToMenu}
             onNavigateToCheckout={navigateToCheckout}
           />
+          <ScrollToTopButton />
           {toastMessage && (
             <div className="cart-toast" role="status" aria-live="polite">
               <span className="cart-toast__dot" />

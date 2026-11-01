@@ -527,37 +527,48 @@
   letter-spacing: -0.02em;
 }
 
-/* Space-Saving Text Button */
+/* Card Add to Cart Button */
 .menu-card__text-btn {
-  background: transparent;
+  background: linear-gradient(135deg, #f39200 0%, #e94e1b 100%);
   border: none;
   outline: none;
-  color: #f39200;
+  color: #0b0704;
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 800;
+  letter-spacing: 0.01em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  padding: 2px 0;
-  transition: all 0.22s ease;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(243, 146, 0, 0.35);
+  line-height: 1.2;
 }
 
 .menu-card__text-btn:hover {
-  color: #ffb833;
-  text-shadow: 0 0 10px rgba(243, 146, 0, 0.45);
   transform: translateY(-1px);
+  filter: brightness(1.08);
+  box-shadow: 0 4px 14px rgba(243, 146, 0, 0.55);
 }
 
-.menu-card__text-btn-plus {
-  font-size: 0.95rem;
-  font-weight: 900;
-  line-height: 1;
+.menu-card__text-btn:active {
+  transform: scale(0.97);
+}
+
+.menu-card__text-btn-label {
+  display: inline;
 }
 
 .menu-card__text-btn-short {
+  display: none;
+}
+
+.menu-card__text-btn-plus {
   display: none;
 }
 
@@ -665,17 +676,22 @@
   }
 
   .menu-card__text-btn {
-    font-size: 0.74rem;
-    gap: 2px;
-    padding: 2px 0;
+    font-size: clamp(0.68rem, 2.2vw, 0.74rem);
+    padding: 5px 9px;
+    gap: 3px;
+    border-radius: 999px;
   }
 
   .menu-card__text-btn-label {
-    display: none;
+    display: inline !important;
   }
 
   .menu-card__text-btn-short {
-    display: inline;
+    display: none !important;
+  }
+
+  .menu-card__text-btn-plus {
+    display: none !important;
   }
 
   .menu-card__stepper {

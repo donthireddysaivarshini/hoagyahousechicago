@@ -329,8 +329,6 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
                             aria-label={`Add ${it.name} to cart`}
                           >
                             <span className="menu-card__text-btn-label">Add to Cart</span>
-                            <span className="menu-card__text-btn-short">Add</span>
-                            <span className="menu-card__text-btn-plus">+</span>
                           </button>
                         )}
                       </div>

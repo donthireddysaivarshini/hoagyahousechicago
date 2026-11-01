@@ -397,29 +397,53 @@
 
 .modal-add-cart-btn {
   flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: linear-gradient(90deg, var(--color-orange, #f39200) 0%, var(--color-flame, #e94e1b) 100%);
+  background: linear-gradient(135deg, var(--color-orange, #f39200) 0%, var(--color-flame, #e94e1b) 100%);
   color: #0b0704;
   border: none;
   border-radius: 999px;
-  height: 46px;
-  min-height: 44px;
-  font-size: 0.92rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 20px;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 18px rgba(243, 146, 0, 0.4);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(243, 146, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  box-sizing: border-box;
 }
 
 .modal-add-cart-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(243, 146, 0, 0.6);
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 22px rgba(243, 146, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
   filter: brightness(1.06);
+}
+
+.modal-add-cart-btn:active {
+  transform: scale(0.98);
+}
+
+.modal-add-text {
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #0b0704;
+  white-space: nowrap;
+}
+
+.modal-add-price {
+  background: rgba(11, 7, 4, 0.18);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: clamp(0.82rem, 2vw, 0.90rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #0b0704;
+  white-space: nowrap;
 }
 
 /* Mobile Bottom Sheet Adaptation for Modal */
@@ -493,11 +517,19 @@
     }
 
     .modal-add-cart-btn {
-      height: 42px;
-      min-height: 42px;
-      font-size: 0.8rem;
+      height: 44px;
+      min-height: 44px;
       padding: 0 10px;
       gap: 6px;
+    }
+
+    .modal-add-text {
+      font-size: 0.8rem;
+    }
+
+    .modal-add-price {
+      font-size: 0.76rem;
+      padding: 3px 7px;
     }
   }
 

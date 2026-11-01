@@ -293,7 +293,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             aria-label={`Add to Basket, total $${lineTotal.toFixed(2)}`}
           >
             <span className="modal-add-text">Add to Basket</span>
-            <span className="modal-add-dot" aria-hidden="true">•</span>
             <span className="modal-add-price">${lineTotal.toFixed(2)}</span>
           </button>
         </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLenis } from "@studio-freight/react-lenis";
 import "../../styles/customer-pages.css";
 
 export interface MenuItemData {
@@ -29,21 +30,37 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [selectedBread, setSelectedBread] = useState("French Hoagy Roll");
   const [selectedPeppers, setSelectedPeppers] = useState<string[]>(["Sweet Peppers"]);
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
+  const lenis = useLenis();
 
+  // Bulletproof lock of background scroll & Escape key listener
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+
     if (isOpen) {
       setQuantity(1);
       setSelectedBread("French Hoagy Roll");
       setSelectedPeppers(["Sweet Peppers"]);
       setSelectedExtras([]);
       document.body.style.overflow = "hidden";
+      lenis?.stop();
+      window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
+      lenis?.resize();
     }
+
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
+      lenis?.resize();
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, item]);
+  }, [isOpen, item, lenis, onClose]);
 
   if (!isOpen || !item) return null;
 
@@ -59,7 +76,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     );
   };
 
-  // Compute demo extra cost
+  // Compute modifier pricing
   let extraCost = 0;
   if (selectedBread === "Toasted Garlic Brioche") extraCost += 0.75;
   if (selectedExtras.includes("Provolone Cheese (+$1.00)")) extraCost += 1.0;
@@ -91,9 +108,16 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label={item.name}
+      aria-labelledby="product-modal-title"
     >
-      <div className="product-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="product-modal-card"
+        data-lenis-prevent
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Mobile pull handle indicator */}
+        <div className="product-modal-sheet-handle" aria-hidden="true" />
+
         {/* Header Media */}
         <div className="product-modal-header">
           <img src={`/${item.img}`} alt={item.name} className="product-modal-img" />
@@ -102,7 +126,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             type="button"
             className="product-modal-close-btn"
             onClick={onClose}
-            aria-label="Close modal"
+            aria-label="Close product modal"
           >
             <svg
               width="18"
@@ -113,6 +137,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
+              aria-hidden="true"
             >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
@@ -120,29 +145,22 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           </button>
         </div>
 
-        {/* Modal Body */}
-        <div className="product-modal-body">
+        {/* Scrollable Modal Body with momentum & isolation */}
+        <div className="product-modal-body" data-lenis-prevent>
           <div className="product-modal-meta">
-            <div>
+            <div className="product-modal-info-col">
               <span className="product-modal-tag">{item.subCategory || item.category}</span>
-              <h2 className="product-modal-title">{item.name}</h2>
+              <h2 className="product-modal-title" id="product-modal-title">{item.name}</h2>
             </div>
-            <div className="product-modal-price">${unitTotal.toFixed(2)}</div>
+            <div className="product-modal-price" aria-label={`Price $${unitTotal.toFixed(2)}`}>
+              ${unitTotal.toFixed(2)}
+            </div>
           </div>
 
           <p className="product-modal-desc">
             {item.details ||
               "Flame-seared and seasoned fresh to order on Chicago's South Side. Crafted with authentic grill flavors."}
           </p>
-
-          {/* Client Preview Notice */}
-          <div className="preview-alert-banner">
-            <span className="preview-alert-banner__icon">ℹ️</span>
-            <div>
-              <strong>Client Preview Mode:</strong> The options below are demonstration modifiers.
-              When live, these synchronize directly with your Clover POS Modifier Groups (e.g. Dual-Pricing, Meal MOD).
-            </div>
-          </div>
 
           {/* Customization Options (Sandwiches & Burgers) */}
           {(item.category === "sandwiches" || item.category === "burgers") && (
@@ -151,7 +169,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="product-options-group">
                 <div className="product-options-title">
                   <span>Choice of Bread / Roll</span>
-                  <span className="product-options-req">Required (Choose 1)</span>
+                  <span className="product-options-req">Required</span>
                 </div>
                 <div className="product-options-grid">
                   {["French Hoagy Roll", "Warm Pita", "Toasted Garlic Brioche"].map((bread) => (
@@ -165,8 +183,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         checked={selectedBread === bread}
                         onChange={() => setSelectedBread(bread)}
                       />
-                      <span>{bread}</span>
-                      {bread === "Toasted Garlic Brioche" && <span>+$0.75</span>}
+                      <span className="product-option-text">{bread}</span>
+                      {bread === "Toasted Garlic Brioche" && <span className="product-option-addon">+$0.75</span>}
                     </label>
                   ))}
                 </div>
@@ -189,7 +207,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         checked={selectedPeppers.includes(opt)}
                         onChange={() => togglePepper(opt)}
                       />
-                      <span>{opt}</span>
+                      <span className="product-option-text">{opt}</span>
                     </label>
                   ))}
                 </div>
@@ -199,7 +217,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="product-options-group">
                 <div className="product-options-title">
                   <span>Cheeses &amp; Extra Protein</span>
-                  <span className="product-options-req">Optional Add-ons</span>
+                  <span className="product-options-req">Optional</span>
                 </div>
                 <div className="product-options-grid">
                   {[
@@ -219,7 +237,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         checked={selectedExtras.includes(extra)}
                         onChange={() => toggleExtra(extra)}
                       />
-                      <span>{extra}</span>
+                      <span className="product-option-text">{extra}</span>
                     </label>
                   ))}
                 </div>
@@ -227,7 +245,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           )}
 
-          {/* Sides & Drinks notice */}
+          {/* Sides & Serving Style */}
           {item.category !== "sandwiches" && item.category !== "burgers" && (
             <div className="product-options-section">
               <div className="product-options-group">
@@ -237,12 +255,16 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
                 <div className="product-options-grid">
                   <div className="product-option-pill is-selected">
-                    <span>Fresh Made to Order</span>
-                    <span>✓</span>
+                    <span className="product-option-text">Fresh Made to Order</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
                   </div>
                   <div className="product-option-pill is-selected">
-                    <span>Packed Hot &amp; Fresh</span>
-                    <span>✓</span>
+                    <span className="product-option-text">Packed Hot &amp; Fresh</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -250,18 +272,18 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           )}
         </div>
 
-        {/* Modal Footer */}
+        {/* Modal Sticky Footer with Safe Area Protection */}
         <div className="product-modal-footer">
-          <div className="modal-qty-stepper">
+          <div className="modal-qty-stepper" role="group" aria-label="Quantity selector">
             <button
               type="button"
               className="modal-qty-btn"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
               aria-label="Decrease quantity"
             >
-              -
+              −
             </button>
-            <span className="modal-qty-val">{quantity}</span>
+            <span className="modal-qty-val" aria-live="polite">{quantity}</span>
             <button
               type="button"
               className="modal-qty-btn"
@@ -272,10 +294,15 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </button>
           </div>
 
-          <button type="button" className="modal-add-cart-btn" onClick={handleAdd}>
-            <span>Add to Basket</span>
-            <span>•</span>
-            <span>${lineTotal.toFixed(2)}</span>
+          <button
+            type="button"
+            className="modal-add-cart-btn"
+            onClick={handleAdd}
+            aria-label={`Add to Basket, total $${lineTotal.toFixed(2)}`}
+          >
+            <span className="modal-add-text">Add to Basket</span>
+            <span className="modal-add-dot" aria-hidden="true">•</span>
+            <span className="modal-add-price">${lineTotal.toFixed(2)}</span>
           </button>
         </div>
       </div>
@@ -284,4 +311,3 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 };
 
 export default ProductDetailModal;
-

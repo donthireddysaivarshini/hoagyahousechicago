@@ -248,7 +248,9 @@
   border: none;
   color: #7a7169;
   cursor: pointer;
-  padding: 2px;
+  padding: 6px;
+  min-width: 36px;
+  min-height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -278,18 +280,18 @@
   align-items: center;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 2px 4px;
 }
 
 .cart-item__qty-btn {
   background: transparent;
   border: none;
   color: #f7f3ee;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   display: flex;
   align-items: center;

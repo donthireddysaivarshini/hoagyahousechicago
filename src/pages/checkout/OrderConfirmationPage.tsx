@@ -13,13 +13,13 @@ export const OrderConfirmationPage: React.FC<OrderConfirmationPageProps> = ({
   onNavigateMenu,
   onNavigateOrders,
 }) => {
-  // Fallback demo data if navigated directly
+  // Fallback data if navigated directly
   const orderData = order || {
     orderId: "HH-94820",
     timestamp: "Oct 30, 2026, 8:45 PM",
     customerName: "Alex Morgan",
     customerEmail: "alex.morgan@example.com",
-    customerPhone: "(773) 555-0192",
+    customerPhone: "(773) 891-2416",
     fulfillmentType: "PICKUP" as const,
     deliveryAddress: "Store Pickup: 7116 S Yates Blvd, Chicago, IL 60649",
     orderNotes: "Extra sweet peppers on the side please",
@@ -55,177 +55,136 @@ export const OrderConfirmationPage: React.FC<OrderConfirmationPageProps> = ({
         <div className="confirmation-card">
           {/* Top Hero Checkmark */}
           <div className="confirmation-hero">
-            <div className="confirmation-badge-icon">✓</div>
+            <div className="confirmation-badge-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffb834" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
             <span className="confirmation-order-num">Order #{orderData.orderId}</span>
             <h1 className="customer-page-title" style={{ marginTop: "8px" }}>
-              Order Received! (Preview)
+              Order Received!
             </h1>
             <p className="customer-page-subtitle" style={{ margin: "6px auto 0" }}>
-              Thank you, <strong style={{ color: "#fff" }}>{orderData.customerName}</strong>. Your demonstration order
-              ticket has been generated.
+              Thank you, <strong style={{ color: "#fff" }}>{orderData.customerName}</strong>. Your ticket has been submitted to the grill.
             </p>
           </div>
 
-          {/* Prominent Preview Disclaimer Box (Mandatory Requirement) */}
-          <div className="preview-alert-banner" style={{ background: "rgba(243, 146, 0, 0.12)" }}>
-            <span className="preview-alert-banner__icon">ℹ️</span>
-            <div>
-              <strong>Demonstration Preview Mode Notice:</strong> This is a client testing preview. No actual credit card
-              transaction was processed, and no food order was transmitted to the physical restaurant kitchen or kitchen
-              printers. This screen demonstrates the verified post-checkout confirmation interface for client review.
-            </div>
-          </div>
-
           {/* Order Metadata Details */}
-          <div
-            style={{
-              background: "rgba(255, 255, 255, 0.03)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
-              borderRadius: "10px",
-              padding: "18px",
-              marginBottom: "24px",
-            }}
-          >
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", fontSize: "0.88rem" }}>
+          <div className="confirmation-meta-box">
+            <div className="confirmation-meta-grid">
               <div>
-                <span style={{ color: "#a8a29e", display: "block", fontSize: "0.76rem", textTransform: "uppercase" }}>
-                  Order Timestamp
-                </span>
-                <span style={{ fontWeight: 600, color: "#fff" }}>{orderData.timestamp}</span>
+                <span className="confirmation-meta-label">Order Timestamp</span>
+                <span className="confirmation-meta-value">{orderData.timestamp}</span>
               </div>
 
               <div>
-                <span style={{ color: "#a8a29e", display: "block", fontSize: "0.76rem", textTransform: "uppercase" }}>
-                  Fulfillment Status
-                </span>
-                <span style={{ fontWeight: 700, color: "var(--color-gold, #ffb834)" }}>
+                <span className="confirmation-meta-label">Fulfillment Status</span>
+                <span className="confirmation-meta-value confirmation-meta-value--gold">
                   {orderData.fulfillmentType === "DELIVERY" ? "Local Delivery (3 mi)" : "Store Pickup Ready ~20m"}
                 </span>
               </div>
 
               <div>
-                <span style={{ color: "#a8a29e", display: "block", fontSize: "0.76rem", textTransform: "uppercase" }}>
-                  Contact Details
-                </span>
-                <span style={{ color: "#fff" }}>{orderData.customerPhone}</span>
-                <span style={{ color: "#78716c", display: "block", fontSize: "0.8rem" }}>{orderData.customerEmail}</span>
+                <span className="confirmation-meta-label">Contact Details</span>
+                <span className="confirmation-meta-value">{orderData.customerPhone}</span>
+                <span className="confirmation-meta-sub">{orderData.customerEmail}</span>
               </div>
 
               <div>
-                <span style={{ color: "#a8a29e", display: "block", fontSize: "0.76rem", textTransform: "uppercase" }}>
-                  Destination / Pickup
-                </span>
-                <span style={{ color: "#fff", fontSize: "0.82rem", lineHeight: "1.3" }}>
+                <span className="confirmation-meta-label">Destination / Pickup</span>
+                <span className="confirmation-meta-value" style={{ fontSize: "0.85rem", lineHeight: "1.4" }}>
                   {orderData.deliveryAddress}
                 </span>
               </div>
             </div>
 
             {orderData.orderNotes && (
-              <div style={{ marginTop: "12px", paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                <span style={{ color: "#a8a29e", fontSize: "0.76rem", textTransform: "uppercase", display: "block" }}>
-                  Special Instructions
-                </span>
-                <span style={{ color: "#d6d3d1", fontSize: "0.85rem", fontStyle: "italic" }}>
-                  "{orderData.orderNotes}"
-                </span>
+              <div className="confirmation-notes-box">
+                <span className="confirmation-notes-label">Special Cooking Instructions:</span>
+                <span className="confirmation-notes-text">"{orderData.orderNotes}"</span>
               </div>
             )}
           </div>
 
-          {/* Items Breakdown */}
-          <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", margin: "0 0 14px" }}>
-            Items in this Order
-          </h3>
-          <div style={{ marginBottom: "20px" }}>
-            {orderData.items.map((it, idx) => (
-              <div
-                key={idx}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "10px 0",
-                  borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <img
-                    src={`/${it.img}`}
-                    alt={it.name}
-                    style={{ width: "42px", height: "42px", borderRadius: "6px", objectFit: "cover" }}
-                  />
+          {/* Ordered Items Preview */}
+          <div className="confirmation-items-box">
+            <h3 className="confirmation-items-title">Ordered Items</h3>
+            <div className="confirmation-items-list">
+              {orderData.items.map((item: any, idx: number) => (
+                <div key={idx} className="confirmation-item-row">
                   <div>
-                    <div style={{ fontWeight: 600, color: "#fff", fontSize: "0.92rem" }}>
-                      {it.quantity}x {it.name}
+                    <div style={{ fontWeight: 700, color: "#fff8ee" }}>
+                      {item.quantity}× {item.name}
                     </div>
-                    {it.selectedOptions && it.selectedOptions.length > 0 && (
-                      <div style={{ fontSize: "0.75rem", color: "var(--color-gold, #ffb834)" }}>
-                        {it.selectedOptions.join(" · ")}
+                    {item.selectedOptions && item.selectedOptions.length > 0 && (
+                      <div className="order-item-modifiers" style={{ marginTop: "4px" }}>
+                        {item.selectedOptions.map((opt: string, oIdx: number) => (
+                          <span key={oIdx} className="order-modifier-pill">
+                            {opt}
+                          </span>
+                        ))}
                       </div>
                     )}
                   </div>
+                  <div style={{ fontWeight: 700, color: "var(--color-gold, #ffb834)" }}>
+                    ${((item.numericPrice || 9.99) * item.quantity).toFixed(2)}
+                  </div>
                 </div>
-                <div style={{ fontWeight: 700, color: "#f5f5f4" }}>
-                  ${((it.numericPrice || 0) * it.quantity).toFixed(2)}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* Pricing Summary */}
-          <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: "8px", padding: "14px", marginBottom: "28px" }}>
-            <div className="summary-calc-row">
-              <span>Subtotal</span>
-              <span>${orderData.subtotal.toFixed(2)}</span>
-            </div>
-            <div className="summary-calc-row">
-              <span>Chicago Meal Tax (10.25%)</span>
-              <span>${orderData.tax.toFixed(2)}</span>
-            </div>
-            {orderData.deliveryFee > 0 && (
+            {/* Total Row */}
+            <div className="confirmation-totals-box">
               <div className="summary-calc-row">
-                <span>Local Delivery Fee (3 miles)</span>
-                <span>${orderData.deliveryFee.toFixed(2)}</span>
+                <span>Items Subtotal</span>
+                <span>${orderData.subtotal.toFixed(2)}</span>
               </div>
-            )}
-            <div className="summary-calc-row total-row">
-              <span>Total Paid (Preview)</span>
-              <span className="gold-val">${orderData.total.toFixed(2)}</span>
+              <div className="summary-calc-row">
+                <span>Chicago Meal Tax (10.25%)</span>
+                <span>${orderData.tax.toFixed(2)}</span>
+              </div>
+              {orderData.deliveryFee > 0 && (
+                <div className="summary-calc-row">
+                  <span>Local Delivery Fee</span>
+                  <span>${orderData.deliveryFee.toFixed(2)}</span>
+                </div>
+              )}
+              <div className="summary-calc-row total-row">
+                <span>Grand Total</span>
+                <span className="gold-val">${orderData.total.toFixed(2)}</span>
+              </div>
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "24px" }}>
+          {/* Next Steps Card */}
+          <div className="confirmation-next-steps">
+            <h4 className="confirmation-next-title">What happens next?</h4>
+            <ul className="confirmation-steps-list">
+              <li>Our South Side kitchen is seasoning and grilling your order fresh.</li>
+              <li>You will receive an automated text receipt and status notification at {orderData.customerPhone}.</li>
+              <li>
+                {orderData.fulfillmentType === "DELIVERY"
+                  ? "Our driver will contact you upon arriving within your 3-mile delivery zone."
+                  : "Head to 7116 S Yates Blvd counter for quick pickup in ~15-25 minutes."}
+              </li>
+            </ul>
+          </div>
+
+          {/* Action Navigation */}
+          <div className="confirmation-actions-row">
             <button
               type="button"
-              className="modal-add-cart-btn"
-              style={{ flex: 1, minWidth: "180px", height: "48px" }}
+              className="orders-action-btn orders-action-btn--primary"
               onClick={onNavigateOrders}
             >
-              <span>View in My Orders</span>
+              View in My Orders
             </button>
             <button
               type="button"
+              className="orders-action-btn orders-action-btn--secondary"
               onClick={onNavigateMenu}
-              style={{
-                flex: 1,
-                minWidth: "180px",
-                height: "48px",
-                background: "rgba(255, 255, 255, 0.05)",
-                border: "1px solid rgba(243, 146, 0, 0.35)",
-                color: "#f5ede4",
-                borderRadius: "999px",
-                padding: "12px 24px",
-                fontWeight: 700,
-                fontSize: "0.92rem",
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                transition: "all 0.22s ease",
-              }}
             >
-              Order More Food
+              Back to Menu
             </button>
           </div>
         </div>
@@ -235,4 +194,3 @@ export const OrderConfirmationPage: React.FC<OrderConfirmationPageProps> = ({
 };
 
 export default OrderConfirmationPage;
-

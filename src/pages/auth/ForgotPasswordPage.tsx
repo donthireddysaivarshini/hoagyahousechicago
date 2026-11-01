@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../../styles/auth.css";
 
 export interface ForgotPasswordPageProps {
   onSubmitTarget?: (identifier: string) => void;
@@ -25,13 +26,22 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({
 
   return (
     <div className="auth-card-minimal">
+      {/* Prominent Hoagy House Logo */}
+      <div className="auth-brand-header">
+        <img
+          src="/images/logo.webp"
+          alt="Hoagy House Chicago"
+          className="auth-brand-logo"
+        />
+      </div>
+
       <h1 className="auth-title-minimal">Reset password</h1>
       <p className="auth-subtitle-minimal">
         Please enter your email to receive a verification code.
       </p>
 
       <form className="auth-form-minimal" onSubmit={handleSubmit}>
-        <div className="auth-field-minimal" style={{ marginBottom: "36px" }}>
+        <div className="auth-field-minimal" style={{ marginBottom: "32px" }}>
           <label className="auth-label-minimal" htmlFor="forgot-email">
             E-mail
           </label>
@@ -58,7 +68,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({
         </button>
 
         <p className="auth-switch-text">
-          Remember your password?
+          Remember your password?{" "}
           {onNavigateLogin && (
             <button
               type="button"
@@ -71,11 +81,10 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({
         </p>
 
         {onBackToStore && (
-          <div style={{ textAlign: "center", marginTop: "24px" }}>
+          <div className="auth-back-nav">
             <button
               type="button"
-              className="auth-link-minimal"
-              style={{ opacity: 0.65, fontSize: "0.82rem" }}
+              className="auth-link-minimal auth-back-btn"
               onClick={onBackToStore}
             >
               ← Return to Public Storefront

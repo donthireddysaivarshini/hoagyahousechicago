@@ -41,7 +41,7 @@ const DEMO_HISTORICAL_ORDERS: HistoricalOrder[] = [
         name: "Hoagy Italian Beef",
         quantity: 2,
         price: 9.99,
-        options: ["Bread: French Hoagy Roll", "Peppers: Hot Giardiniera", "Juicy / Dipped"],
+        options: ["French Hoagy Roll", "Hot Giardiniera", "Juicy / Dipped"],
       },
       {
         name: "Pizza Puff",
@@ -65,19 +65,19 @@ const DEMO_HISTORICAL_ORDERS: HistoricalOrder[] = [
     status: "fulfilled",
     statusLabel: "Delivered",
     fulfillmentType: "DELIVERY",
-    destination: "7116 S Yates Blvd, Apt 3B, Chicago, IL 60649 (1.4 mi)",
+    destination: "7116 S Yates Blvd, Apt 3B, Chicago, IL 60649",
     items: [
       {
         name: "1/2 Lb Steak Burger",
         quantity: 1,
         price: 10.99,
-        options: ["Bread: Toasted Brioche", "Extras: Melted Cheddar", "Grilled Onions"],
+        options: ["Toasted Brioche", "Melted Cheddar", "Grilled Onions"],
       },
       {
         name: "10 Pc Legs & Thighs w/ Fries",
         quantity: 1,
         price: 14.99,
-        options: ["Sauce: Chicago Mild Sauce"],
+        options: ["Chicago Mild Sauce"],
       },
       {
         name: "Seasoned Fries (Large)",
@@ -100,7 +100,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
   const { addToCart, showToast, setIsCartOpen } = useCart();
   const [reorderSuccessId, setReorderSuccessId] = useState<string | null>(null);
 
-  // Combine live placed order from current session (if any) with demo historical records
+  // Combine live placed order from current session (if any) with recent records
   const allOrders: HistoricalOrder[] = [
     ...(currentOrder
       ? [
@@ -108,7 +108,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
             id: currentOrder.orderId,
             date: currentOrder.timestamp,
             status: "kitchen" as const,
-            statusLabel: "Preparing on the Grill",
+            statusLabel: "Preparing on Grill",
             fulfillmentType: currentOrder.fulfillmentType,
             destination:
               currentOrder.fulfillmentType === "PICKUP"
@@ -150,7 +150,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
     setTimeout(() => {
       setReorderSuccessId(null);
       setIsCartOpen(true);
-    }, 800);
+    }, 700);
   };
 
   return (
@@ -161,71 +161,87 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
           <div className="customer-page-badge">Order History</div>
           <h1 className="customer-page-title">My Recent Orders</h1>
           <p className="customer-page-subtitle">
-            Track your live grill orders, review previous meal receipts, or quickly reorder your favorite Chicago combos.
+            Track your live grill orders, review meal receipts, or quickly reorder your favorite Chicago combos.
           </p>
         </div>
 
-        {/* Preview Alert Banner */}
-        <div className="preview-alert-banner">
-          <span className="preview-alert-banner__icon">📋</span>
-          <div>
-            <strong>Demonstration Order History:</strong> These past orders represent sample customer activity for client demonstration.
-            When connected to the production Clover POS &amp; Django customer account, your live store orders will sync automatically.
+        {/* Store Policy Callout with SVG Icon */}
+        <div className="orders-policy-callout">
+          <svg
+            className="orders-policy-icon"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+          <div className="orders-policy-text">
+            <strong>Need to modify or cancel?</strong> Once food is on the grill, please call the store directly at{" "}
+            <a href="tel:7738912416" className="orders-policy-link">
+              (773) 891-2416
+            </a>{" "}
+            with your order number.
           </div>
         </div>
 
-        {/* Cancellation Notice Banner */}
-        <div
-          style={{
-            background: "rgba(255, 255, 255, 0.03)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            borderRadius: "8px",
-            padding: "12px 18px",
-            fontSize: "0.85rem",
-            color: "#d6d3d1",
-            marginBottom: "28px",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
-          <span style={{ color: "var(--color-gold, #ffb834)", fontSize: "1.1rem" }}>📞</span>
-          <span>
-            <strong>Need to modify or cancel?</strong> Per store policy, once food is placed on the grill, please call the store directly at{" "}
-            <a href="tel:7735550192" style={{ color: "var(--color-gold, #ffb834)", textDecoration: "underline" }}>
-              (773) 555-0192
-            </a>{" "}
-            with your order number.
-          </span>
-        </div>
+        {/* Empty State */}
+        {allOrders.length === 0 ? (
+          <div className="orders-empty-state">
+            <svg
+              className="orders-empty-icon"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ffb834"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+            <h2 className="orders-empty-title">No orders placed yet</h2>
+            <p className="orders-empty-desc">
+              Your recent meal receipts will appear here once you place an order.
+            </p>
+            <button
+              type="button"
+              className="orders-action-btn orders-action-btn--primary"
+              onClick={onNavigateMenu}
+            >
+              Explore Our Menu
+            </button>
+          </div>
+        ) : (
+          /* Structured, Scannable Orders List (Mobile-First 6-Row Layout) */
+          <div className="orders-list-stack">
+            {allOrders.map((order) => {
+              const isLive = order.status === "kitchen" || order.status === "confirmed";
+              return (
+                <article
+                  key={order.id}
+                  className={`order-card-scannable ${isLive ? "order-card-scannable--live" : ""}`}
+                >
+                  {/* Row 1: Order Number & Total Amount */}
+                  <div className="order-row-top">
+                    <span className="order-num-tag">Order #{order.id}</span>
+                    <span className="order-total-highlight">${order.total.toFixed(2)}</span>
+                  </div>
 
-        {/* Orders Listing */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          {allOrders.map((order) => {
-            const isLive = order.status === "kitchen" || order.status === "confirmed";
-            return (
-              <div
-                key={order.id}
-                className="order-history-card"
-                style={{
-                  border: isLive ? "1px solid rgba(243, 146, 0, 0.5)" : "1px solid rgba(255, 255, 255, 0.08)",
-                  boxShadow: isLive ? "0 4px 20px rgba(243, 146, 0, 0.15)" : "none",
-                }}
-              >
-                {/* Header Row */}
-                <div className="order-history-header">
-                  <div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
-                      <span
-                        style={{
-                          fontFamily: "var(--font-display, Outfit, sans-serif)",
-                          fontWeight: 800,
-                          fontSize: "1.1rem",
-                          color: "#fff",
-                        }}
-                      >
-                        Order #{order.id}
-                      </span>
+                  {/* Row 2: Status Badge & Date */}
+                  <div className="order-row-status">
+                    <div className="order-status-badge-wrap">
                       <span
                         className={`order-status-pill ${
                           order.status === "fulfilled"
@@ -237,178 +253,107 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
                       >
                         {order.statusLabel}
                       </span>
-                      {isLive && (
-                        <span
-                          style={{
-                            background: "rgba(243, 146, 0, 0.2)",
-                            color: "var(--color-gold, #ffb834)",
-                            fontSize: "0.72rem",
-                            fontWeight: 700,
-                            padding: "2px 8px",
-                            borderRadius: "4px",
-                            letterSpacing: "0.05em",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          LIVE SESSION
-                        </span>
-                      )}
+                      {isLive && <span className="order-live-pulse-badge">LIVE TICKET</span>}
                     </div>
-                    <div style={{ fontSize: "0.82rem", color: "#a8a29e" }}>
-                      {order.date} • {order.fulfillmentType === "PICKUP" ? "Pickup at Store" : "Local Delivery (3-Mile Radius)"}
-                    </div>
-                    <div style={{ fontSize: "0.82rem", color: "#78716c", marginTop: "2px" }}>
-                      📍 {order.destination}
-                    </div>
+                    <span className="order-date-text">{order.date}</span>
                   </div>
 
-                  {/* Total & Reorder Button */}
-                  <div style={{ textAlign: "right" }}>
-                    <div style={{ fontSize: "1.25rem", fontWeight: 800, color: "var(--color-gold, #ffb834)" }}>
-                      ${order.total.toFixed(2)}
-                    </div>
-                    <div style={{ fontSize: "0.75rem", color: "#a8a29e", marginTop: "2px" }}>
-                      {order.items.reduce((s, it) => s + it.quantity, 0)} items total
-                    </div>
-                  </div>
-                </div>
-
-                {/* Items List */}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                    padding: "12px 0",
-                    borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
-                  }}
-                >
-                  {order.items.map((item, idx) => (
-                    <div
-                      key={idx}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        fontSize: "0.9rem",
-                      }}
+                  {/* Row 3: Fulfillment & Location */}
+                  <div className="order-row-fulfillment">
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#ffb834"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
                     >
-                      <div style={{ flex: 1, paddingRight: "16px" }}>
-                        <div style={{ fontWeight: 600, color: "#f5f5f4" }}>
-                          {item.quantity}x {item.name}
-                        </div>
-                        {item.options && item.options.length > 0 && (
-                          <div
-                            style={{
-                              display: "flex",
-                              flexWrap: "wrap",
-                              gap: "4px",
-                              marginTop: "4px",
-                            }}
-                          >
-                            {item.options.map((opt, oIdx) => (
-                              <span
-                                key={oIdx}
-                                style={{
-                                  fontSize: "0.74rem",
-                                  background: "rgba(255, 255, 255, 0.05)",
-                                  color: "#a8a29e",
-                                  padding: "2px 6px",
-                                  borderRadius: "4px",
-                                }}
-                              >
-                                {opt}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      <div style={{ fontWeight: 700, color: "#d6d3d1", whiteSpace: "nowrap" }}>
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Cost Breakdown & Actions */}
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                    gap: "12px",
-                    marginTop: "14px",
-                  }}
-                >
-                  <div style={{ fontSize: "0.8rem", color: "#a8a29e", display: "flex", gap: "16px" }}>
-                    <span>Subtotal: ${order.subtotal.toFixed(2)}</span>
-                    <span>Tax (10.25%): ${order.tax.toFixed(2)}</span>
-                    {order.deliveryFee > 0 && <span>Delivery: ${order.deliveryFee.toFixed(2)}</span>}
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    <span className="order-destination-text">{order.destination}</span>
                   </div>
 
-                  <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                  {/* Row 4: Items List */}
+                  <div className="order-row-items">
+                    {order.items.map((item, idx) => (
+                      <div key={idx} className="order-item-line">
+                        <div className="order-item-left">
+                          <span className="order-item-qty">{item.quantity}×</span>
+                          <span className="order-item-title">{item.name}</span>
+                          {item.options && item.options.length > 0 && (
+                            <span className="order-item-opts">
+                              ({item.options.join(" · ")})
+                            </span>
+                          )}
+                        </div>
+                        <span className="order-item-cost">
+                          ${(item.price * item.quantity).toFixed(2)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Row 5: Compact Totals Summary */}
+                  <div className="order-row-summary">
+                    <span>Subtotal: ${order.subtotal.toFixed(2)}</span>
+                    <span className="order-summary-dot" aria-hidden="true">•</span>
+                    <span>Tax (10.25%): ${order.tax.toFixed(2)}</span>
+                    {order.deliveryFee > 0 && (
+                      <>
+                        <span className="order-summary-dot" aria-hidden="true">•</span>
+                        <span>Delivery: ${order.deliveryFee.toFixed(2)}</span>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Row 6: Action Buttons */}
+                  <div className="order-row-actions">
                     <button
                       type="button"
+                      className="orders-action-btn orders-action-btn--primary"
                       onClick={() => handleReorder(order)}
-                      style={{
-                        background: "linear-gradient(90deg, var(--color-orange, #f39200) 0%, var(--color-flame, #e94e1b) 100%)",
-                        border: "none",
-                        color: "#0b0704",
-                        padding: "9px 20px",
-                        borderRadius: "999px",
-                        fontSize: "0.85rem",
-                        fontWeight: 800,
-                        letterSpacing: "0.03em",
-                        textTransform: "uppercase",
-                        cursor: "pointer",
-                        transition: "all 0.25s ease",
-                        boxShadow: "0 4px 14px rgba(243, 146, 0, 0.35)",
-                      }}
                     >
-                      {reorderSuccessId === order.id ? "✓ Added to Cart!" : "🔄 Reorder Items"}
+                      {reorderSuccessId === order.id ? (
+                        <>
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                          <span>Added to Cart</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                          </svg>
+                          <span>Reorder Combo</span>
+                        </>
+                      )}
                     </button>
 
                     <button
                       type="button"
+                      className="orders-action-btn orders-action-btn--secondary"
                       onClick={onNavigateMenu}
-                      style={{
-                        background: "rgba(255, 255, 255, 0.05)",
-                        border: "1px solid rgba(243, 146, 0, 0.35)",
-                        color: "#f5ede4",
-                        padding: "9px 18px",
-                        borderRadius: "999px",
-                        fontSize: "0.85rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.03em",
-                        textTransform: "uppercase",
-                        cursor: "pointer",
-                        transition: "all 0.22s ease",
-                      }}
                     >
                       Browse Menu
                     </button>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
 
         {/* Back Link */}
-        <div style={{ textAlign: "center", marginTop: "36px" }}>
+        <div className="customer-page-footer-nav">
           <button
             type="button"
+            className="customer-page-back-link"
             onClick={onNavigateHome}
-            style={{
-              background: "transparent",
-              border: "none",
-              color: "#a8a29e",
-              fontSize: "0.9rem",
-              fontWeight: 600,
-              cursor: "pointer",
-              textDecoration: "underline",
-            }}
           >
             ← Back to Storefront Home
           </button>

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import "../../styles/auth.css";
 
 export interface OtpVerificationPageProps {
   destination?: string;
@@ -102,30 +103,52 @@ export const OtpVerificationPage: React.FC<OtpVerificationPageProps> = ({
 
   return (
     <div className="auth-card-minimal">
+      {/* Prominent Hoagy House Logo */}
+      <div className="auth-brand-header">
+        <img
+          src="/images/logo.webp"
+          alt="Hoagy House Chicago"
+          className="auth-brand-logo"
+        />
+      </div>
+
       <h1 className="auth-title-minimal">Enter code</h1>
       <p className="auth-subtitle-minimal">
-        We sent a 6-digit verification code to <br />
-        <span style={{ color: "#ffffff", fontWeight: 500 }}>{destination}</span>
+        We sent a 6-digit verification code to <strong style={{ color: "#fff" }}>{destination}</strong>.
       </p>
 
       <form className="auth-form-minimal" onSubmit={handleVerify}>
-        <div className="auth-otp-minimal-grid" onPaste={handlePaste}>
+        <div className="auth-otp-row">
           {otp.map((digit, idx) => (
             <input
               key={idx}
               ref={(el) => (inputsRef.current[idx] = el)}
               type="text"
               inputMode="numeric"
-              pattern="[0-9]*"
               maxLength={1}
+              className="auth-otp-cell"
               value={digit}
               onChange={(e) => handleChange(idx, e.target.value)}
               onKeyDown={(e) => handleKeyDown(idx, e)}
-              className="auth-otp-underline-box"
-              autoComplete="one-time-code"
+              onPaste={idx === 0 ? handlePaste : undefined}
               aria-label={`Digit ${idx + 1}`}
             />
           ))}
+        </div>
+
+        <div className="auth-resend-row">
+          {canResend ? (
+            <button
+              type="button"
+              className="auth-link-minimal"
+              style={{ color: "var(--color-gold, #ffb834)", fontWeight: 600 }}
+              onClick={handleTriggerResend}
+            >
+              Resend verification code
+            </button>
+          ) : (
+            <span>Resend code in {timer}s</span>
+          )}
         </div>
 
         <button
@@ -133,28 +156,11 @@ export const OtpVerificationPage: React.FC<OtpVerificationPageProps> = ({
           className="auth-btn-solid-black"
           disabled={!isComplete || isVerifying}
         >
-          {isVerifying ? "Verifying..." : "Confirm & Continue"}
+          {isVerifying ? "Verifying..." : "Verify & Continue"}
         </button>
 
-        <div style={{ textAlign: "center", marginTop: "24px" }}>
-          {canResend ? (
-            <button
-              type="button"
-              className="auth-link-minimal"
-              style={{ fontWeight: 600, color: "#ffffff" }}
-              onClick={handleTriggerResend}
-            >
-              Resend verification code
-            </button>
-          ) : (
-            <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.86rem" }}>
-              Resend code in <strong>0:{timer < 10 ? `0${timer}` : timer}</strong>
-            </span>
-          )}
-        </div>
-
-        <p className="auth-switch-text" style={{ marginTop: "16px" }}>
-          Wrong email?
+        <p className="auth-switch-text">
+          Want to change email?{" "}
           {onNavigateLogin && (
             <button
               type="button"
@@ -167,11 +173,10 @@ export const OtpVerificationPage: React.FC<OtpVerificationPageProps> = ({
         </p>
 
         {onBackToStore && (
-          <div style={{ textAlign: "center", marginTop: "24px" }}>
+          <div className="auth-back-nav">
             <button
               type="button"
-              className="auth-link-minimal"
-              style={{ opacity: 0.65, fontSize: "0.82rem" }}
+              className="auth-link-minimal auth-back-btn"
               onClick={onBackToStore}
             >
               ← Return to Public Storefront

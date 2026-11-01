@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/customer-pages.css";
+import "../../styles/auth.css";
 
 export interface RegisterPageProps {
   onSuccess?: () => void;
@@ -14,15 +14,14 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
 }) => {
   const [name, setName] = useState("Alex Morgan");
   const [email, setEmail] = useState("alex.morgan@example.com");
-  const [password, setPassword] = useState("••••••••••••");
-  const [agreeTerms, setAgreeTerms] = useState(true);
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agreeTerms) return;
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -40,18 +39,30 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
 
   return (
     <div className="auth-card-minimal">
-      <h1 className="auth-title-minimal">Create account</h1>
-      <p className="auth-subtitle-minimal">Join Hoagy House Rewards for fast reordering and exclusive Chicago specials.</p>
+      {/* Prominent Hoagy House Logo */}
+      <div className="auth-brand-header">
+        <img
+          src="/images/logo.webp"
+          alt="Hoagy House Chicago"
+          className="auth-brand-logo"
+        />
+      </div>
 
-      {/* Google Authentication Section */}
+      <h1 className="auth-title-minimal">Create account</h1>
+      <p className="auth-subtitle-minimal">
+        Join Hoagy House Rewards for fast reordering and exclusive Chicago specials.
+      </p>
+
+      {/* Styled Google Sign-In Action */}
       <div className="google-auth-wrapper">
         <button
           type="button"
           className="google-auth-btn"
           onClick={handleGoogleSignUp}
           disabled={isGoogleLoading || isLoading}
+          aria-label="Sign up with Google"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
               fill="#4285F4"
@@ -71,18 +82,6 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
           </svg>
           <span>{isGoogleLoading ? "Connecting with Google..." : "Sign up with Google"}</span>
         </button>
-
-        <div
-          style={{
-            fontSize: "0.74rem",
-            color: "#a8a29e",
-            marginTop: "8px",
-            textAlign: "center",
-            lineHeight: 1.4,
-          }}
-        >
-          <span style={{ color: "var(--color-gold, #ffb834)", fontWeight: 700 }}>[Preview Mode]</span> Rapid Google OAuth integration ready for production domain verification.
-        </div>
       </div>
 
       <div className="auth-divider-line">OR REGISTER WITH EMAIL</div>
@@ -150,26 +149,24 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
           </div>
         </div>
 
-        <div className="auth-options-row" style={{ marginBottom: "28px" }}>
+        <div className="auth-options-row">
           <label className="auth-remember-label">
             <input
               type="checkbox"
               className="auth-checkbox-minimal"
-              checked={agreeTerms}
-              onChange={(e) => setAgreeTerms(e.target.checked)}
+              checked={acceptTerms}
+              onChange={(e) => setAcceptTerms(e.target.checked)}
             />
-            <span style={{ fontSize: "0.84rem" }}>
-              I agree to the Terms and Privacy Policy
-            </span>
+            <span style={{ fontSize: "0.82rem" }}>I accept the terms &amp; privacy policy</span>
           </label>
         </div>
 
         <button
           type="submit"
           className="auth-btn-solid-black"
-          disabled={isLoading || !email || !password || !name || !agreeTerms}
+          disabled={isLoading || !email || !password || !name || !acceptTerms}
         >
-          {isLoading ? "Creating account..." : "Sign up"}
+          {isLoading ? "Creating account..." : "Register"}
         </button>
 
         <p className="auth-switch-text">
@@ -186,11 +183,10 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
         </p>
 
         {onBackToStore && (
-          <div style={{ textAlign: "center", marginTop: "24px" }}>
+          <div className="auth-back-nav">
             <button
               type="button"
-              className="auth-link-minimal"
-              style={{ opacity: 0.65, fontSize: "0.82rem" }}
+              className="auth-link-minimal auth-back-btn"
               onClick={onBackToStore}
             >
               ← Return to Public Storefront

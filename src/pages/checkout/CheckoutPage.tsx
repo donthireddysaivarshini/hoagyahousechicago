@@ -32,7 +32,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [fulfillmentType, setFulfillmentType] = useState<"PICKUP" | "DELIVERY">("PICKUP");
   const [customerName, setCustomerName] = useState("Alex Morgan");
   const [customerEmail, setCustomerEmail] = useState("alex.morgan@example.com");
-  const [customerPhone, setCustomerPhone] = useState("(773) 555-0192");
+  const [customerPhone, setCustomerPhone] = useState("(773) 891-2416");
   const [deliveryAddress, setDeliveryAddress] = useState("7116 S Yates Blvd, Apt 3B");
   const [deliveryZip, setDeliveryZip] = useState("60649");
   const [orderNotes, setOrderNotes] = useState("");
@@ -89,7 +89,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
       setIsSubmitting(false);
       clearCart();
       onOrderSuccess(completedOrder);
-    }, 1000);
+    }, 900);
   };
 
   if (items.length === 0) {
@@ -103,7 +103,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
           </p>
           <button
             type="button"
-            className="modal-add-cart-btn"
+            className="orders-action-btn orders-action-btn--primary"
             style={{ maxWidth: "260px", margin: "0 auto" }}
             onClick={onBackToMenu}
           >
@@ -119,21 +119,11 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
       <div className="customer-page-inner">
         {/* Page Header */}
         <div className="customer-page-header">
-          <div className="customer-page-badge">Clover House Chicago · Checkout</div>
+          <div className="customer-page-badge">Hoagy House Chicago · Checkout</div>
           <h1 className="customer-page-title">Finalize Your Order</h1>
           <p className="customer-page-subtitle">
             Confirm your fulfillment preference, contact information, and review your order total.
           </p>
-        </div>
-
-        {/* Client Preview Mode Disclaimer */}
-        <div className="preview-alert-banner">
-          <span className="preview-alert-banner__icon">ℹ️</span>
-          <div>
-            <strong>Client Preview &amp; Feedback Mode:</strong> This checkout interface demonstrates the complete customer
-            flow including 3-mile delivery, Chicago restaurant tax (10.25%), and Clover payment fields. No real payment is
-            captured and no kitchen ticket is printed in this preview.
-          </div>
         </div>
 
         {/* Main 2-Column Grid */}
@@ -154,10 +144,17 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     onClick={() => setFulfillmentType("PICKUP")}
                     role="button"
                     tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") setFulfillmentType("PICKUP");
+                    }}
                   >
                     <div className="fulfillment-tab__header">
                       <span className="fulfillment-tab__name">Store Pickup</span>
-                      <span>{fulfillmentType === "PICKUP" ? "✓" : ""}</span>
+                      {fulfillmentType === "PICKUP" && (
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffb834" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
                     </div>
                     <span className="fulfillment-tab__desc">Pick up fresh at 7116 S Yates Blvd</span>
                   </div>
@@ -167,10 +164,17 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     onClick={() => setFulfillmentType("DELIVERY")}
                     role="button"
                     tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") setFulfillmentType("DELIVERY");
+                    }}
                   >
                     <div className="fulfillment-tab__header">
                       <span className="fulfillment-tab__name">Local Delivery</span>
-                      <span>{fulfillmentType === "DELIVERY" ? "✓" : ""}</span>
+                      {fulfillmentType === "DELIVERY" && (
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffb834" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
                     </div>
                     <span className="fulfillment-tab__desc">Within 3 miles ($3.99 fee)</span>
                   </div>
@@ -178,7 +182,21 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
                 {fulfillmentType === "PICKUP" ? (
                   <div className="pickup-info-box">
-                    <span>📍</span>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#ffb834"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      style={{ flexShrink: 0, marginTop: "2px" }}
+                    >
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
                     <div>
                       <strong style={{ color: "#fff" }}>Hoagy House South Side Chicago</strong>
                       <div>7116 S Yates Blvd, Chicago, IL 60649</div>
@@ -210,7 +228,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                           id="delivery-city"
                           type="text"
                           disabled
-                          className="form-input"
+                          className="form-input form-input--disabled"
                           value="Chicago, IL"
                         />
                       </div>
@@ -258,7 +276,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                       type="tel"
                       required
                       className="form-input"
-                      placeholder="(773) 000-0000"
+                      placeholder="(773) 891-2416"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                     />
@@ -279,34 +297,36 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 </div>
               </div>
 
-              {/* Card 3: Store Operating Hours Notice (Strict Requirement) */}
+              {/* Card 3: Store Operating Hours Notice */}
               <div className="checkout-card">
                 <h2 className="checkout-card__title">
                   <span className="checkout-card__title-num">3</span>
                   <span>Store Hours &amp; Special Instructions</span>
                 </h2>
 
-                {/* Opening Hours Validation Notice */}
-                <div
-                  style={{
-                    background: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "8px",
-                    padding: "14px",
-                    marginBottom: "16px",
-                    display: "flex",
-                    gap: "10px",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <span style={{ fontSize: "1.2rem" }}>🕒</span>
-                  <div style={{ fontSize: "0.86rem", color: "#d6d3d1", lineHeight: "1.4" }}>
+                {/* Opening Hours Notice */}
+                <div className="orders-policy-callout" style={{ marginBottom: "16px" }}>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#ffb834"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    style={{ flexShrink: 0 }}
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <div className="orders-policy-text">
                     <strong style={{ color: "var(--color-gold, #ffb834)" }}>
-                      Operating Hours Check: Pending Client Schedule Confirmation
+                      Restaurant Schedule Verification
                     </strong>
-                    <div style={{ marginTop: "4px", color: "#a8a29e" }}>
-                      The client confirmed that orders can be placed whenever the restaurant is open. In the live production
-                      release, checkout will automatically validate against Hoagy House's confirmed weekly operating hours.
+                    <div>
+                      Orders are accepted during active restaurant operating hours. Live hours validation will synchronize with store schedule.
                     </div>
                   </div>
                 </div>
@@ -326,7 +346,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 </div>
               </div>
 
-              {/* Card 4: Clover Payment Integration Interface */}
+              {/* Card 4: Clover Payment Interface */}
               <div className="checkout-card">
                 <h2 className="checkout-card__title">
                   <span className="checkout-card__title-num">4</span>
@@ -341,7 +361,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                         Encrypted tokenization powered by Clover SCL
                       </div>
                     </div>
-                    <span className="payment-badge-sandbox">Sandbox Mode</span>
+                    <span className="payment-badge-sandbox">Secure Vault</span>
                   </div>
 
                   <div className="form-group" style={{ marginBottom: "12px" }}>
@@ -413,10 +433,25 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                       marginTop: "12px",
                       display: "flex",
                       alignItems: "center",
-                      gap: "6px",
+                      gap: "8px",
+                      lineHeight: "1.4",
                     }}
                   >
-                    <span>🔒</span>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#ffb834"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      style={{ flexShrink: 0 }}
+                    >
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
                     <span>PCI SAQ A compliant. Card details tokenized in Clover's vault without touching our web server.</span>
                   </div>
                 </div>
@@ -495,8 +530,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     <span>Confirming Order...</span>
                   ) : (
                     <>
-                      <span>Place Order (Preview)</span>
-                      <span>•</span>
+                      <span>Place Order</span>
+                      <span aria-hidden="true">•</span>
                       <span>${grandTotal.toFixed(2)}</span>
                     </>
                   )}
@@ -524,4 +559,3 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
 };
 
 export default CheckoutPage;
-

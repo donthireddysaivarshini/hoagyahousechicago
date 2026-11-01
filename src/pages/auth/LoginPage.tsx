@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/customer-pages.css";
+import "../../styles/auth.css";
 
 export interface LoginPageProps {
   onSuccess?: () => void;
@@ -40,18 +40,30 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
   return (
     <div className="auth-card-minimal">
-      <h1 className="auth-title-minimal">Welcome back</h1>
-      <p className="auth-subtitle-minimal">Sign in to your Hoagy House account to view past orders and saved delivery addresses.</p>
+      {/* Prominent Hoagy House Logo */}
+      <div className="auth-brand-header">
+        <img
+          src="/images/logo.webp"
+          alt="Hoagy House Chicago"
+          className="auth-brand-logo"
+        />
+      </div>
 
-      {/* Google Authentication Section */}
+      <h1 className="auth-title-minimal">Welcome back</h1>
+      <p className="auth-subtitle-minimal">
+        Sign in to your Hoagy House account to view past orders and saved delivery addresses.
+      </p>
+
+      {/* Styled Google Sign-In Action */}
       <div className="google-auth-wrapper">
         <button
           type="button"
           className="google-auth-btn"
           onClick={handleGoogleSignIn}
           disabled={isGoogleLoading || isLoading}
+          aria-label="Continue with Google sign in"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
               fill="#4285F4"
@@ -71,18 +83,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           </svg>
           <span>{isGoogleLoading ? "Connecting with Google..." : "Continue with Google"}</span>
         </button>
-
-        <div
-          style={{
-            fontSize: "0.74rem",
-            color: "#a8a29e",
-            marginTop: "8px",
-            textAlign: "center",
-            lineHeight: 1.4,
-          }}
-        >
-          <span style={{ color: "var(--color-gold, #ffb834)", fontWeight: 700 }}>[Preview Mode]</span> One-click sign-in configured. Live OAuth connects to Django backend on domain deployment.
-        </div>
       </div>
 
       <div className="auth-divider-line">OR SIGN IN WITH EMAIL</div>
@@ -176,11 +176,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({
         </p>
 
         {onBackToStore && (
-          <div style={{ textAlign: "center", marginTop: "24px" }}>
+          <div className="auth-back-nav">
             <button
               type="button"
-              className="auth-link-minimal"
-              style={{ opacity: 0.65, fontSize: "0.82rem" }}
+              className="auth-link-minimal auth-back-btn"
               onClick={onBackToStore}
             >
               ← Return to Public Storefront

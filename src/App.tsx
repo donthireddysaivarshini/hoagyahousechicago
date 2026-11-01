@@ -276,6 +276,7 @@ const AppContent: React.FC = () => {
       const hasModalOpen =
         document.querySelector(".cart-drawer-overlay.is-open") ||
         document.querySelector(".fullscreen-nav.is-open") ||
+        document.querySelector(".product-modal-backdrop.is-open") ||
         document.querySelector(".cinema-loader");
 
       if (!hasModalOpen && !isNavSweeping) {

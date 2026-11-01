@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useLenis } from "@studio-freight/react-lenis";
 import siteData from "../../data/siteData.json";
 import { useCart } from "../../context/CartContext";
 import FullScreenNavMenu from "./FullScreenNavMenu";
@@ -26,7 +25,6 @@ export const Header: React.FC<HeaderProps> = ({
   const [isSticky, setIsSticky] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { totalCount, setIsCartOpen, subtotal } = useCart();
-  const lenis = useLenis();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,8 +43,6 @@ export const Header: React.FC<HeaderProps> = ({
     e.preventDefault();
     if (onNavigateHome) {
       onNavigateHome();
-    } else if (lenis) {
-      lenis.scrollTo(0, { immediate: false, duration: 0.9 });
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }

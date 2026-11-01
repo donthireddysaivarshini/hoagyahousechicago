@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useLenis } from "@studio-freight/react-lenis";
 import { useCart } from "../../context/CartContext";
 import "../../styles/full-screen-nav.css";
 
@@ -27,7 +26,6 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
   currentView = "home",
 }) => {
   const { totalCount, setIsCartOpen } = useCart();
-  const lenis = useLenis();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -38,21 +36,16 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
 
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      lenis?.stop();
       window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "";
-      lenis?.start();
-      lenis?.resize();
     }
 
     return () => {
       document.body.style.overflow = "";
-      lenis?.start();
-      lenis?.resize();
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose, lenis]);
+  }, [isOpen, onClose]);
 
   const navRoutes = [
     {
@@ -140,7 +133,6 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
     <div
       className={`fullscreen-nav ${isOpen ? "is-open" : ""}`}
       id="fullscreenNavMenu"
-      data-lenis-prevent
       role="dialog"
       aria-modal="true"
       aria-label="Navigation Menu"

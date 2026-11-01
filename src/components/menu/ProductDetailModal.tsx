@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useLenis } from "@studio-freight/react-lenis";
 import "../../styles/customer-pages.css";
 
 export interface MenuItemData {
@@ -30,7 +29,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [selectedBread, setSelectedBread] = useState("French Hoagy Roll");
   const [selectedPeppers, setSelectedPeppers] = useState<string[]>(["Sweet Peppers"]);
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
-  const lenis = useLenis();
 
   // Bulletproof lock of background scroll & Escape key listener
   useEffect(() => {
@@ -46,21 +44,16 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       setSelectedPeppers(["Sweet Peppers"]);
       setSelectedExtras([]);
       document.body.style.overflow = "hidden";
-      lenis?.stop();
       window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "";
-      lenis?.start();
-      lenis?.resize();
     }
 
     return () => {
       document.body.style.overflow = "";
-      lenis?.start();
-      lenis?.resize();
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, item, lenis, onClose]);
+  }, [isOpen, item, onClose]);
 
   if (!isOpen || !item) return null;
 
@@ -112,7 +105,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     >
       <div
         className="product-modal-card"
-        data-lenis-prevent
         onClick={(e) => e.stopPropagation()}
       >
         {/* Mobile pull handle indicator */}
@@ -146,7 +138,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         </div>
 
         {/* Scrollable Modal Body with momentum & isolation */}
-        <div className="product-modal-body" data-lenis-prevent>
+        <div className="product-modal-body">
           <div className="product-modal-meta">
             <div className="product-modal-info-col">
               <span className="product-modal-tag">{item.subCategory || item.category}</span>

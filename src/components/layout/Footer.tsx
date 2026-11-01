@@ -1,19 +1,12 @@
 import React from "react";
-import { useLenis } from "@studio-freight/react-lenis";
 
 interface FooterProps {
   onNavigateContact?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
-  const lenis = useLenis();
-
   const handleScrollToTop = () => {
-    if (lenis) {
-      lenis.scrollTo(0, { immediate: false, duration: 1.0 });
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

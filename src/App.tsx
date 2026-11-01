@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
 import IntroLoader from "./components/loader/IntroLoader";
 import SweepTransition from "./components/loader/SweepTransition";
 import Header from "./components/layout/Header";
@@ -110,7 +109,6 @@ const AppContent: React.FC = () => {
   const pendingNavRef = useRef<(() => void) | null>(null);
 
   const { toastMessage } = useCart();
-  const lenis = useLenis();
 
   // Helper: check if a target is an admin page or route (Strictly bypass transitions for admin)
   const isAdminRoute = (routeOrHash?: string) => {
@@ -139,10 +137,6 @@ const AppContent: React.FC = () => {
 
   // Universal bulletproof scroll-to-top handler
   const resetScrollToTop = useCallback((immediate = true) => {
-    if (lenis) {
-      lenis.scrollTo(0, { immediate, force: true });
-      lenis.resize();
-    }
     window.scrollTo({
       top: 0,
       left: 0,
@@ -150,7 +144,7 @@ const AppContent: React.FC = () => {
     });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-  }, [lenis]);
+  }, []);
 
   // Client-side Page Sweep Transition Orchestrator (Only for client-side pages; skips admin)
   const executeClientTransition = useCallback(
@@ -166,11 +160,7 @@ const AppContent: React.FC = () => {
       // 2. If navigating to the already active view, smooth scroll to top without curtain
       if (currentView === targetView) {
         if (categoryToSet) setSelectedCategory(categoryToSet);
-        if (lenis) {
-          lenis.scrollTo(0, { immediate: false, duration: 0.8 });
-        } else {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
 
@@ -185,7 +175,7 @@ const AppContent: React.FC = () => {
         resetScrollToTop(true);
       };
     },
-    [currentView, isNavSweeping, lenis, resetScrollToTop]
+    [currentView, isNavSweeping, resetScrollToTop]
   );
 
   const handleNavCover = useCallback(() => {
@@ -236,10 +226,6 @@ const AppContent: React.FC = () => {
       ScrollTrigger.getAll().forEach((st) => st.disable(false, true));
       const timer = setTimeout(() => {
         resetScrollToTop(true);
-        if (lenis) {
-          lenis.start();
-          lenis.resize();
-        }
       }, 25);
       return () => clearTimeout(timer);
     } else {
@@ -248,29 +234,13 @@ const AppContent: React.FC = () => {
         resetScrollToTop(true);
         ScrollTrigger.getAll().forEach((st) => st.enable());
         ScrollTrigger.refresh();
-        if (lenis) {
-          lenis.start();
-          lenis.resize();
-        }
         window.dispatchEvent(new Event("resize"));
       }, 40);
       return () => clearTimeout(timer);
     }
-  }, [currentView, lenis, resetScrollToTop]);
+  }, [currentView, resetScrollToTop]);
 
-  // Synchronize Lenis smooth-scroll ticks with GSAP ScrollTrigger
-  useEffect(() => {
-    if (!lenis) return;
-    const handleScroll = () => {
-      ScrollTrigger.update();
-    };
-    lenis.on("scroll", handleScroll);
-    return () => {
-      lenis.off("scroll", handleScroll);
-    };
-  }, [lenis]);
-
-  // Safety watchdog: ensure document.body and html never stay stuck with overflow: hidden or stopped scroll
+  // Safety watchdog: ensure document.body and html never stay stuck with overflow: hidden
   useEffect(() => {
     const ensureScrollActive = () => {
       const hasModalOpen =
@@ -286,10 +256,6 @@ const AppContent: React.FC = () => {
         if (document.body.classList.contains("is-loading")) {
           document.body.classList.remove("is-loading");
         }
-        if (lenis?.isStopped) {
-          lenis.start();
-          lenis.resize();
-        }
       }
     };
 
@@ -299,7 +265,7 @@ const AppContent: React.FC = () => {
       window.removeEventListener("focus", ensureScrollActive);
       clearInterval(interval);
     };
-  }, [isNavSweeping, lenis]);
+  }, [isNavSweeping]);
 
   const navigateToHome = useCallback(() => {
     if (window.location.pathname !== "/") {
@@ -394,7 +360,6 @@ const AppContent: React.FC = () => {
         <IntroLoader
           onComplete={() => {
             ScrollTrigger.refresh();
-            if (lenis) lenis.resize();
           }}
         />
       )}
@@ -571,20 +536,9 @@ const AppContent: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <ReactLenis
-      root
-      options={{
-        lerp: 0.1,
-        duration: 1.2,
-        smoothWheel: true,
-        wheelMultiplier: 1.0,
-        touchMultiplier: 1.4,
-      }}
-    >
-      <CartProvider>
-        <AppContent />
-      </CartProvider>
-    </ReactLenis>
+    <CartProvider>
+      <AppContent />
+    </CartProvider>
   );
 };
 

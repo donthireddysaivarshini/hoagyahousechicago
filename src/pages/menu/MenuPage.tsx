@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useLenis } from "@studio-freight/react-lenis";
 import categories from "../../data/categories.json";
 import allItems from "../../data/items.json";
 import { useCart } from "../../context/CartContext";
@@ -20,7 +19,6 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
   const [itemsPerPage, setItemsPerPage] = useState<number>(12);
   const contentTopRef = useRef<HTMLDivElement>(null);
   const { addToCart, items: cartItems, updateQuantity } = useCart();
-  const lenis = useLenis();
 
   // State for Product Detail Modal
   const [modalItem, setModalItem] = useState<MenuItemData | null>(null);
@@ -48,9 +46,7 @@ export const MainMenuPage: React.FC<MainMenuPageProps> = ({
 
   // Scroll smoothly to top of menu catalog
   const scrollMenuToTop = (smooth = true) => {
-    if (lenis) {
-      lenis.scrollTo("#mainMenuPage", { offset: -70, immediate: !smooth, duration: 0.75 });
-    } else if (contentTopRef.current) {
+    if (contentTopRef.current) {
       contentTopRef.current.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
     } else {
       window.scrollTo({ top: 0, behavior: smooth ? "smooth" : "auto" });

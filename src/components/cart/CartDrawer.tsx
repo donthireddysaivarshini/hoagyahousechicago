@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useLenis } from "@studio-freight/react-lenis";
 import { useCart } from "../../context/CartContext";
 import "../../styles/cart-drawer.css";
 
@@ -22,7 +21,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     totalCount,
     subtotal,
   } = useCart();
-  const lenis = useLenis();
 
   // Close on ESC
   useEffect(() => {
@@ -35,22 +33,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isCartOpen, setIsCartOpen]);
 
-  // Lock body scroll cleanly and stop/restart Lenis without breaking window scroll limits
+  // Lock body scroll cleanly when cart drawer is open
   useEffect(() => {
     if (isCartOpen) {
       document.body.style.overflow = "hidden";
-      lenis?.stop();
     } else {
       document.body.style.overflow = "";
-      lenis?.start();
-      lenis?.resize();
     }
     return () => {
       document.body.style.overflow = "";
-      lenis?.start();
-      lenis?.resize();
     };
-  }, [isCartOpen, lenis]);
+  }, [isCartOpen]);
 
   const tax = subtotal * 0.1025; // Chicago meal tax ~10.25%
   const total = subtotal + tax;
@@ -81,7 +74,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     >
       <aside
         className="cart-drawer"
-        data-lenis-prevent
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-label="Your Cart"

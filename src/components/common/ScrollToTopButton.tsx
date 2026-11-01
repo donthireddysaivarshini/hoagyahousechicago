@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useLenis } from "@studio-freight/react-lenis";
 
 interface ScrollToTopButtonProps {
   threshold?: number;
@@ -7,7 +6,6 @@ interface ScrollToTopButtonProps {
 
 export const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ threshold = 320 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const lenis = useLenis();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,11 +22,7 @@ export const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ threshold 
   }, [threshold]);
 
   const handleScrollToTop = () => {
-    if (lenis) {
-      lenis.scrollTo(0, { immediate: false, duration: 0.95 });
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

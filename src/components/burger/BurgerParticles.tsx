@@ -20,11 +20,11 @@ interface ParticleDef {
 }
 
 const PARTICLES: ParticleDef[] = [
-  // 1. Top-Left: Crispy bacon strip framing the upper-left
+  // 1. Top-Left: Golden fry framing the upper-left
   {
-    id: "bacon-strip-top-left",
-    name: "Crispy Bacon Strip",
-    src: "/images/particles/bacon_strip.webp",
+    id: "fry-top-left",
+    name: "Golden Fry",
+    src: "/images/particles/fry.webp",
     top: "12%",
     left: "4%",
     size: "clamp(85px, 8.5vw, 145px)",
@@ -122,11 +122,11 @@ const PARTICLES: ParticleDef[] = [
     disperseY: 40,
     disperseRot: 35
   },
-  // 7. Top-Right: Crispy bacon shards breaking apart above burger crown
+  // 7. Top-Right: Crisp onion ring breaking apart above burger crown
   {
-    id: "bacon-shards-top-right",
-    name: "Crispy Bacon Shards",
-    src: "/images/particles/bacon_shards.webp",
+    id: "onion-top-right",
+    name: "Crisp Onion Ring",
+    src: "/images/particles/onion.webp",
     top: "12%",
     left: "76%",
     size: "clamp(85px, 8.5vw, 145px)",

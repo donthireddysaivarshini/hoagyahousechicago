@@ -17,6 +17,7 @@ import type { PlacedOrderData } from "./pages";
 const AdminDashboard = React.lazy(() => import("./pages/admin/AdminDashboard"));
 const AdminLoginPage = React.lazy(() => import("./pages/admin/AdminLoginPage"));
 import Footer from "./components/layout/Footer";
+import OrderModal from "./components/common/OrderModal";
 import { CartProvider, useCart } from "./context/CartContext";
 import CartDrawer from "./components/cart/CartDrawer";
 import ScrollToTopButton from "./components/common/ScrollToTopButton";
@@ -109,6 +110,7 @@ const AppContent: React.FC = () => {
   const pendingNavRef = useRef<(() => void) | null>(null);
 
   const { toastMessage } = useCart();
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   // Helper: check if a target is an admin page or route (Strictly bypass transitions for admin)
   const isAdminRoute = (routeOrHash?: string) => {
@@ -223,7 +225,7 @@ const AppContent: React.FC = () => {
     resetScrollToTop(true);
 
     if (currentView !== "home") {
-      ScrollTrigger.getAll().forEach((st) => st.disable(false, true));
+      ScrollTrigger.getAll().forEach((st: any) => st.disable(false, true));
       const timer = setTimeout(() => {
         resetScrollToTop(true);
       }, 25);
@@ -232,7 +234,7 @@ const AppContent: React.FC = () => {
       resetScrollToTop(true);
       const timer = setTimeout(() => {
         resetScrollToTop(true);
-        ScrollTrigger.getAll().forEach((st) => st.enable());
+        ScrollTrigger.getAll().forEach((st: any) => st.enable());
         ScrollTrigger.refresh();
         window.dispatchEvent(new Event("resize"));
       }, 40);
@@ -382,6 +384,7 @@ const AppContent: React.FC = () => {
           onNavigateAuth={() => navigateToAuth("login")}
           onNavigateOrders={navigateToOrders}
           onNavigateProfile={navigateToProfile}
+          onOpenOrderModal={() => setIsOrderModalOpen(true)}
         />
       )}
 
@@ -391,6 +394,7 @@ const AppContent: React.FC = () => {
         <HomePage
           isActive={currentView === "home"}
           onNavigateToMenu={navigateToMenu}
+          onOpenOrderModal={() => setIsOrderModalOpen(true)}
         />
 
         {/* Menu Page Catalog */}
@@ -522,6 +526,10 @@ const AppContent: React.FC = () => {
             onNavigateToCheckout={navigateToCheckout}
           />
           <ScrollToTopButton />
+          <OrderModal
+            isOpen={isOrderModalOpen}
+            onClose={() => setIsOrderModalOpen(false)}
+          />
           {toastMessage && (
             <div className="cart-toast" role="status" aria-live="polite">
               <span className="cart-toast__dot" />

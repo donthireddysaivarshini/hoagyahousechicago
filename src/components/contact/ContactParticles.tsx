@@ -18,11 +18,11 @@ interface IngredientParticleDef {
 }
 
 const INGREDIENT_PARTICLES: IngredientParticleDef[] = [
-  // 1. Top-Left: Crispy Bacon Strip framing top left heading
+  // 1. Top-Left: Golden Crispy Fry framing top left heading
   {
-    id: "contact-bacon-strip-top-left",
-    name: "Crispy Bacon Strip",
-    src: "/images/particles/bacon_strip.webp",
+    id: "contact-fry-top-left",
+    name: "Golden Shoestring Fry",
+    src: "/images/particles/fry.webp",
     top: "14%",
     left: "3.5%",
     size: "clamp(80px, 8vw, 135px)",
@@ -114,11 +114,11 @@ const INGREDIENT_PARTICLES: IngredientParticleDef[] = [
     baseXPercent: 46,
     baseYPercent: 86,
   },
-  // 7. Top-Right: Crispy Bacon Shards breaking above contact form
+  // 7. Top-Right: Crisp Sweet Onion Ring breaking above contact form
   {
-    id: "contact-bacon-shards-top-right",
-    name: "Crispy Bacon Shards",
-    src: "/images/particles/bacon_shards.webp",
+    id: "contact-onion-top-right",
+    name: "Crisp Sweet Onion Ring",
+    src: "/images/particles/onion.webp",
     top: "11%",
     left: "84%",
     size: "clamp(85px, 8.5vw, 145px)",

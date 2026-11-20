@@ -15,25 +15,38 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
         {/* Top Pre-Footer Callout Bar */}
         <div className="luxury-footer__top-row">
           <h2 className="luxury-footer__top-heading">Craving Chicago’s finest?</h2>
-          <a
-            href="https://www.doordash.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="luxury-footer__cta-btn"
-          >
-            <span>ORDER ON DOORDASH</span>
-            <span className="luxury-footer__cta-arrow" aria-hidden="true">→</span>
-          </a>
+          <div className="luxury-footer__top-actions">
+            <a
+              href="https://www.doordash.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="luxury-footer__cta-btn luxury-footer__cta-btn--doordash"
+              aria-label="Order on DoorDash"
+            >
+              <span>ORDER ON DOORDASH</span>
+              <span className="luxury-footer__cta-arrow" aria-hidden="true">→</span>
+            </a>
+            <a
+              href="https://www.ubereats.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="luxury-footer__cta-btn luxury-footer__cta-btn--ubereats"
+              aria-label="Order on Uber Eats"
+            >
+              <span>ORDER ON UBER EATS</span>
+              <span className="luxury-footer__cta-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
 
-        {/* Massive Typographic Monolithic Wordmark Hero */}
-        <div className="luxury-footer__hero-wordmark" aria-label="Hoagy House">
-          <div className="luxury-footer__brand-bars" aria-hidden="true">
-            <span className="luxury-footer__bar"></span>
-            <span className="luxury-footer__bar"></span>
-            <span className="luxury-footer__bar luxury-footer__bar--accent"></span>
-          </div>
-          <span className="luxury-footer__wordmark-title">hoagy house</span>
+        {/* Real Brand Logo Showcase (Replaced /// hoagy house text wordmark) */}
+        <div className="luxury-footer__brand-showcase" aria-label="Hoagy House Chicago">
+          <img
+            src="/images/logo.webp"
+            alt="Hoagy House Chicago"
+            className="luxury-footer__brand-logo"
+            loading="lazy"
+          />
         </div>
 
         {/* 4-Column Mid Grid: Location, Contact, Hours, Heritage Seal */}
@@ -90,7 +103,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
               )}
             </span>
             <p className="luxury-footer__info-text">
-              <a href="tel:7738912416" className="luxury-footer__link">
+              <a
+                href="tel:7738912416"
+                className="luxury-footer__link luxury-footer__phone-link"
+                aria-label="Tap to call (773) 891-2416"
+              >
                 (773) 891-2416
               </a>
               <br />
@@ -129,7 +146,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
             </div>
           </div>
         </div>
-
 
         {/* Bottom Legal / Copyright Row */}
         <div className="luxury-footer__bottom-row">

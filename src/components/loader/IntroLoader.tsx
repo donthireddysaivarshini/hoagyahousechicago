@@ -28,9 +28,9 @@ interface CinemaParticle {
 const CINEMA_PARTICLES: CinemaParticle[] = [
   // --- UPPER SKY (Mobile: Top area / Desktop: Widescreen framing) ---
   {
-    id: "particle-bacon-strip-outer-tl",
-    name: "Crispy Bacon Strip",
-    src: "/images/particles/bacon_strip.webp",
+    id: "particle-fry-outer-tl",
+    name: "Golden Shoestring Fry",
+    src: "/images/particles/fry.webp",
     targetX: "clamp(-440px, -37vw, -280px)",
     targetY: "clamp(-280px, -28vh, -180px)",
     targetZ: "40px",
@@ -44,9 +44,9 @@ const CINEMA_PARTICLES: CinemaParticle[] = [
     floatType: "float2",
   },
   {
-    id: "particle-bacon-shards-outer-tr",
-    name: "Crispy Bacon Shards",
-    src: "/images/particles/bacon_shards.webp",
+    id: "particle-pickle-outer-tr",
+    name: "Crisp Dill Pickle",
+    src: "/images/particles/pickle.webp",
     targetX: "clamp(290px, 36vw, 440px)",
     targetY: "clamp(-290px, -29vh, -190px)",
     targetZ: "80px",

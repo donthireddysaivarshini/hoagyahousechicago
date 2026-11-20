@@ -1,258 +1,139 @@
-import React, { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import BurgerCanvas from "../../components/burger/BurgerCanvas";
-import BurgerParticles from "../../components/burger/BurgerParticles";
-
-
+import React from "react";
 
 interface BurgerExplodeSectionProps {
   isActive?: boolean;
+  onOpenOrderModal?: () => void;
 }
 
-export const BurgerExplodeSection: React.FC<BurgerExplodeSectionProps> = ({ isActive = true }) => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const triggerRef = useRef<ScrollTrigger | null>(null);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    gsap.registerPlugin(ScrollTrigger);
-
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const initScrollTrigger = () => {
-      if (triggerRef.current) triggerRef.current.kill();
-
-      triggerRef.current = ScrollTrigger.create({
-        trigger: section,
-        pin: true,
-        start: "top top",
-        end: () => `+=${Math.round(window.innerHeight * 1.5)}`,
-        anticipatePin: 0,
-        refreshPriority: 2,
-        scrub: 0.5,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const p = Math.max(0, Math.min(1, self.progress));
-          setScrollProgress(p);
-        }
-      });
-
-      if (!isActive && triggerRef.current) {
-        triggerRef.current.disable(false, true);
-      }
-    };
-
-    initScrollTrigger();
-    ScrollTrigger.refresh();
-
-    // Auto-refresh when model is ready or intro loader lifts
-    const handleRefresh = () => {
-      if (triggerRef.current) {
-        triggerRef.current.enable();
-      }
-      ScrollTrigger.refresh();
-    };
-
-    window.addEventListener("loader-complete", handleRefresh);
-    window.addEventListener("burger-3d-ready", handleRefresh);
-    window.addEventListener("resize", handleRefresh);
-
-    // Watchdog refresh intervals to ensure pin bounds adapt after loader finishes
-    const t1 = setTimeout(handleRefresh, 600);
-    const t2 = setTimeout(handleRefresh, 1600);
-    const t3 = setTimeout(handleRefresh, 2800);
-
-    return () => {
-      window.removeEventListener("loader-complete", handleRefresh);
-      window.removeEventListener("burger-3d-ready", handleRefresh);
-      window.removeEventListener("resize", handleRefresh);
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      if (triggerRef.current) {
-        triggerRef.current.kill(true);
-        triggerRef.current = null;
-      }
-      ScrollTrigger.getAll().forEach((st) => {
-        if (st.trigger === section) {
-          st.kill(true);
-        }
-      });
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!triggerRef.current) return;
-    if (isActive) {
-      triggerRef.current.enable();
-      ScrollTrigger.refresh();
-    } else {
-      triggerRef.current.disable(false, true);
-    }
-  }, [isActive]);
-
-
-
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    let rafId = 0;
-    const handleMouseMove = (e: MouseEvent) => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        const nx = (e.clientX / window.innerWidth) * 2 - 1;
-        const ny = (e.clientY / window.innerHeight) * 2 - 1;
-        setMousePos({ x: nx, y: ny });
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(rafId);
-    };
-  }, []);
-
+export const BurgerExplodeSection: React.FC<BurgerExplodeSectionProps> = ({
+  onOpenOrderModal,
+}) => {
   return (
-    <section className="burger-hero" id="burgerHeroSection" ref={sectionRef}>
-      {/* Background Ambience Layers with Smooth Mouse Parallax */}
+    <section className="burger-hero" id="burgerHeroSection">
+      {/* Background Ambience Layers */}
       <div className="burger-hero__bg" aria-hidden="true">
-        {/* Section 1 Hero Restaurant Background */}
-        <div
-          className="burger-hero__bg-img"
-          style={{
-            transform: `translate3d(${mousePos.x * -18}px, ${mousePos.y * -14}px, 0) scale(1.06)`,
-            transition: "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)"
-          }}
-        ></div>
-        <div className="burger-hero__bg-vignette"></div>
-        <div className="burger-hero__bg-side-tint"></div>
-
-        {/* Section 2 Dark Studio Background Layer (Smoothly fades in as burger flies to plate) */}
-        <div
-          className="burger-hero__bg-dark-studio"
-          style={{
-            opacity: Math.max(0, Math.min(1, (scrollProgress - 0.28) / 0.30))
-          }}
-        >
-          <div
-            className="burger-hero__dark-studio-img"
-            style={{
-              transform: `translate3d(${mousePos.x * -22}px, ${mousePos.y * -16}px, 0) scale(1.06)`,
-              transition: "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)"
-            }}
-          ></div>
-          <div className="burger-hero__dark-studio-vignette"></div>
-          {/* Warm Light Pool on the studio table surface directly under the plate */}
-          <div className="burger-plated__table-light-pool"></div>
-        </div>
+        <div className="burger-hero__bg-img" />
+        <div className="burger-hero__bg-vignette" />
+        <div className="burger-hero__bg-side-tint" />
       </div>
 
-      {/* Floating Ingredient Particles (fades out as burger flies to plate) */}
-      <BurgerParticles progress={scrollProgress} />
-
-      {/* Full-bleed 3D Canvas Layer */}
-      <div className="burger-canvas-stage">
-        <BurgerCanvas progress={scrollProgress} isActive={isActive} />
-      </div>
-
-      {/* =========================================================================
-          PHASE 1: SECTION 1 (HERO & EXPLODING 3D VIEW)
-          Left: Title, Exploded badge, CTA
-          Right: 3D Exploding Burger
-         ========================================================================= */}
-      <div
-        className="burger-hero__stage"
-        style={{
-          opacity: Math.max(0, 1 - (scrollProgress - 0.30) / 0.14),
-          pointerEvents: scrollProgress > 0.42 ? "none" : "auto",
-          transform: `translateY(${scrollProgress > 0.30 ? (scrollProgress - 0.30) * -80 : 0}px)`
-        }}
-      >
+      {/* Hero Content Stage */}
+      <div className="burger-hero__stage">
         <div className="burger-hero__inner">
-          {/* Left Column: Website Name Badge & Creative Professional Tagline */}
+          {/* Left Column: Heading, Subtext, and Two Direct CTAs */}
           <div className="burger-hero__text-col">
-            {/* Website Name in Neat Badge */}
+            {/* Brand Badge */}
             <div className="burger-hero__brand-badge">
               <span className="burger-hero__brand-badge-dot" aria-hidden="true" />
               <span className="burger-hero__brand-badge-name">HOAGY HOUSE · CHICAGO</span>
             </div>
 
-            {/* Creative Professional Tagline */}
+            {/* Main Lead Heading */}
             <h1 className="burger-hero__tagline-title">
-              <span className="burger-hero__tagline-lead">CRAFTED WITH FIRE,</span>
-              <span className="burger-hero__tagline-accent">SERVED WITH SOUL</span>
+              <span className="burger-hero__tagline-lead">Home of the</span>
+              <span className="burger-hero__tagline-accent">Famous Hoagies</span>
             </h1>
 
+            {/* Description Subtext */}
             <p className="burger-hero__tagline-desc">
-              Home of Chicago’s signature flame-seared smash burgers, authentic Philly steaks &amp; legendary grill classics — crafted fresh to order every day.
+              Fresh hoagies, Philly steaks, wings and fish, made to order on Chicago's South Side. 100% turkey and beef. No pork.
             </p>
+
+            {/* Direct Action Buttons: Order Now & Call Us */}
+            <div className="burger-hero__actions">
+              <button
+                type="button"
+                className="burger-hero__cta-primary"
+                onClick={onOpenOrderModal}
+                aria-label="Order Now on DoorDash or Uber Eats"
+              >
+                <span className="burger-hero__cta-primary-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                  </svg>
+                </span>
+                <span className="burger-hero__cta-primary-text">Order Now</span>
+                <span className="burger-hero__cta-partner-badge">DoorDash · Uber Eats</span>
+              </button>
+
+              <a
+                href="tel:7738912416"
+                className="burger-hero__cta-secondary"
+                aria-label="Call Hoagy House at (773) 891-2416"
+              >
+                <span className="burger-hero__cta-secondary-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                </span>
+                <span className="burger-hero__cta-secondary-text">Call Us</span>
+                <span className="burger-hero__cta-phone-num">(773) 891-2416</span>
+              </a>
+            </div>
+
+            {/* Quality & Dietary Guarantee Pills */}
+            <div className="burger-hero__trust-row">
+              <span className="burger-hero__trust-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                100% Turkey &amp; Beef
+              </span>
+              <span className="burger-hero__trust-divider">•</span>
+              <span className="burger-hero__trust-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Strictly No Pork
+              </span>
+              <span className="burger-hero__trust-divider">•</span>
+              <span className="burger-hero__trust-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Made Fresh to Order
+              </span>
+            </div>
           </div>
 
-          {/* Right Column Spacer: where 3D burger explodes */}
-          <div className="burger-hero__model-placeholder" aria-hidden="true"></div>
-        </div>
-
-        {/* Animated Scroll Down Indicator (Icon Only) - Bottom Middle */}
-        <div
-          className="burger-hero__scroll-indicator"
-          onClick={() => {
-            window.scrollBy({ top: window.innerHeight * 0.95, behavior: "smooth" });
-          }}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              window.scrollBy({ top: window.innerHeight * 0.95, behavior: "smooth" });
-            }
-          }}
-          aria-label="Scroll down to explore"
-          style={{
-            opacity: Math.max(0, 1 - scrollProgress * 7),
-            pointerEvents: scrollProgress > 0.12 ? "none" : "auto",
-          }}
-        >
-          <div className="burger-hero__scroll-mouse">
-            <span className="burger-hero__scroll-wheel" />
+          {/* Right Column: Realistic High-Quality Hoagy Sandwich Photo */}
+          <div className="burger-hero__visual-col">
+            <div className="burger-hero__photo-card">
+              <div className="burger-hero__photo-glow" aria-hidden="true" />
+              <img
+                src="/images/italian-beef-sandwich.webp"
+                alt="Hoagy House Signature Chicago Steak Sandwich Cut in Half with Melted Cheese"
+                className="burger-hero__photo-img"
+                loading="eager"
+              />
+              <div className="burger-hero__photo-badge">
+                <span className="burger-hero__photo-badge-sub">CHICAGO ORIGINAL</span>
+                <span className="burger-hero__photo-badge-title">SIGNATURE HOAGY</span>
+              </div>
+            </div>
           </div>
-          <svg
-            className="burger-hero__scroll-chevron"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
         </div>
       </div>
 
-      {/* =========================================================================
-          PHASE 2: SECTION 2 (NEW SECTION: BURGER FLIES & LANDS RESTING ON PLATE)
-          Left: 3D Plate with Resting Burger
-          Right: Editorial Text, Story, Ingredients & Order CTA
-         ========================================================================= */}
-      <div
-        className="burger-plated__stage"
-        id="platedSection"
-        style={{
-          opacity: Math.max(0, Math.min(1, (scrollProgress - 0.42) / 0.20)),
-          pointerEvents: scrollProgress < 0.42 ? "none" : "auto",
-          transform: `translateY(${Math.max(0, (1 - Math.min(1, (scrollProgress - 0.42) / 0.20)) * 60)}px)`
-        }}
-      >
+      {/* SECTION 2: ABOUT OUR BUSINESS */}
+      <div className="burger-plated__section" id="aboutSection">
         <div className="burger-plated__inner">
-          {/* Left Column Spacer: where 3D burger lands resting on plate */}
-          <div className="burger-plated__plate-placeholder" aria-hidden="true"></div>
+          {/* Left Column: Secondary Signature Hoagy Photo Showcase */}
+          <div className="burger-plated__visual-col">
+            <div className="burger-plated__photo-wrapper">
+              <div className="burger-plated__photo-glow" aria-hidden="true" />
+              <img
+                src="/products/Hoagy House Cheesesteak Feast.webp"
+                alt="Hoagy House Philly Cheesesteak and Hoagy Feast"
+                className="burger-plated__photo-img"
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-          {/* Right Column: About Business Editorial Story */}
+          {/* Right Column: Story & Business Heritage */}
           <div className="burger-plated__text-col">
             <h2 className="burger-plated__title">
               <span className="burger-plated__title-sub">ABOUT OUR BUSINESS</span>
@@ -274,6 +155,18 @@ export const BurgerExplodeSection: React.FC<BurgerExplodeSectionProps> = ({ isAc
             <p className="burger-plated__closing">
               “We’re glad to be serving you again.”
             </p>
+
+            {/* Quick Order trigger */}
+            <div className="burger-plated__order-cta">
+              <button
+                type="button"
+                className="burger-plated__cta-btn"
+                onClick={onOpenOrderModal}
+              >
+                <span>ORDER FOR DELIVERY OR CARRYOUT</span>
+                <span className="burger-plated__cta-arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -35,7 +35,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     particles: [
       { id: "p1", type: "img", src: "images/particles/jalapeno.webp", top: "36%", right: "6%", size: "clamp(32px, 3.5vw, 42px)", rotate: 24, floatAnim: "featFloat1", duration: "5.5s", delay: "0s" },
       { id: "p2", type: "img", src: "images/particles/onion.webp", top: "42%", left: "5%", size: "clamp(30px, 3.2vw, 40px)", rotate: -18, floatAnim: "featFloat2", duration: "6.2s", delay: "0.8s" },
-      { id: "p3", type: "img", src: "images/particles/bacon_shards.webp", top: "72%", right: "8%", size: "clamp(26px, 2.8vw, 34px)", rotate: 32, floatAnim: "featFloat1", duration: "5s", delay: "1.4s" },
+      { id: "p3", type: "img", src: "images/particles/tomato.webp", top: "72%", right: "8%", size: "clamp(26px, 2.8vw, 34px)", rotate: 32, floatAnim: "featFloat1", duration: "5s", delay: "1.4s" },
       { id: "p4", type: "spark", top: "30%", left: "14%", size: "9px", floatAnim: "featSparkPulse", duration: "3s", delay: "0.2s" },
     ],
   },
@@ -59,9 +59,9 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Crispy Fried Chicken",
     img: "images/categories/crispy-chicken-wings.webp",
     particles: [
-      { id: "p1", type: "img", src: "images/particles/bacon_shards.webp", top: "35%", right: "7%", size: "clamp(28px, 3.2vw, 38px)", rotate: 30, floatAnim: "featFloat1", duration: "5.2s", delay: "0.2s" },
+      { id: "p1", type: "img", src: "images/particles/fry.webp", top: "35%", right: "7%", size: "clamp(28px, 3.2vw, 38px)", rotate: 30, floatAnim: "featFloat1", duration: "5.2s", delay: "0.2s" },
       { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "42%", left: "5%", size: "clamp(32px, 3.5vw, 42px)", rotate: -20, floatAnim: "featFloat2", duration: "6.4s", delay: "0.7s" },
-      { id: "p3", type: "img", src: "images/particles/bacon_shards.webp", top: "72%", left: "9%", size: "clamp(26px, 2.8vw, 34px)", rotate: -32, floatAnim: "featFloat1", duration: "5.8s", delay: "1.3s" },
+      { id: "p3", type: "img", src: "images/particles/pickle.webp", top: "72%", left: "9%", size: "clamp(26px, 2.8vw, 34px)", rotate: -32, floatAnim: "featFloat1", duration: "5.8s", delay: "1.3s" },
       { id: "p4", type: "spark", top: "33%", left: "12%", size: "9px", floatAnim: "featSparkPulse", duration: "2.8s", delay: "0.4s" },
     ],
   },
@@ -98,7 +98,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     fullName: "Hot & Crispy Wings",
     img: "images/categories/golden-chicken-bites.webp",
     particles: [
-      { id: "p1", type: "img", src: "images/particles/bacon_shards.webp", top: "34%", left: "6%", size: "clamp(30px, 3.2vw, 40px)", rotate: -26, floatAnim: "featFloat2", duration: "5.6s", delay: "0.2s" },
+      { id: "p1", type: "img", src: "images/particles/fry.webp", top: "34%", left: "6%", size: "clamp(30px, 3.2vw, 40px)", rotate: -26, floatAnim: "featFloat2", duration: "5.6s", delay: "0.2s" },
       { id: "p2", type: "img", src: "images/particles/jalapeno.webp", top: "40%", right: "6%", size: "clamp(32px, 3.5vw, 42px)", rotate: 19, floatAnim: "featFloat1", duration: "6.2s", delay: "0.7s" },
       { id: "p3", type: "img", src: "images/particles/onion.webp", top: "68%", left: "8%", size: "clamp(28px, 3vw, 38px)", rotate: 28, floatAnim: "featFloat2", duration: "5.9s", delay: "1.3s" },
       { id: "p4", type: "spark", top: "30%", right: "12%", size: "10px", floatAnim: "featSparkPulse", duration: "3s", delay: "0.5s" },
@@ -112,7 +112,7 @@ const CATEGORY_CARDS: CategoryCardItem[] = [
     img: "images/categories/shoestring-fries.webp",
     particles: [
       { id: "p1", type: "img", src: "images/particles/fry.webp", top: "34%", right: "6%", size: "clamp(40px, 4.5vw, 54px)", rotate: 28, floatAnim: "featFloat1", duration: "6s", delay: "0.1s" },
-      { id: "p2", type: "img", src: "images/particles/bacon_shards.webp", top: "42%", left: "5%", size: "clamp(30px, 3.2vw, 40px)", rotate: -20, floatAnim: "featFloat2", duration: "5.4s", delay: "0.6s" },
+      { id: "p2", type: "img", src: "images/particles/pickle.webp", top: "42%", left: "5%", size: "clamp(30px, 3.2vw, 40px)", rotate: -20, floatAnim: "featFloat2", duration: "5.4s", delay: "0.6s" },
       { id: "p3", type: "img", src: "images/particles/fry.webp", top: "68%", right: "9%", size: "clamp(36px, 4vw, 48px)", rotate: -42, floatAnim: "featFloat1", duration: "6.6s", delay: "1.2s" },
       { id: "p4", type: "spark", top: "31%", left: "12%", size: "9px", floatAnim: "featSparkPulse", duration: "3.2s", delay: "0.3s" },
     ],

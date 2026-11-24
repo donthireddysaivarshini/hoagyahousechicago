@@ -73,14 +73,19 @@ export const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose }) => {
         <div className="order-modal-options">
           {/* Option 1: DoorDash */}
           <a
-            href="https://www.doordash.com"
+            href="https://www.doordash.com/store/hoagy-house-chicago-132473/122833947/?cursor=eyJzZWFyY2hfaXRlbV9jYXJvdXNlbF9jdXJzb3IiOnsicXVlcnkiOiJIb2FneSBob3VzZSAiLCJpdGVtX2lkcyI6W10sInNlYXJjaF90ZXJtIjoiaG9hZ3kgaG91c2UiLCJ2ZXJ0aWNhbF9pZCI6LTk5OSwidmVydGljYWxfbmFtZSI6ImFsbCIsInF1ZXJ5X2ludGVudCI6IlNUT1JFX1JYIn0sInN0b3JlX3ByaW1hcnlfdmVydGljYWxfaWRzIjpbMSwxMDAzMjIsMTAwMzMyLDEwMDMzMywxMTAwMzcsMTEwMDQ1LDExMDA1MiwxMTAwNTUsMTEwMDYyLDExMDA4MiwxMTAwODMsMTc1LDE3NiwxNzcsMTc4LDE3OSwxOTIsMTEwMDU4LDE5MywxOTVdfQ==&pickup=false"
             target="_blank"
             rel="noopener noreferrer"
             className="order-modal-btn order-modal-btn--doordash"
             aria-label="Order on DoorDash"
           >
+            <div className="order-modal-btn-icon-wrap order-modal-btn-icon-wrap--doordash" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#FF3008">
+                <path d="M23.038 9.537a5.525 5.525 0 0 0-4.897-4.041H4.37a.89.89 0 0 0-.82.553L.073 14.19a.89.89 0 0 0 .82 1.226h4.34a.89.89 0 0 0 .82-.553l1.86-4.524h6.03a3.738 3.738 0 0 1 3.312 2.732 3.754 3.754 0 0 1-3.626 4.75H8.76a.89.89 0 0 0-.82.553l-1.07 2.604a.89.89 0 0 0 .82 1.226h5.938c5.44 0 9.774-4.55 9.41-10.167z" />
+              </svg>
+            </div>
             <div className="order-modal-btn-content">
-              <span className="order-modal-btn-badge">FAST DELIVERY</span>
+              <span className="order-modal-btn-badge order-modal-btn-badge--doordash">FAST DELIVERY</span>
               <span className="order-modal-btn-title">Order on DoorDash</span>
               <span className="order-modal-btn-desc">Convenient doorstep delivery &amp; live driver tracking</span>
             </div>
@@ -101,6 +106,11 @@ export const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose }) => {
             className="order-modal-btn order-modal-btn--ubereats"
             aria-label="Order on Uber Eats"
           >
+            <div className="order-modal-btn-icon-wrap order-modal-btn-icon-wrap--ubereats" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#06C167">
+                <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z" />
+              </svg>
+            </div>
             <div className="order-modal-btn-content">
               <span className="order-modal-btn-badge order-modal-btn-badge--uber">SOUTH SIDE DELIVERY</span>
               <span className="order-modal-btn-title">Order on Uber Eats</span>

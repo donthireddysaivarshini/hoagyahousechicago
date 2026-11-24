@@ -18,11 +18,11 @@ interface IngredientParticleDef {
 }
 
 const INGREDIENT_PARTICLES: IngredientParticleDef[] = [
-  // 1. Top-Left: Golden Crispy Fry framing top left heading
+  // 1. Top-Left: Crispy Golden Chicken framing top left heading
   {
-    id: "contact-fry-top-left",
-    name: "Golden Shoestring Fry",
-    src: "/images/particles/fry.webp",
+    id: "contact-chicken-top-left",
+    name: "Crispy Golden Chicken",
+    src: "/images/categories/golden-chicken-bites.webp",
     top: "14%",
     left: "3.5%",
     size: "clamp(80px, 8vw, 135px)",
@@ -98,11 +98,11 @@ const INGREDIENT_PARTICLES: IngredientParticleDef[] = [
     baseXPercent: 44,
     baseYPercent: 42,
   },
-  // 6. Bottom-Center: Golden Crispy Potato Fry floating near bottom
+  // 6. Bottom-Center: Fresh Romaine Lettuce Leaf floating near bottom
   {
-    id: "contact-fry-bottom-center",
-    name: "Golden Crispy Potato Fry",
-    src: "/images/particles/fry.webp",
+    id: "contact-lettuce-bottom-center",
+    name: "Crisp Green Lettuce",
+    src: "/images/particles/lettuce.webp",
     top: "86%",
     left: "46%",
     size: "clamp(72px, 7.2vw, 120px)",

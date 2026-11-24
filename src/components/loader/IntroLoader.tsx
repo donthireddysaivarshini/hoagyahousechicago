@@ -28,9 +28,9 @@ interface CinemaParticle {
 const CINEMA_PARTICLES: CinemaParticle[] = [
   // --- UPPER SKY (Mobile: Top area / Desktop: Widescreen framing) ---
   {
-    id: "particle-fry-outer-tl",
-    name: "Golden Shoestring Fry",
-    src: "/images/particles/fry.webp",
+    id: "particle-chicken-outer-tl",
+    name: "Golden Crispy Chicken Bite",
+    src: "/images/categories/golden-chicken-bites.webp",
     targetX: "clamp(-440px, -37vw, -280px)",
     targetY: "clamp(-280px, -28vh, -180px)",
     targetZ: "40px",
@@ -113,9 +113,9 @@ const CINEMA_PARTICLES: CinemaParticle[] = [
     floatType: "float3",
   },
   {
-    id: "particle-fry-inner-br",
-    name: "Golden Potato Fry",
-    src: "/images/particles/fry.webp",
+    id: "particle-chicken-inner-br",
+    name: "Crispy Golden Chicken",
+    src: "/images/categories/golden-chicken-bites.webp",
     targetX: "clamp(160px, 20vw, 235px)",
     targetY: "clamp(140px, 18vh, 190px)",
     targetZ: "25px",

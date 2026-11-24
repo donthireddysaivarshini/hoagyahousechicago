@@ -20,15 +20,15 @@ interface ParticleDef {
 }
 
 const PARTICLES: ParticleDef[] = [
-  // 1. Top-Left: Golden fry framing the upper-left
+  // 1. Top-Left: Crispy golden chicken bite / fry framing upper-left
   {
-    id: "fry-top-left",
-    name: "Golden Fry",
-    src: "/images/particles/fry.webp",
-    top: "12%",
+    id: "particle-top-left",
+    name: "Golden Bite",
+    src: "/images/categories/golden-chicken-bites.webp",
+    top: "13%",
     left: "4%",
-    size: "clamp(85px, 8.5vw, 145px)",
-    baseRotate: -18,
+    size: "clamp(85px, 8.5vw, 140px)",
+    baseRotate: -20,
     floatAnim: "particleFloat1",
     floatDuration: "6.5s",
     floatDelay: "0s",
@@ -42,9 +42,9 @@ const PARTICLES: ParticleDef[] = [
     id: "lettuce-mid-left",
     name: "Romaine Lettuce Leaf",
     src: "/images/particles/lettuce.webp",
-    top: "60%",
-    left: "2%",
-    size: "clamp(85px, 8.5vw, 140px)",
+    top: "61%",
+    left: "3%",
+    size: "clamp(85px, 8vw, 135px)",
     baseRotate: 24,
     floatAnim: "particleFloat2",
     floatDuration: "7.8s",
@@ -54,14 +54,14 @@ const PARTICLES: ParticleDef[] = [
     disperseY: 15,
     disperseRot: 30
   },
-  // 3. Bottom-Left: Zesty jalapeño ring on left table surface
+  // 3. Bottom-Left: Zesty jalapeño ring on table surface
   {
     id: "jalapeno-bottom-left",
     name: "Jalapeño Pepper Ring",
     src: "/images/particles/jalapeno.webp",
-    top: "86%",
+    top: "85%",
     left: "11%",
-    size: "clamp(65px, 6.5vw, 110px)",
+    size: "clamp(65px, 6.5vw, 105px)",
     baseRotate: -22,
     floatAnim: "particleFloat3",
     floatDuration: "5.8s",
@@ -71,14 +71,14 @@ const PARTICLES: ParticleDef[] = [
     disperseY: 45,
     disperseRot: -20
   },
-  // 4. Upper-Middle: Sweet red onion ring floating between title & burger
+  // 4. Upper-Center: Sweet red onion ring floating tilted between title & sandwich
   {
     id: "onion-upper-mid",
     name: "Red Onion Ring",
     src: "/images/particles/onion.webp",
-    top: "26%",
-    left: "45%",
-    size: "clamp(75px, 7.5vw, 120px)",
+    top: "28%",
+    left: "46%",
+    size: "clamp(80px, 7.5vw, 125px)",
     baseRotate: 26,
     floatAnim: "particleFloat1",
     floatDuration: "8.2s",
@@ -88,14 +88,14 @@ const PARTICLES: ParticleDef[] = [
     disperseY: -45,
     disperseRot: 30
   },
-  // 5. Center-Middle: Glistening dill pickle slice floating in mid-depth
+  // 5. Center-Middle: Crinkle cut dill pickle slice floating in mid-depth
   {
     id: "pickle-center-mid",
-    name: "Glistening Pickle Slice",
+    name: "Dill Pickle Slice",
     src: "/images/particles/pickle.webp",
-    top: "52%",
-    left: "39%",
-    size: "clamp(68px, 6.8vw, 110px)",
+    top: "53%",
+    left: "40%",
+    size: "clamp(72px, 7vw, 115px)",
     baseRotate: -22,
     floatAnim: "particleFloat2",
     floatDuration: "7.2s",
@@ -105,15 +105,15 @@ const PARTICLES: ParticleDef[] = [
     disperseY: 20,
     disperseRot: -25
   },
-  // 6. Lower-Middle: Golden crispy potato fry floating near table center
+  // 6. Lower-Middle: Crispy golden shoestring french fry at center table
   {
     id: "fry-lower-mid",
-    name: "Golden Crispy Potato Fry",
+    name: "Crispy Golden Fry",
     src: "/images/particles/fry.webp",
-    top: "75%",
-    left: "49%",
-    size: "clamp(70px, 7vw, 115px)",
-    baseRotate: 36,
+    top: "79%",
+    left: "50%",
+    size: "clamp(72px, 7vw, 115px)",
+    baseRotate: 16,
     floatAnim: "particleFloat3",
     floatDuration: "6.6s",
     floatDelay: "0.9s",
@@ -122,15 +122,15 @@ const PARTICLES: ParticleDef[] = [
     disperseY: 40,
     disperseRot: 35
   },
-  // 7. Top-Right: Crisp onion ring breaking apart above burger crown
+  // 7. Top-Right: Crispy golden bite / fry breaking apart above sandwich
   {
-    id: "onion-top-right",
-    name: "Crisp Onion Ring",
-    src: "/images/particles/onion.webp",
-    top: "12%",
-    left: "76%",
-    size: "clamp(85px, 8.5vw, 145px)",
-    baseRotate: 14,
+    id: "particle-top-right",
+    name: "Crispy Golden Bite",
+    src: "/images/categories/golden-chicken-bites.webp",
+    top: "13%",
+    left: "78%",
+    size: "clamp(85px, 8.5vw, 140px)",
+    baseRotate: 18,
     floatAnim: "particleFloat2",
     floatDuration: "7.2s",
     floatDelay: "1.6s",
@@ -144,8 +144,8 @@ const PARTICLES: ParticleDef[] = [
     id: "tomato-bottom-right",
     name: "Juicy Tomato Slice",
     src: "/images/particles/tomato.webp",
-    top: "82%",
-    left: "84%",
+    top: "84%",
+    left: "86%",
     size: "clamp(85px, 8.5vw, 140px)",
     baseRotate: -14,
     floatAnim: "particleFloat1",

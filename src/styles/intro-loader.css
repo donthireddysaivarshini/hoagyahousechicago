@@ -10,8 +10,8 @@
   height: 100vh;
   z-index: 10000;
   overflow: hidden;
-  background: #070504;
-  color: #f5ede4;
+  background: #fbf8f4;
+  color: #18120e;
   user-select: none;
   -webkit-user-select: none;
   pointer-events: auto;
@@ -29,13 +29,13 @@
   z-index: 0;
 }
 
-/* Deep Obsidian Radial Gradient */
+/* Light Warm Amber Radial Gradient */
 .cinema-loader__bg-gradient {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 45% at 50% 50%, rgba(243, 146, 0, 0.14) 0%, rgba(233, 78, 27, 0.05) 45%, transparent 75%),
-    radial-gradient(circle 800px at 50% 50%, #150f0a 0%, #0c0806 50%, #050403 100%);
+    radial-gradient(ellipse 60% 45% at 50% 50%, rgba(243, 146, 0, 0.16) 0%, rgba(233, 78, 27, 0.05) 45%, transparent 75%),
+    radial-gradient(circle 800px at 50% 50%, #ffffff 0%, #fbf8f4 50%, #f0e9df 100%);
   z-index: 1;
 }
 
@@ -265,15 +265,13 @@
 .cinema-loader__bar-container {
   width: clamp(220px, 30vw, 360px);
   height: 4px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 200, 59, 0.22);
+  background: rgba(28, 21, 16, 0.08);
+  border: 1px solid rgba(243, 146, 0, 0.35);
   border-radius: 999px;
   margin-top: 0;
   position: relative;
   overflow: visible;
-  box-shadow:
-    inset 0 1px 3px rgba(0, 0, 0, 0.9),
-    0 0 24px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 2px 10px rgba(28, 21, 16, 0.06);
 }
 
 /* Ionized Shooting Star Plasma Tail */
@@ -336,12 +334,9 @@
   justify-content: center;
   gap: 2px;
   font-family: monospace;
-  color: #ffb834;
+  color: #c46800;
   line-height: 1;
   margin-top: 4px;
-  text-shadow:
-    0 0 14px rgba(243, 146, 0, 0.6),
-    0 2px 8px rgba(0, 0, 0, 0.95);
 }
 
 .cinema-loader__counter-value {
@@ -349,13 +344,13 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   font-variant-numeric: tabular-nums;
-  color: #fff4e0;
+  color: #18120e;
 }
 
 .cinema-loader__counter-symbol {
   font-size: clamp(0.68rem, 0.9vw, 0.8rem);
   font-weight: 600;
-  color: rgba(243, 146, 0, 0.85);
+  color: #c46800;
 }
 
 /* Celestial Shooting Star Leading Head */

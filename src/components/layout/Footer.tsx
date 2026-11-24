@@ -14,15 +14,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
       <div className="luxury-footer__inner">
         {/* Top Pre-Footer Callout Bar */}
         <div className="luxury-footer__top-row">
-          <h2 className="luxury-footer__top-heading">Craving Chicago’s finest?</h2>
+          <h2 className="luxury-footer__top-heading">CRAVING CHICAGO’S FINEST?</h2>
           <div className="luxury-footer__top-actions">
             <a
-              href="https://www.doordash.com"
+              href="https://www.doordash.com/store/hoagy-house-chicago-132473/122833947/?cursor=eyJzZWFyY2hfaXRlbV9jYXJvdXNlbF9jdXJzb3IiOnsicXVlcnkiOiJIb2FneSBob3VzZSAiLCJpdGVtX2lkcyI6W10sInNlYXJjaF90ZXJtIjoiaG9hZ3kgaG91c2UiLCJ2ZXJ0aWNhbF9pZCI6LTk5OSwidmVydGljYWxfbmFtZSI6ImFsbCIsInF1ZXJ5X2ludGVudCI6IlNUT1JFX1JYIn0sInN0b3JlX3ByaW1hcnlfdmVydGljYWxfaWRzIjpbMSwxMDAzMjIsMTAwMzMyLDEwMDMzMywxMTAwMzcsMTEwMDQ1LDExMDA1MiwxMTAwNTUsMTEwMDYyLDExMDA4MiwxMTAwODMsMTc1LDE3NiwxNzcsMTc4LDE3OSwxOTIsMTEwMDU4LDE5MywxOTVdfQ==&pickup=false"
               target="_blank"
               rel="noopener noreferrer"
               className="luxury-footer__cta-btn luxury-footer__cta-btn--doordash"
               aria-label="Order on DoorDash"
             >
+              <span className="luxury-footer__cta-icon-badge luxury-footer__cta-icon-badge--doordash" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="#FF3008">
+                  <path d="M23.038 9.537a5.525 5.525 0 0 0-4.897-4.041H4.37a.89.89 0 0 0-.82.553L.073 14.19a.89.89 0 0 0 .82 1.226h4.34a.89.89 0 0 0 .82-.553l1.86-4.524h6.03a3.738 3.738 0 0 1 3.312 2.732 3.754 3.754 0 0 1-3.626 4.75H8.76a.89.89 0 0 0-.82.553l-1.07 2.604a.89.89 0 0 0 .82 1.226h5.938c5.44 0 9.774-4.55 9.41-10.167z" />
+                </svg>
+              </span>
               <span>ORDER ON DOORDASH</span>
               <span className="luxury-footer__cta-arrow" aria-hidden="true">→</span>
             </a>
@@ -33,20 +38,25 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
               className="luxury-footer__cta-btn luxury-footer__cta-btn--ubereats"
               aria-label="Order on Uber Eats"
             >
+              <span className="luxury-footer__cta-icon-badge luxury-footer__cta-icon-badge--ubereats" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="#06C167">
+                  <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z" />
+                </svg>
+              </span>
               <span>ORDER ON UBER EATS</span>
               <span className="luxury-footer__cta-arrow" aria-hidden="true">→</span>
             </a>
           </div>
         </div>
 
-        {/* Real Brand Logo Showcase (Replaced /// hoagy house text wordmark) */}
-        <div className="luxury-footer__brand-showcase" aria-label="Hoagy House Chicago">
-          <img
-            src="/images/logo.webp"
-            alt="Hoagy House Chicago"
-            className="luxury-footer__brand-logo"
-            loading="lazy"
-          />
+        {/* Brand Showcase: Iconic /// HOAGY HOUSE Wordmark in ALL CAPS */}
+        <div className="luxury-footer__hero-wordmark" aria-label="HOAGY HOUSE CHICAGO">
+          <div className="luxury-footer__brand-bars" aria-hidden="true">
+            <span className="luxury-footer__bar" />
+            <span className="luxury-footer__bar luxury-footer__bar--accent" />
+            <span className="luxury-footer__bar" />
+          </div>
+          <span className="luxury-footer__wordmark-title">HOAGY HOUSE</span>
         </div>
 
         {/* 4-Column Mid Grid: Location, Contact, Hours, Heritage Seal */}
@@ -67,11 +77,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
                 rel="noopener noreferrer"
                 className="luxury-footer__link"
               >
-                7116 S Yates Blvd<br />
-                Chicago, IL 60649
+                7116 S YATES BLVD<br />
+                CHICAGO, IL 60649
               </a>
               <br />
-              <span className="luxury-footer__sub-note">South Side · Dine In &amp; Carry Out</span>
+              <span className="luxury-footer__sub-note">SOUTH SIDE · DINE IN &amp; CARRY OUT</span>
             </p>
           </div>
 
@@ -112,7 +122,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
               </a>
               <br />
               <a href="mailto:hoagyhousechicago@gmail.com" className="luxury-footer__link">
-                hoagyhousechicago@gmail.com
+                HOAGYHOUSECHICAGO@GMAIL.COM
               </a>
             </p>
           </div>
@@ -127,9 +137,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
               HOURS
             </span>
             <p className="luxury-footer__info-text">
-              Mon – Thu: 10:00 AM – 11:00 PM<br />
-              Fri – Sat: 10:00 AM – 2:00 AM<br />
-              Sun: 10:00 AM – 11:00 PM
+              MON – THU: 10:00 AM – 11:00 PM<br />
+              FRI – SAT: 10:00 AM – 2:00 AM<br />
+              SUN: 10:00 AM – 11:00 PM
             </p>
           </div>
 
@@ -150,10 +160,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateContact }) => {
         {/* Bottom Legal / Copyright Row */}
         <div className="luxury-footer__bottom-row">
           <span className="luxury-footer__copyright">
-            &copy; {new Date().getFullYear()} Hoagy House. All Rights Reserved.
+            &copy; {new Date().getFullYear()} HOAGY HOUSE. ALL RIGHTS RESERVED.
           </span>
           <span className="luxury-footer__quality-note">
-            100% Turkey &amp; Beef · No Pork · Dine In &amp; Carry Out · DoorDash &amp; Uber Eats
+            100% TURKEY &amp; BEEF · NO PORK · DINE IN &amp; CARRY OUT · DOORDASH &amp; UBER EATS
           </span>
           <button
             type="button"

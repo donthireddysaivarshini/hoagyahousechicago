@@ -1,4 +1,5 @@
 import React from "react";
+import BurgerParticles from "../../components/burger/BurgerParticles";
 
 interface BurgerExplodeSectionProps {
   isActive?: boolean;
@@ -10,15 +11,17 @@ export const BurgerExplodeSection: React.FC<BurgerExplodeSectionProps> = ({
 }) => {
   return (
     <section className="burger-hero" id="burgerHeroSection">
-      {/* Background Ambience Layers */}
+      {/* Authentic Storefront Background with Clean Daylight Scrim (No Muddy Tint) */}
       <div className="burger-hero__bg" aria-hidden="true">
         <div className="burger-hero__bg-img" />
-        <div className="burger-hero__bg-vignette" />
-        <div className="burger-hero__bg-side-tint" />
+        <div className="burger-hero__bg-overlay" />
       </div>
 
       {/* Hero Content Stage */}
       <div className="burger-hero__stage">
+        {/* Ambient Hover & Floating Food Particles (Fry, Jalapeno, Lettuce, Onion, Pickle, Tomato) */}
+        <BurgerParticles />
+
         <div className="burger-hero__inner">
           {/* Left Column: Heading, Subtext, and Two Direct CTAs */}
           <div className="burger-hero__text-col">
@@ -108,10 +111,6 @@ export const BurgerExplodeSection: React.FC<BurgerExplodeSectionProps> = ({
                 className="burger-hero__photo-img"
                 loading="eager"
               />
-              <div className="burger-hero__photo-badge">
-                <span className="burger-hero__photo-badge-sub">CHICAGO ORIGINAL</span>
-                <span className="burger-hero__photo-badge-title">SIGNATURE HOAGY</span>
-              </div>
             </div>
           </div>
         </div>

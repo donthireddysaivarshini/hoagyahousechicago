@@ -211,7 +211,7 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
           </button>
         </div>
 
-        {/* Center: Numbered Navigation Stack */}
+        {/* Center: Navigation Stack (Numbers Removed) */}
         <nav className="fullscreen-nav__menu-body">
           <ul className="fullscreen-nav__links-list">
             {navRoutes.map((route) => (
@@ -221,7 +221,6 @@ export const FullScreenNavMenu: React.FC<FullScreenNavMenuProps> = ({
                   className={`fullscreen-nav__link-btn ${route.isActive ? "is-active" : ""}`}
                   onClick={route.onClick}
                 >
-                  <span className="fullscreen-nav__link-num">{route.num}</span>
                   <span className="fullscreen-nav__link-text">{route.label}</span>
                   {route.badge && (
                     <span className="fullscreen-nav__link-badge">{route.badge}</span>
